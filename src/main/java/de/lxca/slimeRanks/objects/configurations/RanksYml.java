@@ -1,6 +1,6 @@
-package de.lxca.slimeRanks.objects;
+package de.lxca.slimeRanks.objects.configurations;
 
-public class RanksYml extends Yml{
+public class RanksYml extends Yml {
 
     private static final String filePath = "plugins/SlimeRanks/";
     private static final String fileName = "ranks.yml";

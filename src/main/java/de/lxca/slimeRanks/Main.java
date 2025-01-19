@@ -1,7 +1,7 @@
 package de.lxca.slimeRanks;
 
-import de.lxca.slimeRanks.objects.MessagesYml;
-import de.lxca.slimeRanks.objects.RanksYml;
+import de.lxca.slimeRanks.objects.configurations.MessagesYml;
+import de.lxca.slimeRanks.objects.configurations.RanksYml;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
