@@ -1,4 +1,4 @@
-package de.lxca.slimeRanks.objects.configurations;
+package de.lxca.slimeRanks.objects;
 
 import de.lxca.slimeRanks.Main;
 import org.bukkit.configuration.file.YamlConfiguration;
