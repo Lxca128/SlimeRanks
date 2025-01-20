@@ -1,5 +1,6 @@
 package de.lxca.slimeRanks;
 
+import de.lxca.slimeRanks.objects.RankManager;
 import de.lxca.slimeRanks.objects.configurations.MessagesYml;
 import de.lxca.slimeRanks.objects.configurations.RanksYml;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -11,11 +12,13 @@ public final class Main extends JavaPlugin {
 
     private static MessagesYml messagesYml;
     private static RanksYml ranksYml;
+    private static RankManager rankManager;
 
     @Override
     public void onEnable() {
         messagesYml = new MessagesYml();
         ranksYml = new RanksYml();
+        rankManager = RankManager.getInstance();
     }
 
     @Override
@@ -37,5 +40,9 @@ public final class Main extends JavaPlugin {
 
     public static RanksYml getRanksYml() {
         return ranksYml;
+    }
+
+    public static RankManager getRankManager() {
+        return rankManager;
     }
 }
