@@ -19,5 +19,6 @@ public class PlayerJoinListener implements Listener {
         }
 
         player.playerListName(rank.getTabFormat(player));
+        player.setPlayerListOrder(rank.getPriority());
     }
 }
