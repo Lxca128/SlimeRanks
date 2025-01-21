@@ -51,6 +51,10 @@ public class Rank {
         return MiniMessage.miniMessage().deserialize(tabFormat.replace("{player}", player.getName()));
     }
 
+    public int getPriority() {
+        return priority;
+    }
+
     public boolean chatIsActive() {
         return chatActive;
     }
