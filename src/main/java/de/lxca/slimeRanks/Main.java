@@ -1,6 +1,7 @@
 package de.lxca.slimeRanks;
 
 import de.lxca.slimeRanks.listeners.AsyncChatListener;
+import de.lxca.slimeRanks.listeners.PlayerJoinListener;
 import de.lxca.slimeRanks.objects.RankManager;
 import de.lxca.slimeRanks.objects.configurations.MessagesYml;
 import de.lxca.slimeRanks.objects.configurations.RanksYml;
@@ -25,6 +26,7 @@ public final class Main extends JavaPlugin {
 
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new AsyncChatListener(), this);
+        pluginManager.registerEvents(new PlayerJoinListener(), this);
     }
 
     @Override
