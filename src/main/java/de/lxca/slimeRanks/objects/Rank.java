@@ -35,8 +35,8 @@ public class Rank {
         this.permission = ranksYml.getString("Ranks." + identifier + ".Permission", null);
     }
 
-    public String getPermission() {
-        return permission;
+    public boolean tabIsActive() {
+        return tabActive;
     }
 
     public Component getTabFormat(@NotNull Player player) {
@@ -47,6 +47,10 @@ public class Rank {
         return MiniMessage.miniMessage().deserialize(tabFormat.replace("{player}", player.getName()));
     }
 
+    public boolean chatIsActive() {
+        return chatActive;
+    }
+
     public Component getChatFormat(@NotNull Player player, @NotNull String message) {
         if (chatFormat == null) {
             return null;
@@ -55,11 +59,19 @@ public class Rank {
         return MiniMessage.miniMessage().deserialize(chatFormat.replace("{player}", player.getName()).replace("{message}", message));
     }
 
+    public boolean nameTagIsActive() {
+        return nameTagActive;
+    }
+
     public Component getNameTagFormat(@NotNull Player player) {
         if (nameTagFormat == null) {
             return null;
         }
 
         return MiniMessage.miniMessage().deserialize(nameTagFormat.replace("{player}", player.getName()));
+    }
+
+    public String getPermission() {
+        return permission;
     }
 }
