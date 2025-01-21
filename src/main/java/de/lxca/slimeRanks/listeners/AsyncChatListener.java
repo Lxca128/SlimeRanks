@@ -17,7 +17,7 @@ public class AsyncChatListener implements Listener {
         Player player = event.getPlayer();
         Rank rank = Main.getRankManager().getPlayerRank(player);
 
-        if (rank == null) {
+        if (rank == null || !rank.chatIsActive()) {
             return;
         }
         event.setCancelled(true);
