@@ -35,6 +35,10 @@ public class Rank {
         this.permission = ranksYml.getString("Ranks." + identifier + ".Permission", null);
     }
 
+    public String getIdentifier() {
+        return identifier;
+    }
+
     public boolean tabIsActive() {
         return tabActive;
     }
