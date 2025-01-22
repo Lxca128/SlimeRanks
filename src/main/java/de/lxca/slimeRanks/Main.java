@@ -3,6 +3,7 @@ package de.lxca.slimeRanks;
 import de.lxca.slimeRanks.listeners.AsyncChatListener;
 import de.lxca.slimeRanks.listeners.PlayerJoinListener;
 import de.lxca.slimeRanks.listeners.PlayerQuitListener;
+import de.lxca.slimeRanks.listeners.WorldLoadListener;
 import de.lxca.slimeRanks.objects.RankManager;
 import de.lxca.slimeRanks.objects.configurations.MessagesYml;
 import de.lxca.slimeRanks.objects.configurations.RanksYml;
@@ -29,6 +30,7 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new AsyncChatListener(), this);
         pluginManager.registerEvents(new PlayerJoinListener(), this);
         pluginManager.registerEvents(new PlayerQuitListener(), this);
+        pluginManager.registerEvents(new WorldLoadListener(), this);
     }
 
     @Override
