@@ -2,6 +2,7 @@ package de.lxca.slimeRanks.listeners;
 
 import de.lxca.slimeRanks.Main;
 import de.lxca.slimeRanks.objects.Rank;
+import de.lxca.slimeRanks.objects.RankManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,11 +15,17 @@ public class PlayerJoinListener implements Listener {
         Player player = event.getPlayer();
         Rank rank = Main.getRankManager().getPlayerRank(player);
 
-        if (rank == null || !rank.tabIsActive()) {
+        if (rank == null) {
             return;
         }
 
-        player.playerListName(rank.getTabFormat(player));
-        player.setPlayerListOrder(rank.getPriority());
+        if (rank.tabIsActive()) {
+            player.playerListName(rank.getTabFormat(player));
+            player.setPlayerListOrder(rank.getPriority());
+        }
+
+        if (rank.nameTagIsActive()) {
+            RankManager.getInstance().addPlayerNameTag(player);
+        }
     }
 }
