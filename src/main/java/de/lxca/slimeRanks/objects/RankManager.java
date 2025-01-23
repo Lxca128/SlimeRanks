@@ -60,6 +60,8 @@ public class RankManager {
         textDisplay.setBillboard(Display.Billboard.CENTER);
         textDisplay.getPersistentDataContainer().set(rankKey, PersistentDataType.BOOLEAN, true);
 
+        player.hideEntity(Main.getInstance(), textDisplay);
+
         player.addPassenger(textDisplay);
         playerNameTags.put(player, textDisplay);
     }
