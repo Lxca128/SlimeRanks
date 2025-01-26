@@ -5,10 +5,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Display;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.TextDisplay;
+import org.bukkit.entity.*;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,7 +16,7 @@ public class RankManager {
 
     private static RankManager instance;
     private static final ArrayList<Rank> ranks = new ArrayList<>();
-    private static final HashMap<Player, TextDisplay> playerNameTags = new HashMap<>();
+    private static final HashMap<Player, ArmorStand> playerNameTags = new HashMap<>();
     private static final NamespacedKey rankKey = new NamespacedKey(Main.getInstance(), "slimeranks_rank");
 
     private RankManager() {
@@ -55,34 +52,39 @@ public class RankManager {
 
     public void addPlayerNameTag(Player player) {
         Rank rank = getPlayerRank(player);
-        TextDisplay textDisplay = player.getWorld().spawn(player.getLocation(), TextDisplay.class);
-        textDisplay.text(rank.getNameTagFormat(player));
-        textDisplay.setBillboard(Display.Billboard.CENTER);
-        textDisplay.getPersistentDataContainer().set(rankKey, PersistentDataType.BOOLEAN, true);
+        ArmorStand nameTag = player.getWorld().spawn(player.getLocation(), ArmorStand.class);
+        nameTag.customName(rank.getNameTagFormat(player));
+        nameTag.setCustomNameVisible(true);
+        nameTag.setVisible(false);
+        nameTag.setSmall(true);
+        nameTag.setMarker(true);
+        nameTag.setCanTick(false);
+        nameTag.setInvulnerable(true);
+        nameTag.getPersistentDataContainer().set(rankKey, PersistentDataType.BOOLEAN, true);
 
-        player.hideEntity(Main.getInstance(), textDisplay);
+        player.hideEntity(Main.getInstance(), nameTag);
 
-        player.addPassenger(textDisplay);
-        playerNameTags.put(player, textDisplay);
+        player.addPassenger(nameTag);
+        playerNameTags.put(player, nameTag);
     }
 
     public void removePlayerNameTag(Player player) {
-        TextDisplay textDisplay = playerNameTags.get(player);
+        ArmorStand nameTag = playerNameTags.get(player);
 
-        if (textDisplay == null) {
+        if (nameTag == null) {
             return;
         }
 
-        player.removePassenger(textDisplay);
+        player.removePassenger(nameTag);
         playerNameTags.remove(player);
-        textDisplay.remove();
+        nameTag.remove();
     }
 
     public void clearPlayerNameTags(@NotNull World world) {
         for (Entity entity : world.getEntities()) {
-            if (entity instanceof TextDisplay textDisplay && textDisplay.getPersistentDataContainer().has(rankKey, PersistentDataType.BOOLEAN)) {
-                playerNameTags.entrySet().removeIf(entry -> entry.getValue().equals(textDisplay));
-                textDisplay.remove();
+            if (entity instanceof ArmorStand nameTag && nameTag.getPersistentDataContainer().has(rankKey, PersistentDataType.BOOLEAN)) {
+                playerNameTags.entrySet().removeIf(entry -> entry.getValue().equals(nameTag));
+                nameTag.remove();
             }
         }
     }
