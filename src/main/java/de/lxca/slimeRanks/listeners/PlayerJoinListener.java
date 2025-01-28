@@ -3,6 +3,7 @@ package de.lxca.slimeRanks.listeners;
 import de.lxca.slimeRanks.Main;
 import de.lxca.slimeRanks.objects.Rank;
 import de.lxca.slimeRanks.objects.RankManager;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,7 +25,7 @@ public class PlayerJoinListener implements Listener {
             player.setPlayerListOrder(rank.getPriority());
         }
 
-        if (rank.nameTagIsActive()) {
+        if (rank.nameTagIsActive() && player.getGameMode() != GameMode.SPECTATOR) {
             RankManager.getInstance().addPlayerNameTag(player);
         }
     }
