@@ -1,6 +1,5 @@
 package de.lxca.slimeRanks.listeners;
 
-import de.lxca.slimeRanks.Main;
 import de.lxca.slimeRanks.objects.Rank;
 import de.lxca.slimeRanks.objects.RankManager;
 import org.bukkit.GameMode;
@@ -14,7 +13,7 @@ public class PlayerJoinListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        Rank rank = Main.getRankManager().getPlayerRank(player);
+        Rank rank = RankManager.getInstance().getPlayerRank(player);
 
         if (rank == null) {
             return;

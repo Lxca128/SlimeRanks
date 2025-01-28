@@ -15,7 +15,6 @@ public final class Main extends JavaPlugin {
 
     private static MessagesYml messagesYml;
     private static RanksYml ranksYml;
-    private static RankManager rankManager;
 
     @Override
     public void onEnable() {
@@ -50,9 +49,5 @@ public final class Main extends JavaPlugin {
 
     public static RanksYml getRanksYml() {
         return ranksYml;
-    }
-
-    public static RankManager getRankManager() {
-        return rankManager;
     }
 }

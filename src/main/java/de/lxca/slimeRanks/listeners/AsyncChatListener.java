@@ -1,7 +1,7 @@
 package de.lxca.slimeRanks.listeners;
 
-import de.lxca.slimeRanks.Main;
 import de.lxca.slimeRanks.objects.Rank;
+import de.lxca.slimeRanks.objects.RankManager;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -15,7 +15,7 @@ public class AsyncChatListener implements Listener {
     @EventHandler
     public void onAsyncChat(AsyncChatEvent event) {
         Player player = event.getPlayer();
-        Rank rank = Main.getRankManager().getPlayerRank(player);
+        Rank rank = RankManager.getInstance().getPlayerRank(player);
 
         if (rank == null || !rank.chatIsActive()) {
             return;
