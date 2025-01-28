@@ -1,7 +1,6 @@
 package de.lxca.slimeRanks;
 
 import de.lxca.slimeRanks.listeners.*;
-import de.lxca.slimeRanks.objects.RankManager;
 import de.lxca.slimeRanks.objects.configurations.MessagesYml;
 import de.lxca.slimeRanks.objects.configurations.RanksYml;
 import org.bukkit.Bukkit;
@@ -18,9 +17,7 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        messagesYml = new MessagesYml();
-        ranksYml = new RanksYml();
-        rankManager = RankManager.getInstance();
+        initializeVariables();
 
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new AsyncChatListener(), this);
@@ -41,6 +38,11 @@ public final class Main extends JavaPlugin {
 
     public static Logger getLogger(Class<?> clazz) {
         return LoggerFactory.getLogger(clazz);
+    }
+
+    public static void initializeVariables() {
+        messagesYml = new MessagesYml();
+        ranksYml = new RanksYml();
     }
 
     public static MessagesYml getMessagesYml() {
