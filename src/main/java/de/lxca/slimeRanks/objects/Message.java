@@ -5,17 +5,30 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
+
 public class Message {
 
     private static String prefix;
     private final CommandSender commandSender;
     private final boolean withPrefix;
     private final String messageKey;
+    private final HashMap<String, String> replacements;
 
     public Message(@NotNull CommandSender commandSender, boolean withPrefix, @NotNull String messageKey) {
         this.commandSender = commandSender;
         this.withPrefix = withPrefix;
         this.messageKey = messageKey;
+        this.replacements = new HashMap<>();
+
+        sendMessage();
+    }
+
+    public Message(@NotNull CommandSender commandSender, boolean withPrefix, @NotNull String messageKey, @NotNull HashMap<String, String> replacements) {
+        this.commandSender = commandSender;
+        this.withPrefix = withPrefix;
+        this.messageKey = messageKey;
+        this.replacements = replacements;
 
         sendMessage();
     }
@@ -31,6 +44,11 @@ public class Message {
 
         if (withPrefix) {
             messageString = getPrefix() + messageString;
+        }
+
+        for (String key : replacements.keySet()) {
+            String regex = "\\{" + key + "}";
+            messageString = messageString.replaceAll(regex, replacements.get(key));
         }
 
         commandSender.sendMessage(MiniMessage.miniMessage().deserialize(messageString));
