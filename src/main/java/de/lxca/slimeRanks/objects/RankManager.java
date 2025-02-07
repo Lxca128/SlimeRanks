@@ -92,6 +92,34 @@ public class RankManager {
         player.addPassenger(nameTag);
     }
 
+    public void hidePlayerNameTag(@NotNull Player player) {
+        ArmorStand nameTag = playerNameTags.get(player);
+
+        if (nameTag == null) {
+            return;
+        }
+
+        for (Player loopPlayer : Bukkit.getOnlinePlayers()) {
+            loopPlayer.hideEntity(Main.getInstance(), nameTag);
+        }
+    }
+
+    public void showPlayerNameTag(@NotNull Player player) {
+        ArmorStand nameTag = playerNameTags.get(player);
+
+        if (nameTag == null) {
+            return;
+        }
+
+        for (Player loopPlayer : Bukkit.getOnlinePlayers()) {
+            if (loopPlayer.equals(player)) {
+                continue;
+            }
+
+            loopPlayer.showEntity(Main.getInstance(), nameTag);
+        }
+    }
+
     public void clearPlayerNameTags(@NotNull World world) {
         for (Entity entity : world.getEntities()) {
             if (entity instanceof ArmorStand nameTag && nameTag.getPersistentDataContainer().has(rankKey, PersistentDataType.BOOLEAN)) {
