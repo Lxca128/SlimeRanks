@@ -1,9 +1,12 @@
 package de.lxca.slimeRanks;
 
+import de.lxca.slimeRanks.commands.SlimeranksCommand;
 import de.lxca.slimeRanks.listeners.*;
+import de.lxca.slimeRanks.objects.RankManager;
 import de.lxca.slimeRanks.objects.configurations.MessagesYml;
 import de.lxca.slimeRanks.objects.configurations.RanksYml;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandMap;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -18,6 +21,9 @@ public final class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         initializeVariables();
+
+        CommandMap commandMap = Bukkit.getCommandMap();
+        commandMap.register("slimeventure", new SlimeranksCommand("slimeranks"));
 
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new AsyncChatListener(), this);
