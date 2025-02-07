@@ -34,6 +34,10 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new PlayerQuitListener(), this);
         pluginManager.registerEvents(new PlayerPostRespawnListener(), this);
         pluginManager.registerEvents(new WorldLoadListener(), this);
+
+        if (!Bukkit.getOnlinePlayers().isEmpty()) {
+            RankManager.getInstance().reload();
+        }
     }
 
     @Override
