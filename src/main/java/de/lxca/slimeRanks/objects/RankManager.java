@@ -53,7 +53,7 @@ public class RankManager {
 
     public void addPlayerNameTag(Player player) {
         Rank rank = getPlayerRank(player);
-        ArmorStand nameTag = player.getWorld().spawn(player.getLocation(), ArmorStand.class);
+        ArmorStand nameTag = player.getWorld().spawn(player.getLocation().add(0, 1.25, 0), ArmorStand.class);
         nameTag.customName(rank.getNameTagFormat(player));
         nameTag.setCustomNameVisible(true);
         nameTag.setVisible(false);
