@@ -44,7 +44,7 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        TeamManager.getInstance().removeInvisibleNameTagTeam();
     }
 
     public static @NotNull Main getInstance() {
