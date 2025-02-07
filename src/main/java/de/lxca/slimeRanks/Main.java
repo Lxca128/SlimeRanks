@@ -3,6 +3,7 @@ package de.lxca.slimeRanks;
 import de.lxca.slimeRanks.commands.SlimeranksCommand;
 import de.lxca.slimeRanks.listeners.*;
 import de.lxca.slimeRanks.objects.RankManager;
+import de.lxca.slimeRanks.objects.TeamManager;
 import de.lxca.slimeRanks.objects.configurations.MessagesYml;
 import de.lxca.slimeRanks.objects.configurations.RanksYml;
 import org.bukkit.Bukkit;
@@ -32,6 +33,7 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new PlayerGameModeChangeListener(), this);
         pluginManager.registerEvents(new PlayerJoinListener(), this);
         pluginManager.registerEvents(new PlayerQuitListener(), this);
+        pluginManager.registerEvents(new PlayerToggleSneakListener(), this);
         pluginManager.registerEvents(new PlayerPostRespawnListener(), this);
         pluginManager.registerEvents(new WorldLoadListener(), this);
 
