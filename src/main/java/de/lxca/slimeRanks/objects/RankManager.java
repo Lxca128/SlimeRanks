@@ -1,6 +1,7 @@
 package de.lxca.slimeRanks.objects;
 
 import de.lxca.slimeRanks.Main;
+import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
@@ -96,6 +97,28 @@ public class RankManager {
             if (entity instanceof ArmorStand nameTag && nameTag.getPersistentDataContainer().has(rankKey, PersistentDataType.BOOLEAN)) {
                 playerNameTags.entrySet().removeIf(entry -> entry.getValue().equals(nameTag));
                 nameTag.remove();
+            }
+        }
+    }
+
+    public void reload() {
+        for (World world : Bukkit.getWorlds()) {
+            clearPlayerNameTags(world);
+        }
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            Rank rank = RankManager.instance.getPlayerRank(player);
+
+            if (rank.tabIsActive()) {
+                player.playerListName(rank.getTabFormat(player));
+                player.setPlayerListOrder(rank.getPriority());
+            } else {
+                player.playerListName(player.name());
+                player.setPlayerListOrder(0);
+            }
+
+            if (rank.nameTagIsActive()) {
+                addPlayerNameTag(player);
             }
         }
     }
