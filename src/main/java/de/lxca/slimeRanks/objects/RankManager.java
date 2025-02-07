@@ -80,6 +80,17 @@ public class RankManager {
         nameTag.remove();
     }
 
+    public void mountPlayerNameTag(@NotNull Player player) {
+        ArmorStand nameTag = playerNameTags.get(player);
+
+        if (nameTag == null) {
+            return;
+        }
+
+        nameTag.teleport(player.getLocation());
+        player.addPassenger(nameTag);
+    }
+
     public void clearPlayerNameTags(@NotNull World world) {
         for (Entity entity : world.getEntities()) {
             if (entity instanceof ArmorStand nameTag && nameTag.getPersistentDataContainer().has(rankKey, PersistentDataType.BOOLEAN)) {
