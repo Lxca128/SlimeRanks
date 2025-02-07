@@ -79,6 +79,10 @@ public class Rank {
         return MiniMessage.miniMessage().deserialize(nameTagFormat.replace("{player}", player.getName()));
     }
 
+    public boolean hideNameTagOnSneak() {
+        return hideNameTagOnSneak;
+    }
+
     public String getPermission() {
         return permission;
     }
