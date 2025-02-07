@@ -1,5 +1,5 @@
 name: SlimeRanks
-version: '1.0-SNAPSHOT'
+version: @version@
 main: de.lxca.slimeRanks.Main
 api-version: '1.21'
 prefix: SlimeRanks
