@@ -7,6 +7,7 @@ import de.lxca.slimeRanks.objects.TeamManager;
 import de.lxca.slimeRanks.objects.configurations.MessagesYml;
 import de.lxca.slimeRanks.objects.configurations.RanksYml;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.command.CommandMap;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -37,6 +38,10 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new PlayerPostRespawnListener(), this);
         pluginManager.registerEvents(new WorldLoadListener(), this);
 
+        for (World world : Bukkit.getWorlds()) {
+            RankManager.getInstance().clearPlayerNameTags(world);
+        }
+
         if (!Bukkit.getOnlinePlayers().isEmpty()) {
             RankManager.getInstance().reload();
         }
@@ -44,6 +49,9 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        for (World world : Bukkit.getWorlds()) {
+            RankManager.getInstance().clearPlayerNameTags(world);
+        }
         TeamManager.getInstance().removeInvisibleNameTagTeam();
     }
 
