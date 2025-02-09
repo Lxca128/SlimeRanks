@@ -41,6 +41,10 @@ public class RankManager {
         return instance;
     }
 
+    public int getRankCount() {
+        return ranks.size();
+    }
+
     public Rank getPlayerRank(@NotNull Player player) {
         for (Rank rank : ranks) {
             if (rank.getPermission() == null || player.hasPermission(rank.getPermission())) {
