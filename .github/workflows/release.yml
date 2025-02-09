@@ -12,7 +12,7 @@ jobs:
       contents: write
 
     steps:
-      - name: Repository auschecken
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up JDK 21
@@ -21,14 +21,14 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      - name: Build mit Maven
+      - name: Build with Maven
         run: mvn clean package
 
-      - name: Version aus `pom.xml` extrahieren
+      - name: Get current version from the pom.xml
         id: get_version
         run: echo "VERSION=$(awk -F '[<>]' '/<version>/ {print $3; exit}' pom.xml)" >> $GITHUB_ENV
 
-      - name: Release erstellen
+      - name: Create release
         uses: softprops/action-gh-release@v1
         with:
           files: target/*.jar
@@ -39,10 +39,3 @@ jobs:
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Lösche Branch nach Merge
-        if: github.event.pull_request.merged == true
-        run: |
-          BRANCH_NAME=${{ github.head_ref }}
-          echo "Branch to delete: $BRANCH_NAME"
-          git push origin --delete $BRANCH_NAME
