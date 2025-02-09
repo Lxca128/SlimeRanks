@@ -2,6 +2,7 @@ package de.lxca.slimeRanks;
 
 import de.lxca.slimeRanks.commands.SlimeranksCommand;
 import de.lxca.slimeRanks.listeners.*;
+import de.lxca.slimeRanks.objects.Metrics;
 import de.lxca.slimeRanks.objects.RankManager;
 import de.lxca.slimeRanks.objects.TeamManager;
 import de.lxca.slimeRanks.objects.configurations.MessagesYml;
@@ -19,6 +20,7 @@ public final class Main extends JavaPlugin {
 
     private static MessagesYml messagesYml;
     private static RanksYml ranksYml;
+    private static Metrics metrics;
 
     @Override
     public void onEnable() {
@@ -45,6 +47,8 @@ public final class Main extends JavaPlugin {
         if (!Bukkit.getOnlinePlayers().isEmpty()) {
             RankManager.getInstance().reload();
         }
+
+        initializeMetrics();
     }
 
     @Override
@@ -66,6 +70,11 @@ public final class Main extends JavaPlugin {
     public static void initializeVariables() {
         messagesYml = new MessagesYml();
         ranksYml = new RanksYml();
+        metrics = new Metrics(getInstance(), 24715);
+    }
+
+    private static void initializeMetrics() {
+        metrics.addCustomChart(new Metrics.SimplePie("rank_count", () -> String.valueOf(RankManager.getInstance().getRankCount())));
     }
 
     public static MessagesYml getMessagesYml() {
