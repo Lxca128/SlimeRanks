@@ -1,22 +1,24 @@
-# SlimeRanks Plugin  
+![Title](https://github.com/user-attachments/assets/f3524319-1fff-40d1-8fe9-9d07833f8887)
+| SlimeRanks is a powerful and flexible Minecraft plugin that allows server owners to create fully customizable ranks. These ranks can be displayed in the tab list, chat, and above players' heads to enhance the gaming experience. |
+|:-------------------------:|
 
-## About  
-**SlimeRanks** is a Minecraft plugin designed for **PaperSpigot** servers. It will allow server owners to create custom ranks that are displayed:  
-- In the **tab list**  
-- In the **chat**  
-- **Above players' heads**  
+## ✨ Features
+- 🔹 **Custom Ranks:** Create unlimited ranks with unique names, colors, and styles.
+- 📜 **Multiple Display Options:** Show ranks in the tab list, chat, and above players.
+- 🖼️ **Custom Texture Support:** Optionally assign textures as rank icons.
+- 🔝 **Tablist Priority:** Customize the order in which players appear in the tab list.
+- 🚫 **Toggleable Features:** Choose where ranks should be displayed (e.g., only in tab and chat).
+- ⚙ **Advanced Configuration:** Almost everything is configurable, from mechanics to messages.
 
-## Development Status  
-⚠️ **This plugin is currently under development and not functional yet.**  
-It is not ready for production use, and features are still being implemented.  
+## 📥 Installation
+1. Download the latest version of `SlimeRanks.jar`.
+2. Move the file to your Minecraft server's `plugins` folder.
+3. Restart the server to load the plugin.
+4. Configure ranks and settings in the `ranks.yml` file.
 
-## Planned Features  
-- Simple and intuitive configuration for creating custom ranks.  
-- Customizable display of ranks in tab, chat, and above players' heads.  
-- Lightweight and optimized performance for PaperSpigot.  
-
-## Important  
-Do not use this plugin on live servers as it is incomplete and may not function as intended.  
-
-## Stay Updated  
-Follow the development progress for future updates and the first stable release!  
+## 🛠 Commands & Permissions
+| Command | Description | Permission |
+| -------- | ------- | ------- |
+| `/slimeranks about` | Displays information about SlimeRanks. | `slimeranks.admin` |
+| `/slimeranks help` | Shows all available commands. | `slimeranks.admin` |
+| `/slimeranks reload` | Reloads the plugin configurations. | `slimeranks.admin` |
