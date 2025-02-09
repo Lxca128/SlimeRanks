@@ -39,3 +39,8 @@ jobs:
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Lösche Branch nach Merge
+        if: github.ref == 'refs/heads/master'
+        run: |
+          git push origin --delete ${{ github.head_ref }}
