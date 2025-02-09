@@ -41,7 +41,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Lösche Branch nach Merge
-        if: github.ref == 'refs/heads/master'
+        if: github.event.pull_request.merged == true
         run: |
-          BRANCH_NAME=${GITHUB_REF##*/} # extrahiere den Branch-Namen aus dem Ref
+          BRANCH_NAME=${{ github.head_ref }}
+          echo "Branch to delete: $BRANCH_NAME"
           git push origin --delete $BRANCH_NAME
