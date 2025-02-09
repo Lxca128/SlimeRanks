@@ -43,4 +43,5 @@ jobs:
       - name: Lösche Branch nach Merge
         if: github.ref == 'refs/heads/master'
         run: |
-          git push origin --delete ${{ github.head_ref }}
+          BRANCH_NAME=${GITHUB_REF##*/} # extrahiere den Branch-Namen aus dem Ref
+          git push origin --delete $BRANCH_NAME
