@@ -29,3 +29,10 @@ SlimeRanks is a powerful and flexible Minecraft plugin that allows server owners
 | `/slimeranks about` | Displays information about SlimeRanks. | `slimeranks.admin` |
 | `/slimeranks help` | Shows all available commands. | `slimeranks.admin` |
 | `/slimeranks reload` | Reloads the plugin configurations. | `slimeranks.admin` |
+
+## 🖼️ Examples
+| | Without Texture | With Texture |
+| -------- | ------- | ------- |
+| **Player List** | ![WithoutTexture](https://github.com/user-attachments/assets/d45166a4-3caf-4bab-81a0-b46266e1ca36) | ![WithTexture](https://github.com/user-attachments/assets/4f0821b3-6f0c-4242-a20b-d39d6e454d28) |
+| **Chat** | ![WithoutTexture](https://github.com/user-attachments/assets/eec44cdc-14a7-462c-a260-b9c8260fc5c2) | ![WithTexture](https://github.com/user-attachments/assets/7b647b01-8181-4c15-bef3-b3ab3c6ee29a) |
+| **Nametag** | ![WithoutTexture](https://github.com/user-attachments/assets/daac3f90-8f38-4d58-9a4e-b55e7399eb18) | ![WithTexture](https://github.com/user-attachments/assets/f28fa399-48c5-451e-a0a5-29c0342ab60d) |
