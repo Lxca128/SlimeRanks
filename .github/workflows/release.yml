@@ -9,6 +9,7 @@ on:
       changelog:
         description: 'Changelog'
         required: true
+        type: string
       prerelease:
         description: 'Is this a prerelease? (true/false)'
         required: true
