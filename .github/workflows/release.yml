@@ -3,16 +3,12 @@ name: Build and Release Plugin
 on:
   workflow_dispatch:
     inputs:
-      version:
-        description: 'Version (e.g., 1.0.0)'
-        required: true
-        type: string
       changelog:
         description: 'Changelog'
         required: true
         type: string
       prerelease:
-        description: 'Is this a prerelease? (true/false)'
+        description: 'Is this a prerelease?'
         required: true
         type: boolean
 
@@ -32,19 +28,19 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      - name: Update version in pom.xml
-        run: |
-          sed -i 's|<version>.*</version>|<version>${{ inputs.version }}</version>|' pom.xml
-
       - name: Build with Maven
         run: mvn clean package
+
+      - name: Get current version from the pom.xml
+        id: get_version
+        run: echo "VERSION=$(awk -F '[<>]' '/<version>/ {print $3; exit}' pom.xml)" >> $GITHUB_ENV
 
       - name: Create release
         uses: softprops/action-gh-release@v1
         with:
           files: target/*.jar
-          tag_name: v${{ inputs.version }}
-          name: Release v${{ inputs.version }}
+          tag_name: v${{ env.VERSION }}
+          name: Release v${{ env.VERSION }}
           body: "${{ inputs.changelog }}"
           draft: false
           prerelease: ${{ inputs.prerelease }}
