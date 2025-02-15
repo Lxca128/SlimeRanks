@@ -6,6 +6,7 @@ on:
       version:
         description: 'Version (e.g., 1.0.0)'
         required: true
+        type: string
       changelog:
         description: 'Changelog'
         required: true
@@ -13,6 +14,7 @@ on:
       prerelease:
         description: 'Is this a prerelease? (true/false)'
         required: true
+        type: boolean
 
 jobs:
   build:
