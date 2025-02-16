@@ -1,11 +1,14 @@
 package de.lxca.slimeRanks.objects;
 
 import de.lxca.slimeRanks.Main;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Message {
 
@@ -33,13 +36,26 @@ public class Message {
         sendMessage();
     }
 
-    private void sendMessage() {
+    public Message(@NotNull String messageKey) {
+        this.commandSender = null;
+        this.withPrefix = false;
+        this.messageKey = messageKey;
+        this.replacements = new HashMap<>();
+    }
+
+    public Message(@NotNull String messageKey, @NotNull HashMap<String, String> replacements) {
+        this.commandSender = null;
+        this.withPrefix = false;
+        this.messageKey = messageKey;
+        this.replacements = replacements;
+    }
+
+    public Component getMessage() {
         String messageString = Main.getMessagesYml().getYmlConfig().getString(messageKey, null);
 
         if (messageString == null) {
-            commandSender.sendMessage(messageKey);
             Main.getLogger(this.getClass()).warn("Message with key {} not found in messages.yml!", messageKey);
-            return;
+            return null;
         }
 
         if (withPrefix) {
@@ -51,7 +67,42 @@ public class Message {
             messageString = messageString.replaceAll(regex, replacements.get(key));
         }
 
-        commandSender.sendMessage(MiniMessage.miniMessage().deserialize(messageString));
+        return MiniMessage.miniMessage().deserialize(messageString);
+    }
+
+    public ArrayList<Component> getLore() {
+        List<?> loreLines = Main.getMessagesYml().getYmlConfig().getList(messageKey, null);
+
+        if (loreLines == null || loreLines.isEmpty()) {
+            Main.getLogger(this.getClass()).warn("Message with key {} not found or is empty in messages.yml!", messageKey);
+            return null;
+        }
+
+        ArrayList<Component> loreLineComponents = new ArrayList<>();
+
+        for (Object loreLine : loreLines) {
+            if (!(loreLine instanceof String loreLineString)) {
+                Main.getLogger(this.getClass()).warn("Message with key {} contains non-string lore line at index {} in messages.yml!", messageKey, loreLines.indexOf(loreLine));
+                continue;
+            }
+
+            for (String key : replacements.keySet()) {
+                String regex = "\\{" + key + "}";
+                loreLineString = loreLineString.replaceAll(regex, replacements.get(key));
+            }
+
+            loreLineComponents.add(MiniMessage.miniMessage().deserialize(loreLineString));
+        }
+
+        return loreLineComponents;
+    }
+
+    public void sendMessage() {
+        if (commandSender == null) {
+            return;
+        }
+
+        commandSender.sendMessage(getMessage());
     }
 
     private String getPrefix() {
