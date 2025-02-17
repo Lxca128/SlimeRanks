@@ -7,14 +7,14 @@ import de.lxca.slimeRanks.objects.RankManager;
 import de.lxca.slimeRanks.objects.TeamManager;
 import de.lxca.slimeRanks.objects.configurations.MessagesYml;
 import de.lxca.slimeRanks.objects.configurations.RanksYml;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandMap;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public final class Main extends JavaPlugin {
 
@@ -64,7 +64,7 @@ public final class Main extends JavaPlugin {
     }
 
     public static Logger getLogger(Class<?> clazz) {
-        return LoggerFactory.getLogger(clazz);
+        return LogManager.getLogger(clazz);
     }
 
     public static void initializeVariables() {
