@@ -55,7 +55,7 @@ public class Message {
 
         if (messageString == null) {
             Main.getLogger(this.getClass()).warn("Message with key {} not found in messages.yml!", messageKey);
-            return null;
+            return MiniMessage.miniMessage().deserialize(messageKey);
         }
 
         if (withPrefix) {
