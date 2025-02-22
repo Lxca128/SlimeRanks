@@ -41,6 +41,10 @@ public class RankManager {
         return instance;
     }
 
+    public ArrayList<Rank> getRanks() {
+        return new ArrayList<>(ranks);
+    }
+
     public int getRankCount() {
         return ranks.size();
     }
