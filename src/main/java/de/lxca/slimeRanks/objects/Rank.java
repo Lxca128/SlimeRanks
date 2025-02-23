@@ -58,6 +58,10 @@ public class Rank {
         return MiniMessage.miniMessage().deserialize(tabFormat.replace("{player}", player.getName()));
     }
 
+    public String getRawTabFormat() {
+        return tabFormat;
+    }
+
     public void setTabFormat(@NotNull String tabFormat) {
         Main.getRanksYml().getYmlConfig().set("Ranks." + identifier + ".Tab.Format", tabFormat);
         Main.getRanksYml().saveYmlConfig();
@@ -92,6 +96,10 @@ public class Rank {
         return MiniMessage.miniMessage().deserialize(chatFormat.replace("{player}", player.getName()).replace("{message}", message));
     }
 
+    public String getRawChatFormat() {
+        return chatFormat;
+    }
+
     public void setChatFormat(@NotNull String chatFormat) {
         Main.getRanksYml().getYmlConfig().set("Ranks." + identifier + ".Chat.Format", chatFormat);
         Main.getRanksYml().saveYmlConfig();
@@ -114,6 +122,10 @@ public class Rank {
         }
 
         return MiniMessage.miniMessage().deserialize(nameTagFormat.replace("{player}", player.getName()));
+    }
+
+    public String getRawNameTagFormat() {
+        return nameTagFormat;
     }
 
     public void setNameTagFormat(@NotNull String nameTagFormat) {
