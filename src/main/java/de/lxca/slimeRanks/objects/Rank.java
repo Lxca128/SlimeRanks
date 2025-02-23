@@ -153,4 +153,10 @@ public class Rank {
         Main.getRanksYml().saveYmlConfig();
         this.permission = permission;
     }
+
+    public void delete() {
+        Main.getRanksYml().getYmlConfig().set("Ranks." + identifier, null);
+        Main.getRanksYml().saveYmlConfig();
+        RankManager.getInstance().reloadRanks();
+    }
 }
