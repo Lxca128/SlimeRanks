@@ -51,24 +51,29 @@ public class Message {
         this.replacements = replacements;
     }
 
-    public Component getMessage() {
+    public String getRawMessage() {
         String messageString = Main.getMessagesYml().getYmlConfig().getString(messageKey, null);
 
         if (messageString == null) {
             Main.getLogger(this.getClass()).warn("Message with key {} not found in messages.yml!", messageKey);
-            return MiniMessage.miniMessage().deserialize(messageKey);
+            return messageKey;
         }
 
         if (withPrefix) {
             messageString = getPrefix() + messageString;
         }
 
+        HashMap<String, String> replacements = getReplacedReplacements();
         for (String key : replacements.keySet()) {
             String regex = "\\{" + key + "}";
             messageString = messageString.replaceAll(regex, replacements.get(key));
         }
 
-        return MiniMessage.miniMessage().deserialize(messageString);
+        return messageString;
+    }
+
+    public Component getMessage() {
+        return MiniMessage.miniMessage().deserialize(getRawMessage());
     }
 
     public ArrayList<Component> getLore() {
@@ -79,6 +84,7 @@ public class Message {
             return null;
         }
 
+        HashMap<String, String> replacements = getReplacedReplacements();
         ArrayList<Component> loreLineComponents = new ArrayList<>();
 
         for (Object loreLine : loreLines) {
