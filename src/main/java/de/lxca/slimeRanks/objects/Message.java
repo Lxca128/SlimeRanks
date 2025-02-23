@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Message {
 
@@ -95,6 +96,24 @@ public class Message {
         }
 
         return loreLineComponents;
+    }
+
+    private @NotNull HashMap<String, String> getReplacedReplacements() {
+        HashMap<String, String> replacements = new HashMap<>();
+
+        for (Map.Entry<String, String> entry : this.replacements.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+
+            if (value != null && value.startsWith("%")) {
+                String valueMessage = new Message(value.substring(1)).getRawMessage();
+                replacements.put(key, valueMessage);
+            } else {
+                replacements.put(key, value);
+            }
+        }
+
+        return replacements;
     }
 
     public void sendMessage() {
