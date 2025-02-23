@@ -6,6 +6,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class Rank {
 
@@ -135,7 +136,7 @@ public class Rank {
         return permission;
     }
 
-    public void setPermission(@NotNull String permission) {
+    public void setPermission(@Nullable String permission) {
         Main.getRanksYml().getYmlConfig().set("Ranks." + identifier + ".Permission", permission);
         Main.getRanksYml().saveYmlConfig();
         this.permission = permission;
