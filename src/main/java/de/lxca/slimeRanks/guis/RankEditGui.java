@@ -105,7 +105,7 @@ public class RankEditGui implements InventoryHolder {
             new ChatInput(player, ChatInputType.RANK_TAB_PRIORITY, 30, rank, additionalInfoMessage);
             player.closeInventory();
         } else if (slot == 24) {
-            if (event.getClick() == ClickType.DOUBLE_CLICK) {
+            if (event.getClick() == ClickType.SHIFT_LEFT || event.getClick() == ClickType.SHIFT_RIGHT) {
                 rank.setPermission(null);
                 inventory.setItem(slot, EditItems.getPermissionStatusItem(rank.getPermission()));
                 RankManager.getInstance().reloadDisplays();
@@ -123,7 +123,7 @@ public class RankEditGui implements InventoryHolder {
         } else if (slot == 27) {
             player.openInventory(new RankOverviewGui().getInventory());
             player.playSound(player, Sound.ITEM_BOOK_PAGE_TURN, 1.0F, 1.0F);
-        } else if (slot == 35 && event.getClick() == ClickType.DOUBLE_CLICK) {
+        } else if (slot == 35 && (event.getClick() == ClickType.SHIFT_LEFT || event.getClick() == ClickType.SHIFT_RIGHT)) {
             rank.delete();
             player.openInventory(new RankOverviewGui().getInventory());
             player.playSound(player, Sound.ENTITY_GENERIC_EXPLODE, 1.0F, 1.0F);
