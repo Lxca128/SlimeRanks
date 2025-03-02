@@ -31,6 +31,7 @@ public final class Main extends JavaPlugin {
 
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new AsyncChatListener(), this);
+        pluginManager.registerEvents(new InventoryClickListener(), this);
         pluginManager.registerEvents(new PlayerChangedWorldListener(), this);
         pluginManager.registerEvents(new PlayerDeathListener(), this);
         pluginManager.registerEvents(new PlayerGameModeChangeListener(), this);
