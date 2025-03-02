@@ -1,9 +1,11 @@
 package de.lxca.slimeRanks.commands;
 
 import de.lxca.slimeRanks.Main;
+import de.lxca.slimeRanks.guis.RankOverviewGui;
 import de.lxca.slimeRanks.objects.Message;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -29,6 +31,14 @@ public class SlimeranksCommand extends Command {
             if (strings[0].equalsIgnoreCase("about")) {
                 sendAboutMessage(commandSender);
                 return true;
+            } else if (strings[0].equalsIgnoreCase("gui")) {
+                if (commandSender instanceof Player player) {
+                    player.openInventory(new RankOverviewGui().getInventory());
+                    return true;
+                } else {
+                    new Message(commandSender, true, "Chat.Command.OnlyPlayers");
+                    return false;
+                }
             } else if (strings[0].equalsIgnoreCase("help")) {
                 new Message(commandSender, false, "Chat.Command.Help");
                 return true;
@@ -67,6 +77,7 @@ public class SlimeranksCommand extends Command {
         ArrayList<String> completerList = new ArrayList<>();
         if (args.length == 1 && sender.hasPermission("slimeranks.admin")) {
             completerList.add("about");
+            completerList.add("gui");
             completerList.add("help");
             completerList.add("reload");
         }
