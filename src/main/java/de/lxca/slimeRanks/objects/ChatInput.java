@@ -29,6 +29,8 @@ public class ChatInput {
     private BukkitTask titleTask;
 
     public ChatInput(Player player, ChatInputType chatInputType, int timerSeconds, Component infoMessage) {
+        killChatInputSession(player);
+
         this.player = player;
         this.chatInputType = chatInputType;
         this.timerSeconds = timerSeconds;
@@ -40,6 +42,8 @@ public class ChatInput {
     }
 
     public ChatInput(Player player, ChatInputType chatInputType, int timerSeconds, Object linkedObject, Component infoMessage) {
+        killChatInputSession(player);
+
         this.player = player;
         this.chatInputType = chatInputType;
         this.timerSeconds = timerSeconds;
@@ -83,9 +87,7 @@ public class ChatInput {
     }
 
     public void endSession(boolean notifyPlayer, Component additionalInfoMessage, boolean actionSuccessful) {
-        chatInputSessions.remove(player);
-        player.clearTitle();
-        titleTask.cancel();
+        killChatInputSession(player);
         if (notifyPlayer) {
             if (actionSuccessful) {
                 player.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 2.0F);
@@ -190,5 +192,15 @@ public class ChatInput {
 
     public static ChatInput getChatInputSession(Player player) {
         return chatInputSessions.get(player);
+    }
+
+    private static void killChatInputSession(Player player) {
+        ChatInput chatInput = chatInputSessions.getOrDefault(player, null);
+
+        if (chatInput != null) {
+            chatInput.titleTask.cancel();
+            player.clearTitle();
+            chatInputSessions.remove(player);
+        }
     }
 }
