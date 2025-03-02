@@ -46,7 +46,7 @@ public final class Main extends JavaPlugin {
         }
 
         if (!Bukkit.getOnlinePlayers().isEmpty()) {
-            RankManager.getInstance().reload();
+            RankManager.getInstance().reloadDisplays();
         }
 
         initializeMetrics();

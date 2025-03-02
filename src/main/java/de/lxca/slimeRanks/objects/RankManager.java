@@ -21,6 +21,19 @@ public class RankManager {
     private static final NamespacedKey rankKey = new NamespacedKey(Main.getInstance(), "slimeranks_rank");
 
     private RankManager() {
+        reloadRanks();
+    }
+
+    public static synchronized RankManager getInstance() {
+        if (instance == null) {
+            instance = new RankManager();
+        }
+
+        return instance;
+    }
+
+    public void reloadRanks() {
+        ranks.clear();
         YamlConfiguration ranksYml = Main.getRanksYml().getYmlConfig();
         ConfigurationSection ranksSection = ranksYml.getConfigurationSection("Ranks");
 
@@ -31,14 +44,6 @@ public class RankManager {
         for (String identifier : ranksSection.getKeys(false)) {
             ranks.add(new Rank(identifier));
         }
-    }
-
-    public static synchronized RankManager getInstance() {
-        if (instance == null) {
-            instance = new RankManager();
-        }
-
-        return instance;
     }
 
     public ArrayList<Rank> getRanks() {
@@ -137,7 +142,7 @@ public class RankManager {
         }
     }
 
-    public void reload() {
+    public void reloadDisplays() {
         for (World world : Bukkit.getWorlds()) {
             clearPlayerNameTags(world);
         }

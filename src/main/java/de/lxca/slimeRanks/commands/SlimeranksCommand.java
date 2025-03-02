@@ -2,7 +2,6 @@ package de.lxca.slimeRanks.commands;
 
 import de.lxca.slimeRanks.Main;
 import de.lxca.slimeRanks.objects.Message;
-import de.lxca.slimeRanks.objects.RankManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
