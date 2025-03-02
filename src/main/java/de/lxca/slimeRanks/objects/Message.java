@@ -44,6 +44,13 @@ public class Message {
         this.replacements = new HashMap<>();
     }
 
+    public Message(@NotNull String messageKey, boolean withPrefix) {
+        this.commandSender = null;
+        this.withPrefix = withPrefix;
+        this.messageKey = messageKey;
+        this.replacements = new HashMap<>();
+    }
+
     public Message(@NotNull String messageKey, @NotNull HashMap<String, String> replacements) {
         this.commandSender = null;
         this.withPrefix = false;
@@ -89,7 +96,7 @@ public class Message {
 
         for (Object loreLine : loreLines) {
             if (!(loreLine instanceof String loreLineString)) {
-                Main.getLogger(this.getClass()).warn("Message with key {} contains non-string lore line at index {} in messages.yml!", messageKey, loreLines.indexOf(loreLine));
+                Main.getLogger(this.getClass()).warn("Message with key {} contains non-string lore line at index {} in messages.yml!", messageKey, String.valueOf(loreLines.indexOf(loreLine)));
                 continue;
             }
 
