@@ -2,6 +2,7 @@ package de.lxca.slimeRanks;
 
 import de.lxca.slimeRanks.commands.SlimeranksCommand;
 import de.lxca.slimeRanks.listeners.*;
+import de.lxca.slimeRanks.objects.Message;
 import de.lxca.slimeRanks.objects.Metrics;
 import de.lxca.slimeRanks.objects.RankManager;
 import de.lxca.slimeRanks.objects.TeamManager;
@@ -84,5 +85,12 @@ public final class Main extends JavaPlugin {
 
     public static RanksYml getRanksYml() {
         return ranksYml;
+    }
+
+    public static void reload() {
+        Message.resetPrefix();
+        Main.initializeVariables();
+        RankManager.getInstance().reloadRanks();
+        RankManager.getInstance().reloadDisplays();
     }
 }

@@ -33,9 +33,7 @@ public class SlimeranksCommand extends Command {
                 new Message(commandSender, false, "Chat.Command.Help");
                 return true;
             } else if (strings[0].equalsIgnoreCase("reload")) {
-                Message.resetPrefix();
-                Main.initializeVariables();
-                RankManager.getInstance().reload();
+                Main.reload();
                 new Message(commandSender, true, "Chat.Command.Reload");
                 return true;
             } else {
