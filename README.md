@@ -13,6 +13,7 @@ SlimeRanks is a powerful and flexible Minecraft plugin that allows server owners
 - 🔹 **Custom Ranks:** Create unlimited ranks with unique names, colors, and styles.
 - 📜 **Multiple Display Options:** Show ranks in the tab list, chat, and above players.
 - 🖼️ **Custom Texture Support:** Optionally assign textures as rank icons.
+- 🖥️ **GUI:** Manage ranks easy via the GUI.
 - 🔝 **Tablist Priority:** Customize the order in which players appear in the tab list.
 - 🚫 **Toggleable Features:** Choose where ranks should be displayed (e.g., only in tab and chat).
 - ⚙ **Advanced Configuration:** Almost everything is configurable, from mechanics to messages.
@@ -27,8 +28,14 @@ SlimeRanks is a powerful and flexible Minecraft plugin that allows server owners
 | Command | Description | Permission |
 | -------- | ------- | ------- |
 | `/slimeranks about` | Displays information about SlimeRanks. | `slimeranks.admin` |
+| `/slimeranks gui` | Opens the GUI to manage all ranks. | `slimeranks.admin` |
 | `/slimeranks help` | Shows all available commands. | `slimeranks.admin` |
 | `/slimeranks reload` | Reloads the plugin configurations. | `slimeranks.admin` |
+
+## 🖥️ GUI Preview
+![image](https://github.com/user-attachments/assets/764ac377-c29e-42d9-8910-246354a2331f)
+![image](https://github.com/user-attachments/assets/555c2ca3-f045-45a7-a603-6df94b39cca1)
+
 
 ## 🖼️ Examples
 | | Without Texture | With Texture |
