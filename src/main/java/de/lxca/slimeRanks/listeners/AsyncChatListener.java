@@ -1,5 +1,7 @@
 package de.lxca.slimeRanks.listeners;
 
+import de.lxca.slimeRanks.Main;
+import de.lxca.slimeRanks.objects.ChatInput;
 import de.lxca.slimeRanks.objects.Rank;
 import de.lxca.slimeRanks.objects.RankManager;
 import io.papermc.paper.event.player.AsyncChatEvent;
@@ -15,6 +17,14 @@ public class AsyncChatListener implements Listener {
     @EventHandler
     public void onAsyncChat(AsyncChatEvent event) {
         Player player = event.getPlayer();
+
+        if (ChatInput.playerHasActivateChatInputSession(player)) {
+            event.setCancelled(true);
+            Main.getInstance().getServer().getScheduler().runTask(
+                    Main.getInstance(), () -> ChatInput.getChatInputSession(player).executeLogic(event));
+            return;
+        }
+
         Rank rank = RankManager.getInstance().getPlayerRank(player);
 
         if (rank == null || !rank.chatIsActive()) {
