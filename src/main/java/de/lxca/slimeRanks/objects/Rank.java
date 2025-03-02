@@ -6,19 +6,20 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class Rank {
 
     private final String identifier;
-    private final boolean tabActive;
-    private final String tabFormat;
-    private final int priority;
-    private final boolean chatActive;
-    private final String chatFormat;
-    private final boolean nameTagActive;
-    private final String nameTagFormat;
-    private final boolean hideNameTagOnSneak;
-    private final String permission;
+    private boolean tabActive;
+    private String tabFormat;
+    private int priority;
+    private boolean chatActive;
+    private String chatFormat;
+    private boolean nameTagActive;
+    private String nameTagFormat;
+    private boolean hideNameTagOnSneak;
+    private String permission;
 
     public Rank(String identifier) {
         YamlConfiguration ranksYml = Main.getRanksYml().getYmlConfig();
@@ -43,6 +44,12 @@ public class Rank {
         return tabActive;
     }
 
+    public void setTabActive(boolean tabActive) {
+        Main.getRanksYml().getYmlConfig().set("Ranks." + identifier + ".Tab.Active", tabActive);
+        Main.getRanksYml().saveYmlConfig();
+        this.tabActive = tabActive;
+    }
+
     public Component getTabFormat(@NotNull Player player) {
         if (tabFormat == null) {
             return null;
@@ -51,12 +58,34 @@ public class Rank {
         return MiniMessage.miniMessage().deserialize(tabFormat.replace("{player}", player.getName()));
     }
 
+    public String getRawTabFormat() {
+        return tabFormat;
+    }
+
+    public void setTabFormat(@NotNull String tabFormat) {
+        Main.getRanksYml().getYmlConfig().set("Ranks." + identifier + ".Tab.Format", tabFormat);
+        Main.getRanksYml().saveYmlConfig();
+        this.tabFormat = tabFormat;
+    }
+
     public int getPriority() {
         return priority;
     }
 
+    public void setPriority(int priority) {
+        Main.getRanksYml().getYmlConfig().set("Ranks." + identifier + ".Tab.Priority", priority);
+        Main.getRanksYml().saveYmlConfig();
+        this.priority = priority;
+    }
+
     public boolean chatIsActive() {
         return chatActive;
+    }
+
+    public void setChatActive(boolean chatActive) {
+        Main.getRanksYml().getYmlConfig().set("Ranks." + identifier + ".Chat.Active", chatActive);
+        Main.getRanksYml().saveYmlConfig();
+        this.chatActive = chatActive;
     }
 
     public Component getChatFormat(@NotNull Player player, @NotNull String message) {
@@ -67,8 +96,24 @@ public class Rank {
         return MiniMessage.miniMessage().deserialize(chatFormat.replace("{player}", player.getName()).replace("{message}", message));
     }
 
+    public String getRawChatFormat() {
+        return chatFormat;
+    }
+
+    public void setChatFormat(@NotNull String chatFormat) {
+        Main.getRanksYml().getYmlConfig().set("Ranks." + identifier + ".Chat.Format", chatFormat);
+        Main.getRanksYml().saveYmlConfig();
+        this.chatFormat = chatFormat;
+    }
+
     public boolean nameTagIsActive() {
         return nameTagActive;
+    }
+
+    public void setNameTagActive(boolean nameTagActive) {
+        Main.getRanksYml().getYmlConfig().set("Ranks." + identifier + ".NameTag.Active", nameTagActive);
+        Main.getRanksYml().saveYmlConfig();
+        this.nameTagActive = nameTagActive;
     }
 
     public Component getNameTagFormat(@NotNull Player player) {
@@ -79,11 +124,39 @@ public class Rank {
         return MiniMessage.miniMessage().deserialize(nameTagFormat.replace("{player}", player.getName()));
     }
 
+    public String getRawNameTagFormat() {
+        return nameTagFormat;
+    }
+
+    public void setNameTagFormat(@NotNull String nameTagFormat) {
+        Main.getRanksYml().getYmlConfig().set("Ranks." + identifier + ".NameTag.Format", nameTagFormat);
+        Main.getRanksYml().saveYmlConfig();
+        this.nameTagFormat = nameTagFormat;
+    }
+
     public boolean hideNameTagOnSneak() {
         return hideNameTagOnSneak;
     }
 
+    public void setHideNameTagOnSneak(boolean hideNameTagOnSneak) {
+        Main.getRanksYml().getYmlConfig().set("Ranks." + identifier + ".NameTag.HideOnSneak", hideNameTagOnSneak);
+        Main.getRanksYml().saveYmlConfig();
+        this.hideNameTagOnSneak = hideNameTagOnSneak;
+    }
+
     public String getPermission() {
         return permission;
+    }
+
+    public void setPermission(@Nullable String permission) {
+        Main.getRanksYml().getYmlConfig().set("Ranks." + identifier + ".Permission", permission);
+        Main.getRanksYml().saveYmlConfig();
+        this.permission = permission;
+    }
+
+    public void delete() {
+        Main.getRanksYml().getYmlConfig().set("Ranks." + identifier, null);
+        Main.getRanksYml().saveYmlConfig();
+        RankManager.getInstance().reloadRanks();
     }
 }

@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Message {
 
@@ -43,6 +44,13 @@ public class Message {
         this.replacements = new HashMap<>();
     }
 
+    public Message(@NotNull String messageKey, boolean withPrefix) {
+        this.commandSender = null;
+        this.withPrefix = withPrefix;
+        this.messageKey = messageKey;
+        this.replacements = new HashMap<>();
+    }
+
     public Message(@NotNull String messageKey, @NotNull HashMap<String, String> replacements) {
         this.commandSender = null;
         this.withPrefix = false;
@@ -50,24 +58,29 @@ public class Message {
         this.replacements = replacements;
     }
 
-    public Component getMessage() {
+    public String getRawMessage() {
         String messageString = Main.getMessagesYml().getYmlConfig().getString(messageKey, null);
 
         if (messageString == null) {
             Main.getLogger(this.getClass()).warn("Message with key {} not found in messages.yml!", messageKey);
-            return null;
+            return messageKey;
         }
 
         if (withPrefix) {
             messageString = getPrefix() + messageString;
         }
 
+        HashMap<String, String> replacements = getReplacedReplacements();
         for (String key : replacements.keySet()) {
             String regex = "\\{" + key + "}";
             messageString = messageString.replaceAll(regex, replacements.get(key));
         }
 
-        return MiniMessage.miniMessage().deserialize(messageString);
+        return messageString;
+    }
+
+    public Component getMessage() {
+        return MiniMessage.miniMessage().deserialize(getRawMessage());
     }
 
     public ArrayList<Component> getLore() {
@@ -78,11 +91,12 @@ public class Message {
             return null;
         }
 
+        HashMap<String, String> replacements = getReplacedReplacements();
         ArrayList<Component> loreLineComponents = new ArrayList<>();
 
         for (Object loreLine : loreLines) {
             if (!(loreLine instanceof String loreLineString)) {
-                Main.getLogger(this.getClass()).warn("Message with key {} contains non-string lore line at index {} in messages.yml!", messageKey, loreLines.indexOf(loreLine));
+                Main.getLogger(this.getClass()).warn("Message with key {} contains non-string lore line at index {} in messages.yml!", messageKey, String.valueOf(loreLines.indexOf(loreLine)));
                 continue;
             }
 
@@ -95,6 +109,24 @@ public class Message {
         }
 
         return loreLineComponents;
+    }
+
+    private @NotNull HashMap<String, String> getReplacedReplacements() {
+        HashMap<String, String> replacements = new HashMap<>();
+
+        for (Map.Entry<String, String> entry : this.replacements.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+
+            if (value != null && value.startsWith("%")) {
+                String valueMessage = new Message(value.substring(1)).getRawMessage();
+                replacements.put(key, valueMessage);
+            } else {
+                replacements.put(key, value);
+            }
+        }
+
+        return replacements;
     }
 
     public void sendMessage() {
