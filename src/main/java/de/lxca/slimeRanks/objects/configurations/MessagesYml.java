@@ -22,6 +22,8 @@ public class MessagesYml extends Yml {
         createConfigKey("Chat.Command.Unknown", "<gray>The command <color:#39ff14>{command}</color> is unknown<dark_gray>.</dark_gray> Use <color:#39ff14>/slimeranks help</color> to see all available commands</gray><dark_gray>.</dark_gray>");
         createConfigKey("Chat.Command.OnlyPlayers", "<red>Only players can use this command</red><dark_gray>.</dark_gray>");
 
+        createConfigKey("Chat.Action.UpdateAvailable", "<gray>A new version of <color:#39ff14>SlimeRanks</color> has been released on <color:#39ff14>Modrinth</color></gray><dark_gray>!</dark_gray><newline><color:#39ff14><b><click:open_url:'https://modrinth.com/plugin/slimeranks'>Click here</click></b></color> <gray>to update your version</gray> <dark_gray>(</dark_gray><color:#39ff14><color:#ff1439>{current_version}</color></color> <dark_gray>-></dark_gray> <color:#39ff14>{newest_version}</color><dark_gray>).</dark_gray>");
+
         createConfigKey("Chat.Input.Started", "<gray>Chat input started<dark_gray>.</dark_gray> To cancel the process<dark_gray>,</dark_gray> write</gray> <color:#39ff24>cancel</color><dark_gray>.</dark_gray>");
         createConfigKey("Chat.Input.Ended", "<gray>Chat input session ended</gray><dark_gray>.</dark_gray>");
         createConfigKey("Chat.Input.RankIdentifier.OnlyLetters", "<red>The rank identifier can only contain letters</red><dark_gray>.</dark_gray>");
