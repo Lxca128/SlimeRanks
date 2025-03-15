@@ -7,6 +7,7 @@ import de.lxca.slimeRanks.objects.RankManager;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -33,7 +34,12 @@ public class AsyncChatListener implements Listener {
         event.setCancelled(true);
 
         Component playerMessage = event.message();
-        String playerMessageString = MiniMessage.miniMessage().serialize(playerMessage);
+        String playerMessageString;
+        if (rank.getColoredMessages() || player.hasPermission("slimeranks.chat.color")) {
+            playerMessageString = PlainTextComponentSerializer.plainText().serialize(playerMessage);
+        } else {
+            playerMessageString = MiniMessage.miniMessage().serialize(playerMessage);
+        }
         Component serverMessage = rank.getChatFormat(player, playerMessageString);
 
         Bukkit.broadcast(serverMessage);
