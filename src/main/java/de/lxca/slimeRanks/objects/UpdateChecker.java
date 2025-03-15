@@ -55,7 +55,7 @@ public class UpdateChecker {
                 }
             }
         } catch (Exception exception) {
-            throw new RuntimeException(exception);
+            Main.getLogger(this.getClass()).warn("Couldn't check for the latest version of SlimeRanks on Modrinth. Please ensure your server is connected to the internet.");
         }
 
         return null;
