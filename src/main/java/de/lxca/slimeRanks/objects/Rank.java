@@ -16,6 +16,7 @@ public class Rank {
     private int priority;
     private boolean chatActive;
     private String chatFormat;
+    private boolean coloredMessages;
     private boolean nameTagActive;
     private String nameTagFormat;
     private boolean hideNameTagOnSneak;
@@ -30,6 +31,7 @@ public class Rank {
         this.priority = ranksYml.getInt("Ranks." + identifier + ".Tab.Priority", 0);
         this.chatActive = ranksYml.getBoolean("Ranks." + identifier + ".Chat.Active", false);
         this.chatFormat = ranksYml.getString("Ranks." + identifier + ".Chat.Format", null);
+        this.coloredMessages = ranksYml.getBoolean("Ranks." + identifier + ".Chat.ColoredMessages", false);
         this.nameTagActive = ranksYml.getBoolean("Ranks." + identifier + ".NameTag.Active", false);
         this.nameTagFormat = ranksYml.getString("Ranks." + identifier + ".NameTag.Format", null);
         this.hideNameTagOnSneak = ranksYml.getBoolean("Ranks." + identifier + ".NameTag.HideOnSneak", true);
@@ -104,6 +106,16 @@ public class Rank {
         Main.getRanksYml().getYmlConfig().set("Ranks." + identifier + ".Chat.Format", chatFormat);
         Main.getRanksYml().saveYmlConfig();
         this.chatFormat = chatFormat;
+    }
+
+    public boolean getColoredMessages() {
+        return coloredMessages;
+    }
+
+    public void setColoredMessages(boolean coloredMessages) {
+        Main.getRanksYml().getYmlConfig().set("Ranks." + identifier + ".Chat.ColoredMessages", coloredMessages);
+        Main.getRanksYml().saveYmlConfig();
+        this.coloredMessages = coloredMessages;
     }
 
     public boolean nameTagIsActive() {
