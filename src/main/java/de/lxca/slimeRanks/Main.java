@@ -2,10 +2,8 @@ package de.lxca.slimeRanks;
 
 import de.lxca.slimeRanks.commands.SlimeranksCommand;
 import de.lxca.slimeRanks.listeners.*;
-import de.lxca.slimeRanks.objects.Message;
-import de.lxca.slimeRanks.objects.Metrics;
-import de.lxca.slimeRanks.objects.RankManager;
-import de.lxca.slimeRanks.objects.TeamManager;
+import de.lxca.slimeRanks.objects.*;
+import de.lxca.slimeRanks.objects.configurations.ConfigYml;
 import de.lxca.slimeRanks.objects.configurations.MessagesYml;
 import de.lxca.slimeRanks.objects.configurations.RanksYml;
 import org.apache.logging.log4j.LogManager;
@@ -19,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 public final class Main extends JavaPlugin {
 
+    private static ConfigYml configYml;
     private static MessagesYml messagesYml;
     private static RanksYml ranksYml;
     private static Metrics metrics;
@@ -51,6 +50,11 @@ public final class Main extends JavaPlugin {
         }
 
         initializeMetrics();
+
+        UpdateChecker updateChecker = new UpdateChecker();
+        if (updateChecker.newUpdateAvailable()) {
+            getLogger().info("SlimeRanks " + getInstance().getPluginMeta().getVersion() + " -> " + updateChecker.getLatestVersion() + " released on Modrinth: https://modrinth.com/plugin/slimeranks");
+        }
     }
 
     @Override
@@ -70,6 +74,7 @@ public final class Main extends JavaPlugin {
     }
 
     public static void initializeVariables() {
+        configYml = new ConfigYml();
         messagesYml = new MessagesYml();
         ranksYml = new RanksYml();
         metrics = new Metrics(getInstance(), 24715);
@@ -77,6 +82,10 @@ public final class Main extends JavaPlugin {
 
     private static void initializeMetrics() {
         metrics.addCustomChart(new Metrics.SimplePie("rank_count", () -> String.valueOf(RankManager.getInstance().getRankCount())));
+    }
+
+    public static ConfigYml getConfigYml() {
+        return configYml;
     }
 
     public static MessagesYml getMessagesYml() {
