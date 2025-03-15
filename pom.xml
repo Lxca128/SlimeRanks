@@ -6,7 +6,7 @@
 
   <groupId>de.lxca</groupId>
   <artifactId>SlimeRanks</artifactId>
-  <version>1.0.0-BETA.5</version>
+  <version>1.0.0-BETA.6</version>
   <packaging>jar</packaging>
 
   <name>SlimeRanks</name>
