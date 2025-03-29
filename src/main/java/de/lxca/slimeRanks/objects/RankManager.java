@@ -40,6 +40,7 @@ public class RankManager {
         ConfigurationSection ranksSection = ranksYml.getConfigurationSection("Ranks");
 
         if (ranksSection == null) {
+            Main.getLogger(this.getClass()).warn("Could not find ranks section in ranks.yml. Please check the file and recreate if necessary.");
             return;
         }
 
