@@ -7,4 +7,5 @@ public enum ChatInputType {
     RANK_NAME_TAG_FORMAT,
     RANK_TAB_PRIORITY,
     RANK_PERMISSION,
+    RANK_PRIORITY,
 }
