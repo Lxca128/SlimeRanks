@@ -26,7 +26,7 @@ public class PlayerJoinListener implements Listener {
 
         if (rank.tabIsActive()) {
             player.playerListName(rank.getTabFormat(player));
-            player.setPlayerListOrder(rank.getPriority());
+            player.setPlayerListOrder(rank.getTabPriority());
         }
 
         if (rank.nameTagIsActive() && player.getGameMode() != GameMode.SPECTATOR) {

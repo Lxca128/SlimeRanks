@@ -63,6 +63,7 @@ public class GlobalItems {
         loreReplacements.put("name_tag_format", rank.getRawNameTagFormat());
         loreReplacements.put("tab_priority", String.valueOf(rank.getPriority()));
         loreReplacements.put("permission", rank.getPermission() == null ? "%Placeholder.None" : rank.getPermission());
+        loreReplacements.put("tab_priority", String.valueOf(rank.getTabPriority()));
         loreReplacements.put("hide_name_tag_on_sneak", rank.hideNameTagOnSneak() ? "%Placeholder.Yes" : "%Placeholder.No");
 
         itemBuilder.setItemName("Gui.Global.ItemName.Rank", nameReplacements);

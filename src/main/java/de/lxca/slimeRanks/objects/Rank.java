@@ -13,7 +13,7 @@ public class Rank {
     private final String identifier;
     private boolean tabActive;
     private String tabFormat;
-    private int priority;
+    private int tabPriority;
     private boolean chatActive;
     private String chatFormat;
     private boolean coloredMessages;
@@ -29,7 +29,7 @@ public class Rank {
         this.identifier = identifier;
         this.tabActive = ranksYml.getBoolean("Ranks." + identifier + ".Tab.Active", false);
         this.tabFormat = ranksYml.getString("Ranks." + identifier + ".Tab.Format", null);
-        this.priority = ranksYml.getInt("Ranks." + identifier + ".Tab.Priority", 0);
+        this.tabPriority = ranksYml.getInt("Ranks." + identifier + ".Tab.Priority", 0);
         this.chatActive = ranksYml.getBoolean("Ranks." + identifier + ".Chat.Active", false);
         this.chatFormat = ranksYml.getString("Ranks." + identifier + ".Chat.Format", null);
         this.coloredMessages = ranksYml.getBoolean("Ranks." + identifier + ".Chat.ColoredMessages", false);
@@ -72,14 +72,14 @@ public class Rank {
         this.tabFormat = tabFormat;
     }
 
-    public int getPriority() {
-        return priority;
+    public int getTabPriority() {
+        return tabPriority;
     }
 
-    public void setPriority(int priority) {
-        Main.getRanksYml().getYmlConfig().set("Ranks." + identifier + ".Tab.Priority", priority);
+    public void setTabPriority(int tabPriority) {
+        Main.getRanksYml().getYmlConfig().set("Ranks." + identifier + ".Tab.Priority", tabPriority);
         Main.getRanksYml().saveYmlConfig();
-        this.priority = priority;
+        this.tabPriority = tabPriority;
     }
 
     public boolean chatIsActive() {

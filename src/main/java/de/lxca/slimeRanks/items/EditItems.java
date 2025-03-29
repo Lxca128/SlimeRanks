@@ -50,7 +50,7 @@ public class EditItems {
 
     public static ItemStack getTabPriorityItem(@NotNull Rank rank) {
         HashMap<String, String> replacements = new HashMap<>();
-        replacements.put("priority", String.valueOf(rank.getPriority()));
+        replacements.put("priority", String.valueOf(rank.getTabPriority()));
 
         ItemBuilder itemBuilder = new ItemBuilder(Material.NETHERITE_UPGRADE_SMITHING_TEMPLATE);
 

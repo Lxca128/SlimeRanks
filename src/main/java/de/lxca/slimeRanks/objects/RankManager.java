@@ -156,7 +156,7 @@ public class RankManager {
 
             if (rank.tabIsActive()) {
                 player.playerListName(rank.getTabFormat(player));
-                player.setPlayerListOrder(rank.getPriority());
+                player.setPlayerListOrder(rank.getTabPriority());
             } else {
                 player.playerListName(player.name());
                 player.setPlayerListOrder(0);
