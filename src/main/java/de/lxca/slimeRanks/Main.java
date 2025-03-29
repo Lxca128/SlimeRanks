@@ -81,6 +81,7 @@ public final class Main extends JavaPlugin {
     }
 
     private static void initializeMetrics() {
+        metrics.addCustomChart(new Metrics.SingleLineChart("created_ranks", () -> RankManager.getInstance().getRankCount()));
         metrics.addCustomChart(new Metrics.SimplePie("rank_count", () -> String.valueOf(RankManager.getInstance().getRankCount())));
     }
 
