@@ -21,6 +21,7 @@ public class Rank {
     private String nameTagFormat;
     private boolean hideNameTagOnSneak;
     private String permission;
+    private int rankPriority;
 
     public Rank(String identifier) {
         YamlConfiguration ranksYml = Main.getRanksYml().getYmlConfig();
@@ -36,6 +37,7 @@ public class Rank {
         this.nameTagFormat = ranksYml.getString("Ranks." + identifier + ".NameTag.Format", null);
         this.hideNameTagOnSneak = ranksYml.getBoolean("Ranks." + identifier + ".NameTag.HideOnSneak", true);
         this.permission = ranksYml.getString("Ranks." + identifier + ".Permission", null);
+        this.rankPriority = ranksYml.getInt("Ranks." + identifier + ".RankPriority", 0);
     }
 
     public String getIdentifier() {
@@ -164,6 +166,16 @@ public class Rank {
         Main.getRanksYml().getYmlConfig().set("Ranks." + identifier + ".Permission", permission);
         Main.getRanksYml().saveYmlConfig();
         this.permission = permission;
+    }
+
+    public int getRankPriority() {
+        return rankPriority;
+    }
+
+    public void setRankPriority(int rankPriority) {
+        Main.getRanksYml().getYmlConfig().set("Ranks." + identifier + ".RankPriority", rankPriority);
+        Main.getRanksYml().saveYmlConfig();
+        this.rankPriority = rankPriority;
     }
 
     public void delete() {
