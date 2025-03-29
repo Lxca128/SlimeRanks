@@ -11,6 +11,8 @@ import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class RankManager {
@@ -44,6 +46,8 @@ public class RankManager {
         for (String identifier : ranksSection.getKeys(false)) {
             ranks.add(new Rank(identifier));
         }
+
+        ranks.sort(Comparator.comparingInt(Rank::getRankPriority).reversed());
     }
 
     public ArrayList<Rank> getRanks() {
