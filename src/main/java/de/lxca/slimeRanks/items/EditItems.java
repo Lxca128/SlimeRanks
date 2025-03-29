@@ -6,7 +6,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 
@@ -63,6 +62,18 @@ public class EditItems {
         return itemBuilder.getItemStack();
     }
 
+    public static ItemStack getRankPriorityItem(@NotNull Rank rank) {
+        HashMap<String, String> replacements = new HashMap<>();
+        replacements.put("priority", String.valueOf(rank.getRankPriority()));
+
+        ItemBuilder itemBuilder = new ItemBuilder(Material.ANVIL);
+
+        itemBuilder.setItemName("Gui.Edit.ItemName.RankPriority");
+        itemBuilder.setLore("Gui.Edit.ItemLore.RankPriority", replacements);
+
+        return itemBuilder.getItemStack();
+    }
+
     public static ItemStack getPermissionItem(@NotNull Rank rank) {
         HashMap<String, String> replacements = new HashMap<>();
         replacements.put("permission", rank.getPermission() == null ? "%Placeholder.None" : rank.getPermission());
@@ -87,6 +98,18 @@ public class EditItems {
         return itemBuilder.getItemStack();
     }
 
+    public static ItemStack getColoredMessagesItem(@NotNull Rank rank) {
+        HashMap<String, String> replacements = new HashMap<>();
+        replacements.put("status", rank.getColoredMessages() ? "%Placeholder.Yes" : "%Placeholder.No");
+
+        ItemBuilder itemBuilder = new ItemBuilder(Material.GLOW_INK_SAC);
+
+        itemBuilder.setItemName("Gui.Edit.ItemName.ColoredMessages");
+        itemBuilder.setLore("Gui.Edit.ItemLore.ColoredMessages", replacements);
+
+        return itemBuilder.getItemStack();
+    }
+
     public static ItemStack getStatusItem(boolean active) {
         ItemBuilder itemBuilder = new ItemBuilder(active ? Material.LIME_DYE : Material.GRAY_DYE);
 
@@ -97,28 +120,6 @@ public class EditItems {
             itemBuilder.setItemName("Gui.Edit.ItemName.Status.Deactivated");
             itemBuilder.setLore("Gui.Edit.ItemLore.Status.Deactivated");
         }
-
-        return itemBuilder.getItemStack();
-    }
-
-    public static ItemStack getPriorityStatusItem(int priority) {
-        ItemBuilder itemBuilder = new ItemBuilder(Material.IRON_NUGGET, priority <= 0 ? 1 : Math.min(priority, 64));
-        HashMap<String, String> replacements = new HashMap<>();
-        replacements.put("priority", String.valueOf(priority));
-
-        itemBuilder.setItemName("Gui.Edit.ItemName.PriorityStatus", replacements);
-        itemBuilder.setLore("Gui.Edit.ItemLore.PriorityStatus");
-
-        return itemBuilder.getItemStack();
-    }
-
-    public static ItemStack getPermissionStatusItem(@Nullable String permission) {
-        ItemBuilder itemBuilder = new ItemBuilder(permission == null ? Material.STRUCTURE_VOID : Material.PAPER);
-        HashMap<String, String> replacements = new HashMap<>();
-        replacements.put("permission", permission == null ? "%Placeholder.None" : permission);
-
-        itemBuilder.setItemName("Gui.Edit.ItemName.PermissionStatus", replacements);
-        itemBuilder.setLore("Gui.Edit.ItemLore.PermissionStatus");
 
         return itemBuilder.getItemStack();
     }

@@ -21,12 +21,12 @@ import java.util.HashMap;
 
 public class RankEditGui implements InventoryHolder {
 
-    private static final int guiSize = 4 * 9;
+    private static final int guiSize = 6 * 9;
 
     private final Inventory inventory;
     private final Rank rank;
 
-    public RankEditGui(Rank rank) {
+    public RankEditGui(@NotNull Rank rank) {
         HashMap<String, String> replacements = new HashMap<>();
         replacements.put("identifier", rank.getIdentifier());
 
@@ -45,21 +45,31 @@ public class RankEditGui implements InventoryHolder {
             inventory.setItem(i, GlobalItems.getBackgroundItem());
         }
 
+        // ROW-1
         inventory.setItem(4, GlobalItems.getRankItem(rank));
-        inventory.setItem(10, EditItems.getTablistItem(rank));
-        inventory.setItem(11, EditItems.getChatItem(rank));
-        inventory.setItem(12, EditItems.getNameTagItem(rank));
-        inventory.setItem(14, EditItems.getTabPriorityItem(rank));
-        inventory.setItem(15, EditItems.getPermissionItem(rank));
-        inventory.setItem(16, EditItems.getHideOnSneakItem(rank));
-        inventory.setItem(19, EditItems.getStatusItem(rank.tabIsActive()));
-        inventory.setItem(20, EditItems.getStatusItem(rank.chatIsActive()));
-        inventory.setItem(21, EditItems.getStatusItem(rank.nameTagIsActive()));
-        inventory.setItem(23, EditItems.getPriorityStatusItem(rank.getPriority()));
-        inventory.setItem(24, EditItems.getPermissionStatusItem(rank.getPermission()));
-        inventory.setItem(25, EditItems.getStatusItem(rank.hideNameTagOnSneak()));
-        inventory.setItem(27, GlobalItems.getBackItem());
-        inventory.setItem(35, EditItems.getDeleteItem());
+
+        // ROW-2
+        inventory.setItem(10, EditItems.getHideOnSneakItem(rank));
+        inventory.setItem(12, EditItems.getTablistItem(rank));
+        inventory.setItem(13, EditItems.getChatItem(rank));
+        inventory.setItem(14, EditItems.getNameTagItem(rank));
+        inventory.setItem(16, EditItems.getColoredMessagesItem(rank));
+
+        // ROW-3
+        inventory.setItem(19, EditItems.getStatusItem(rank.hideNameTagOnSneak()));
+        inventory.setItem(21, EditItems.getStatusItem(rank.tabIsActive()));
+        inventory.setItem(22, EditItems.getStatusItem(rank.chatIsActive()));
+        inventory.setItem(23, EditItems.getStatusItem(rank.nameTagIsActive()));
+        inventory.setItem(25, EditItems.getStatusItem(rank.getColoredMessages()));
+
+        // ROW-5
+        inventory.setItem(38, EditItems.getRankPriorityItem(rank));
+        inventory.setItem(40, EditItems.getPermissionItem(rank));
+        inventory.setItem(42, EditItems.getTabPriorityItem(rank));
+
+        // ROW-6
+        inventory.setItem(45, GlobalItems.getBackItem());
+        inventory.setItem(53, EditItems.getDeleteItem());
     }
 
     @Override
@@ -73,41 +83,53 @@ public class RankEditGui implements InventoryHolder {
         Player player = (Player) event.getWhoClicked();
         int slot = event.getRawSlot();
 
-        if (slot == 10) {
+        if (slot == 12) {
             Component additionalInfoMessage = new Message("Chat.Input.TabFormat", true).getMessage();
             new ChatInput(player, ChatInputType.RANK_TAB_FORMAT, 120, rank, additionalInfoMessage);
             player.closeInventory();
-        } else if (slot == 11) {
+        } else if (slot == 13) {
             Component additionalInfoMessage = new Message("Chat.Input.ChatFormat", true).getMessage();
             new ChatInput(player, ChatInputType.RANK_CHAT_FORMAT, 120, rank, additionalInfoMessage);
             player.closeInventory();
-        } else if (slot == 12) {
+        } else if (slot == 14) {
             Component additionalInfoMessage = new Message("Chat.Input.NameTagFormat", true).getMessage();
             new ChatInput(player, ChatInputType.RANK_NAME_TAG_FORMAT, 120, rank, additionalInfoMessage);
             player.closeInventory();
         } else if (slot == 19) {
+            rank.setHideNameTagOnSneak(!rank.hideNameTagOnSneak());
+            inventory.setItem(4, GlobalItems.getRankItem(rank));
+            inventory.setItem(10, EditItems.getHideOnSneakItem(rank));
+            inventory.setItem(slot, EditItems.getStatusItem(rank.hideNameTagOnSneak()));
+            player.playSound(player, Sound.BLOCK_LEVER_CLICK, 1.0F, 1.0F);
+        } else if (slot == 21) {
             rank.setTabActive(!rank.tabIsActive());
             inventory.setItem(slot, EditItems.getStatusItem(rank.tabIsActive()));
             RankManager.getInstance().reloadDisplays();
             player.playSound(player, Sound.BLOCK_LEVER_CLICK, 1.0F, 1.0F);
-        } else if (slot == 20) {
+        } else if (slot == 22) {
             rank.setChatActive(!rank.chatIsActive());
             inventory.setItem(slot, EditItems.getStatusItem(rank.chatIsActive()));
             RankManager.getInstance().reloadDisplays();
             player.playSound(player, Sound.BLOCK_LEVER_CLICK, 1.0F, 1.0F);
-        } else if (slot == 21) {
+        } else if (slot == 23) {
             rank.setNameTagActive(!rank.nameTagIsActive());
             inventory.setItem(slot, EditItems.getStatusItem(rank.nameTagIsActive()));
             RankManager.getInstance().reloadDisplays();
             player.playSound(player, Sound.BLOCK_LEVER_CLICK, 1.0F, 1.0F);
-        } else if (slot == 23) {
-            Component additionalInfoMessage = new Message("Chat.Input.TabPriority", true).getMessage();
-            new ChatInput(player, ChatInputType.RANK_TAB_PRIORITY, 30, rank, additionalInfoMessage);
+        } else if (slot == 25) {
+            rank.setColoredMessages(!rank.getColoredMessages());
+            inventory.setItem(4, GlobalItems.getRankItem(rank));
+            inventory.setItem(16, EditItems.getColoredMessagesItem(rank));
+            inventory.setItem(slot, EditItems.getStatusItem(rank.getColoredMessages()));
+            player.playSound(player, Sound.BLOCK_LEVER_CLICK, 1.0F, 1.0F);
+        } else if (slot == 38) {
+            Component additionalInfoMessage = new Message("Chat.Input.RankPriority", true).getMessage();
+            new ChatInput(player, ChatInputType.RANK_PRIORITY, 30, rank, additionalInfoMessage);
             player.closeInventory();
-        } else if (slot == 24) {
+        } else if (slot == 40) {
             if (event.getClick() == ClickType.SHIFT_LEFT || event.getClick() == ClickType.SHIFT_RIGHT) {
                 rank.setPermission(null);
-                inventory.setItem(slot, EditItems.getPermissionStatusItem(rank.getPermission()));
+                inventory.setItem(slot, EditItems.getPermissionItem(rank));
                 RankManager.getInstance().reloadDisplays();
                 player.playSound(player, Sound.BLOCK_LAVA_POP, 1.0F, 1.0F);
             } else {
@@ -115,15 +137,14 @@ public class RankEditGui implements InventoryHolder {
                 new ChatInput(player, ChatInputType.RANK_PERMISSION, 30, rank, additionalInfoMessage);
                 player.closeInventory();
             }
-        } else if (slot == 25) {
-            rank.setHideNameTagOnSneak(!rank.hideNameTagOnSneak());
-            inventory.setItem(slot, EditItems.getStatusItem(rank.hideNameTagOnSneak()));
-            RankManager.getInstance().reloadDisplays();
-            player.playSound(player, Sound.BLOCK_LEVER_CLICK, 1.0F, 1.0F);
-        } else if (slot == 27) {
+        } else if (slot == 42) {
+            Component additionalInfoMessage = new Message("Chat.Input.TabPriority", true).getMessage();
+            new ChatInput(player, ChatInputType.RANK_TAB_PRIORITY, 30, rank, additionalInfoMessage);
+            player.closeInventory();
+        } else if (slot == 45) {
             player.openInventory(new RankOverviewGui().getInventory());
             player.playSound(player, Sound.ITEM_BOOK_PAGE_TURN, 1.0F, 1.0F);
-        } else if (slot == 35 && (event.getClick() == ClickType.SHIFT_LEFT || event.getClick() == ClickType.SHIFT_RIGHT)) {
+        } else if (slot == 53 && (event.getClick() == ClickType.SHIFT_LEFT || event.getClick() == ClickType.SHIFT_RIGHT)) {
             rank.delete();
             player.openInventory(new RankOverviewGui().getInventory());
             player.playSound(player, Sound.ENTITY_GENERIC_EXPLODE, 1.0F, 1.0F);

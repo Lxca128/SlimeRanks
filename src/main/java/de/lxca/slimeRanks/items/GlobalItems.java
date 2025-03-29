@@ -61,10 +61,11 @@ public class GlobalItems {
         loreReplacements.put("tablist_format", rank.getRawTabFormat());
         loreReplacements.put("chat_format", rank.getRawChatFormat());
         loreReplacements.put("name_tag_format", rank.getRawNameTagFormat());
-        loreReplacements.put("tab_priority", String.valueOf(rank.getPriority()));
+        loreReplacements.put("rank_priority", String.valueOf(rank.getRankPriority()));
         loreReplacements.put("permission", rank.getPermission() == null ? "%Placeholder.None" : rank.getPermission());
         loreReplacements.put("tab_priority", String.valueOf(rank.getTabPriority()));
         loreReplacements.put("hide_name_tag_on_sneak", rank.hideNameTagOnSneak() ? "%Placeholder.Yes" : "%Placeholder.No");
+        loreReplacements.put("colored_messages", rank.getColoredMessages() ? "%Placeholder.Yes" : "%Placeholder.No");
 
         itemBuilder.setItemName("Gui.Global.ItemName.Rank", nameReplacements);
         itemBuilder.setLore("Gui.Global.ItemLore.Rank", loreReplacements);
