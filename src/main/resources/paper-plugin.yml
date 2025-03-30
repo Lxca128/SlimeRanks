@@ -6,3 +6,13 @@ prefix: SlimeRanks
 load: STARTUP
 authors: [ Lxca128 ]
 description: Create custom ranks which are displayed in the tab, chat and above the player.
+dependencies:
+  server:
+    PlaceholderAPI:
+      load: BEFORE
+      required: false
+      join-classpath: true
+    MiniPlaceholders:
+      load: BEFORE
+      required: false
+      join-classpath: true
