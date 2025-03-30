@@ -1,8 +1,11 @@
 package de.lxca.slimeRanks.objects;
 
 import de.lxca.slimeRanks.Main;
+import io.github.miniplaceholders.api.MiniPlaceholders;
+import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -59,7 +62,7 @@ public class Rank {
             return null;
         }
 
-        return MiniMessage.miniMessage().deserialize(tabFormat.replace("{player}", player.getName()));
+        return parseComponent(tabFormat, player, null);
     }
 
     public String getRawTabFormat() {
@@ -97,7 +100,7 @@ public class Rank {
             return null;
         }
 
-        return MiniMessage.miniMessage().deserialize(chatFormat.replace("{player}", player.getName()).replace("{message}", message));
+        return parseComponent(chatFormat, player, message);
     }
 
     public String getRawChatFormat() {
@@ -135,7 +138,7 @@ public class Rank {
             return null;
         }
 
-        return MiniMessage.miniMessage().deserialize(nameTagFormat.replace("{player}", player.getName()));
+        return parseComponent(nameTagFormat, player, null);
     }
 
     public String getRawNameTagFormat() {
@@ -182,5 +185,25 @@ public class Rank {
         Main.getRanksYml().getYmlConfig().set("Ranks." + identifier, null);
         Main.getRanksYml().saveYmlConfig();
         RankManager.getInstance().reloadRanks();
+    }
+
+    private @NotNull Component parseComponent(@NotNull String format, @NotNull Player player, @Nullable String message) {
+        Component deserializedFormat = null;
+
+        format = format.replace("{player}", player.getName());
+        if (message != null) {
+            format = format.replace("{message}", message);
+        }
+
+        if (Main.isPluginEnabled("PlaceholderAPI")) {
+            format = PlaceholderAPI.setPlaceholders(player, format);
+        }
+
+        if (Main.isPluginEnabled("MiniPlaceholders")) {
+            TagResolver tagResolver = MiniPlaceholders.getAudienceGlobalPlaceholders(player);
+            deserializedFormat = MiniMessage.miniMessage().deserialize(format, tagResolver);
+        }
+
+        return deserializedFormat != null ? deserializedFormat : MiniMessage.miniMessage().deserialize(format);
     }
 }

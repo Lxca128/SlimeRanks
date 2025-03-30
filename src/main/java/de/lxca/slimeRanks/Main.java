@@ -14,6 +14,7 @@ import org.bukkit.World;
 import org.bukkit.command.CommandMap;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 
 public final class Main extends JavaPlugin {
