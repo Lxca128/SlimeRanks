@@ -7,15 +7,14 @@ public class ConfigYml extends Yml {
 
     public ConfigYml() {
         super(filePath, fileName);
-        if (getYmlConfig().getKeys(true).isEmpty()) {
-            setDefaultYmlKeys();
-        }
+        setDefaultYmlKeys();
     }
 
     @Override
     protected void setDefaultYmlKeys() {
         createConfigKey("ConfigVersion", 1);
         createConfigKey("UpdateChannel", "RELEASE");
+        createConfigKey("NameUpdateInterval", 0);
         saveYmlConfig();
     }
 }
