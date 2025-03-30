@@ -6,6 +6,7 @@ import de.lxca.slimeRanks.objects.*;
 import de.lxca.slimeRanks.objects.configurations.ConfigYml;
 import de.lxca.slimeRanks.objects.configurations.MessagesYml;
 import de.lxca.slimeRanks.objects.configurations.RanksYml;
+import de.lxca.slimeRanks.schedulers.NameUpdateScheduler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bukkit.Bukkit;
@@ -21,6 +22,7 @@ public final class Main extends JavaPlugin {
     private static MessagesYml messagesYml;
     private static RanksYml ranksYml;
     private static Metrics metrics;
+    private static BukkitTask nameUpdateTask;
 
     @Override
     public void onEnable() {
@@ -40,6 +42,8 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new PlayerToggleSneakListener(), this);
         pluginManager.registerEvents(new PlayerPostRespawnListener(), this);
         pluginManager.registerEvents(new WorldLoadListener(), this);
+
+        runNameUpdateTask();
 
         for (World world : Bukkit.getWorlds()) {
             RankManager.getInstance().clearPlayerNameTags(world);
@@ -102,5 +106,21 @@ public final class Main extends JavaPlugin {
         Main.initializeVariables();
         RankManager.getInstance().reloadRanks();
         RankManager.getInstance().reloadDisplays();
+        runNameUpdateTask();
+    }
+
+    public static boolean isPluginEnabled(@NotNull String pluginName) {
+        return Bukkit.getPluginManager().isPluginEnabled(pluginName);
+    }
+
+    public static void runNameUpdateTask() {
+        if (nameUpdateTask != null) {
+            nameUpdateTask.cancel();
+        }
+
+        int nameUpdateInterval = configYml.getYmlConfig().getInt("NameUpdateInterval");
+        if (nameUpdateInterval > 0) {
+            nameUpdateTask =  Bukkit.getScheduler().runTaskTimer(getInstance(), new NameUpdateScheduler(), (nameUpdateInterval * 20L), nameUpdateInterval * 20L);
+        }
     }
 }
