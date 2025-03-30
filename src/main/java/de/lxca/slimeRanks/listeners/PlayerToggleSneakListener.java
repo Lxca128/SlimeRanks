@@ -15,12 +15,16 @@ public class PlayerToggleSneakListener implements Listener {
         Player player = event.getPlayer();
         Rank rank = RankManager.getInstance().getPlayerRank(player);
 
-        if (rank.hideNameTagOnSneak() && event.isSneaking()) {
-            TeamManager.getInstance().hidePlayerNameTag(player);
-            RankManager.getInstance().hidePlayerNameTag(player);
+        if (event.isSneaking()) {
+            RankManager.getInstance().hidePlayerNameTag(player, rank.hideNameTagOnSneak());
+            if (rank.hideNameTagOnSneak()) {
+                TeamManager.getInstance().hidePlayerNameTag(player);
+            }
         } else {
-            RankManager.getInstance().showPlayerNameTag(player);
-            TeamManager.getInstance().showPlayerNameTag(player);
+            RankManager.getInstance().showPlayerNameTag(player, rank.hideNameTagOnSneak());
+            if (rank.hideNameTagOnSneak()) {
+                TeamManager.getInstance().showPlayerNameTag(player);
+            }
         }
     }
 }

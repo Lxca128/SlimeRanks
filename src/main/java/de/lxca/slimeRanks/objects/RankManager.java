@@ -110,31 +110,39 @@ public class RankManager {
         player.addPassenger(nameTag);
     }
 
-    public void hidePlayerNameTag(@NotNull Player player) {
-        ArmorStand nameTag = playerNameTags.get(player);
+    public void hidePlayerNameTag(@NotNull Player player, boolean completely) {
+        TextDisplay nameTag = playerNameTags.get(player);
 
         if (nameTag == null) {
             return;
         }
 
-        for (Player loopPlayer : Bukkit.getOnlinePlayers()) {
-            loopPlayer.hideEntity(Main.getInstance(), nameTag);
+        if (completely) {
+            for (Player loopPlayer : Bukkit.getOnlinePlayers()) {
+                loopPlayer.hideEntity(Main.getInstance(), nameTag);
+            }
+        } else {
+            nameTag.setSeeThrough(false);
         }
     }
 
-    public void showPlayerNameTag(@NotNull Player player) {
-        ArmorStand nameTag = playerNameTags.get(player);
+    public void showPlayerNameTag(@NotNull Player player, boolean completely) {
+        TextDisplay nameTag = playerNameTags.get(player);
 
         if (nameTag == null) {
             return;
         }
 
-        for (Player loopPlayer : Bukkit.getOnlinePlayers()) {
-            if (loopPlayer.equals(player)) {
-                continue;
-            }
+        if (completely) {
+            for (Player loopPlayer : Bukkit.getOnlinePlayers()) {
+                if (loopPlayer.equals(player)) {
+                    continue;
+                }
 
-            loopPlayer.showEntity(Main.getInstance(), nameTag);
+                loopPlayer.showEntity(Main.getInstance(), nameTag);
+            }
+        } else {
+            nameTag.setSeeThrough(true);
         }
     }
 
