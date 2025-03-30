@@ -8,7 +8,10 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.*;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.util.Transformation;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -18,7 +21,7 @@ public class RankManager {
 
     private static RankManager instance;
     private static final ArrayList<Rank> ranks = new ArrayList<>();
-    private static final HashMap<Player, ArmorStand> playerNameTags = new HashMap<>();
+    private static final HashMap<Player, TextDisplay> playerNameTags = new HashMap<>();
     private static final NamespacedKey rankKey = new NamespacedKey(Main.getInstance(), "slimeranks_rank");
 
     private RankManager() {
@@ -70,14 +73,12 @@ public class RankManager {
 
     public void addPlayerNameTag(Player player) {
         Rank rank = getPlayerRank(player);
-        ArmorStand nameTag = player.getWorld().spawn(player.getLocation().add(0, 1.25, 0), ArmorStand.class);
-        nameTag.customName(rank.getNameTagFormat(player));
-        nameTag.setCustomNameVisible(true);
-        nameTag.setVisible(false);
-        nameTag.setSmall(true);
-        nameTag.setMarker(true);
-        nameTag.setCanTick(false);
-        nameTag.setInvulnerable(true);
+        TextDisplay nameTag = player.getWorld().spawn(player.getLocation().add(0, 1.80, 0), TextDisplay.class);
+        nameTag.setTransformation(new Transformation(new Vector3f(0, 0.25F, 0), new Quaternionf(), new Vector3f(1, 1, 1), new Quaternionf()));
+        nameTag.text(rank.getNameTagFormat(player));
+        nameTag.setBillboard(Display.Billboard.CENTER);
+        nameTag.setAlignment(TextDisplay.TextAlignment.CENTER);
+        nameTag.setSeeThrough(!player.isSneaking());
         nameTag.getPersistentDataContainer().set(rankKey, PersistentDataType.BOOLEAN, true);
 
         player.hideEntity(Main.getInstance(), nameTag);
@@ -87,7 +88,7 @@ public class RankManager {
     }
 
     public void removePlayerNameTag(Player player) {
-        ArmorStand nameTag = playerNameTags.get(player);
+        TextDisplay nameTag = playerNameTags.get(player);
 
         if (nameTag == null) {
             return;
@@ -99,7 +100,7 @@ public class RankManager {
     }
 
     public void mountPlayerNameTag(@NotNull Player player) {
-        ArmorStand nameTag = playerNameTags.get(player);
+        TextDisplay nameTag = playerNameTags.get(player);
 
         if (nameTag == null) {
             return;
@@ -139,7 +140,7 @@ public class RankManager {
 
     public void clearPlayerNameTags(@NotNull World world) {
         for (Entity entity : world.getEntities()) {
-            if (entity instanceof ArmorStand nameTag && nameTag.getPersistentDataContainer().has(rankKey, PersistentDataType.BOOLEAN)) {
+            if (entity instanceof TextDisplay nameTag && nameTag.getPersistentDataContainer().has(rankKey, PersistentDataType.BOOLEAN)) {
                 playerNameTags.entrySet().removeIf(entry -> entry.getValue().equals(nameTag));
                 nameTag.remove();
             }
