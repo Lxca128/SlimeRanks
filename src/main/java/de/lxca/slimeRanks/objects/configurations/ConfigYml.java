@@ -14,6 +14,8 @@ public class ConfigYml extends Yml {
     protected void setDefaultYmlKeys() {
         createConfigKey("ConfigVersion", 1);
         createConfigKey("UpdateChannel", "RELEASE");
+        createConfigKey("NotifyForPluginUpdates", true);
+        createConfigKey("NotifyForVersionUpdates", true);
         createConfigKey("NameUpdateInterval", 0);
         saveYmlConfig();
     }
