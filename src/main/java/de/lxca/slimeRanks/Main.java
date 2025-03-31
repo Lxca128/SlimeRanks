@@ -56,10 +56,7 @@ public final class Main extends JavaPlugin {
 
         initializeMetrics();
 
-        UpdateChecker updateChecker = new UpdateChecker();
-        if (updateChecker.newUpdateAvailable()) {
-            getLogger().info("SlimeRanks " + getInstance().getPluginMeta().getVersion() + " -> " + updateChecker.getLatestVersion() + " released on Modrinth: https://modrinth.com/plugin/slimeranks");
-        }
+        new UpdateChecker().notifyUpdateAvailable(Bukkit.getConsoleSender());
     }
 
     @Override

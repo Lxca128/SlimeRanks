@@ -1,17 +1,17 @@
 package de.lxca.slimeRanks.objects;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import de.lxca.slimeRanks.Main;
 import de.lxca.slimeRanks.enums.UpdateChannel;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URI;
+import java.util.HashMap;
 
 public class UpdateChecker {
 
@@ -22,16 +22,70 @@ public class UpdateChecker {
     }
 
     public boolean newUpdateAvailable() {
-        String latestVersion = getLatestVersion();
+        JsonObject latestVersion = getLatestVersion();
 
         if (latestVersion == null) {
             return false;
         }
 
-        return !latestVersion.equals(Main.getInstance().getPluginMeta().getVersion());
+        String latestVersionNumber = latestVersion.get("version_number").getAsString();
+
+        return !latestVersionNumber.equals(Main.getInstance().getPluginMeta().getVersion());
     }
 
-    public @Nullable String getLatestVersion() {
+    public void notifyUpdateAvailable(CommandSender commandSender) {
+        if (newUpdateAvailable()) {
+            JsonObject latestVersion = getLatestVersion();
+
+            if (latestVersion == null) {
+                return;
+            }
+
+            String serveVersion = Main.getInstance().getServer().getMinecraftVersion();
+            boolean newestVersionSupportsServerVersion = false;
+
+            for (JsonElement element : latestVersion.getAsJsonArray("game_versions")) {
+                if (element.getAsString().equals(serveVersion)) {
+                    newestVersionSupportsServerVersion = true;
+                    break;
+                }
+            }
+
+            boolean shouldNotify = newestVersionSupportsServerVersion ?
+                    Main.getConfigYml().getYmlConfig().getBoolean("NotifyForPluginUpdates") :
+                    Main.getConfigYml().getYmlConfig().getBoolean("NotifyForVersionUpdates");
+
+            if (!shouldNotify) {
+                return;
+            }
+
+            String currentPluginversion = Main.getInstance().getPluginMeta().getVersion();
+            String latestPluginVersion = latestVersion.get("version_number").getAsString();
+
+            if (commandSender instanceof Player) {
+                HashMap<String, String> replacements = new HashMap<>();
+                replacements.put("current_version", currentPluginversion);
+                replacements.put("newest_version", latestPluginVersion);
+
+                String messageKey = newestVersionSupportsServerVersion ? "Chat.Action.UpdateAvailable" : "Chat.Action.VersionUpdateAvailable";
+
+                new Message(
+                        commandSender,
+                        true,
+                        messageKey,
+                        replacements
+                );
+            } else {
+                Main.getLogger("SlimeRanks").info("A new Version of SlimeRanks is available!");
+                Main.getLogger("SlimeRanks").info("SlimeRanks {} -> {} released on Modrinth: https://modrinth.com/plugin/slimeranks", currentPluginversion, latestPluginVersion);
+                if (!newestVersionSupportsServerVersion) {
+                    Main.getLogger("SlimeRanks").warn("The latest version of SlimeRanks no longer supports this Minecraft version, so support is only limitedly available.");
+                }
+            }
+        }
+    }
+
+    public @Nullable JsonObject getLatestVersion() {
         try {
             URI uri = new URI("https://api.modrinth.com/v2/project/GIyZWUYg/version");
             HttpURLConnection connection = (HttpURLConnection) uri.toURL().openConnection();
@@ -42,7 +96,6 @@ public class UpdateChecker {
 
             for (JsonElement element : jsonArray) {
                 JsonObject version = element.getAsJsonObject();
-                String latestVersionNumber = version.get("version_number").getAsString();
                 String versionType = version.get("version_type").getAsString();
 
                 boolean isValidVersion = switch (updateChannel) {
@@ -51,7 +104,7 @@ public class UpdateChecker {
                 };
 
                 if (isValidVersion) {
-                    return latestVersionNumber;
+                    return version;
                 }
             }
         } catch (Exception exception) {
