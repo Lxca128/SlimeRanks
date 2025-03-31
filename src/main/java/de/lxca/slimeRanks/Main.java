@@ -78,6 +78,10 @@ public final class Main extends JavaPlugin {
         return LogManager.getLogger(clazz);
     }
 
+    public static Logger getLogger(String prefix) {
+        return LogManager.getLogger(prefix);
+    }
+
     public static void initializeVariables() {
         configYml = new ConfigYml();
         messagesYml = new MessagesYml();
