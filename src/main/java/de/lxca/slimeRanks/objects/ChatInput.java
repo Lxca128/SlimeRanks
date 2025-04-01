@@ -125,14 +125,16 @@ public class ChatInput {
             }
 
             ranksYml.set("Ranks." + messageString + ".Tab.Active", true);
-            ranksYml.set("Ranks." + messageString + ".Tab.Format", "<gray>" + messageString + "</gray> <dark_gray>-</dark_gray> <gray>{player}</gray>");
+            ranksYml.set("Ranks." + messageString + ".Tab.Format", "<color:#b0b0b0>" + messageString + "</color> <dark_gray>|</dark_gray> <gray>{player}</gray>");
             ranksYml.set("Ranks." + messageString + ".Tab.Priority", 0);
             ranksYml.set("Ranks." + messageString + ".Chat.Active", true);
-            ranksYml.set("Ranks." + messageString + ".Chat.Format", "<gray>" + messageString + "</gray> <dark_gray>-</dark_gray> <gray>{player}</gray><dark_gray>:</dark_gray> <white>{message}</white>");
+            ranksYml.set("Ranks." + messageString + ".Chat.Format", "<color:#b0b0b0>" + messageString + "</color> <dark_gray>|</dark_gray> <gray>{player}</gray> <dark_gray>»</dark_gray> <color:#ededed>{message}</color>");
+            ranksYml.set("Ranks." + messageString + ".Chat.ColoredMessages", false);
             ranksYml.set("Ranks." + messageString + ".NameTag.Active", true);
-            ranksYml.set("Ranks." + messageString + ".NameTag.Format", "<gray>" + messageString + "</gray> <dark_gray>-</dark_gray> <gray>{player}</gray>");
-            ranksYml.set("Ranks." + messageString + ".NameTag.HideOnSneak", true);
+            ranksYml.set("Ranks." + messageString + ".NameTag.Format", "<color:#b0b0b0>" + messageString + "</color> <dark_gray>|</dark_gray> <gray>{player}</gray>");
+            ranksYml.set("Ranks." + messageString + ".NameTag.HideOnSneak", false);
             ranksYml.set("Ranks." + messageString + ".Permission", "slimeranks.rank." + messageString);
+            ranksYml.set("Ranks." + messageString + ".RankPriority", 1);
             Main.getRanksYml().saveYmlConfig();
             RankManager.getInstance().reloadRanks();
             endSession(true, null, true);
