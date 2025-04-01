@@ -146,6 +146,7 @@ public class RankEditGui implements InventoryHolder {
             player.playSound(player, Sound.ITEM_BOOK_PAGE_TURN, 1.0F, 1.0F);
         } else if (slot == 53 && (event.getClick() == ClickType.SHIFT_LEFT || event.getClick() == ClickType.SHIFT_RIGHT)) {
             rank.delete();
+            RankManager.getInstance().reloadDisplays();
             player.openInventory(new RankOverviewGui().getInventory());
             player.playSound(player, Sound.ENTITY_GENERIC_EXPLODE, 1.0F, 1.0F);
         }
