@@ -4,6 +4,7 @@ import de.lxca.slimeRanks.Main;
 import io.github.miniplaceholders.api.MiniPlaceholders;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextReplacementConfig;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -188,12 +189,8 @@ public class Rank {
     }
 
     private @NotNull Component parseComponent(@NotNull String format, @NotNull Player player, @Nullable String message) {
+        MiniMessage miniMessage = MiniMessage.miniMessage();
         Component deserializedFormat = null;
-
-        format = format.replace("{player}", player.getName());
-        if (message != null) {
-            format = format.replace("{message}", message);
-        }
 
         if (Main.isPluginEnabled("PlaceholderAPI")) {
             format = PlaceholderAPI.setPlaceholders(player, format);
@@ -201,9 +198,31 @@ public class Rank {
 
         if (Main.isPluginEnabled("MiniPlaceholders")) {
             TagResolver tagResolver = MiniPlaceholders.getAudienceGlobalPlaceholders(player);
-            deserializedFormat = MiniMessage.miniMessage().deserialize(format, tagResolver);
+            deserializedFormat = miniMessage.deserialize(format, tagResolver);
         }
 
-        return deserializedFormat != null ? deserializedFormat : MiniMessage.miniMessage().deserialize(format);
+        if (deserializedFormat == null) {
+            format = format.replace("{player}", player.getName());
+
+            if (message != null) {
+                format = format.replace("{message}", message);
+            }
+        } else {
+            TextReplacementConfig playerReplacementConfig = TextReplacementConfig.builder()
+                    .matchLiteral("{player}")
+                    .replacement(player.getName())
+                    .build();
+            deserializedFormat = deserializedFormat.replaceText(playerReplacementConfig);
+
+            if (message != null) {
+                TextReplacementConfig messageReplacementConfig = TextReplacementConfig.builder()
+                        .matchLiteral("{message}")
+                        .replacement(message)
+                        .build();
+                deserializedFormat = deserializedFormat.replaceText(messageReplacementConfig);
+            }
+        }
+
+        return deserializedFormat != null ? deserializedFormat : miniMessage.deserialize(format);
     }
 }
