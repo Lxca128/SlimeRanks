@@ -18,7 +18,7 @@ public class EntityPotionEffectListener implements Listener {
         RankManager rankManager = RankManager.getInstance();
 
         if (rankManager.shouldDisplayPlayerNameTag(player, false) && event.getNewEffect() == null) {
-            rankManager.showPlayerNameTag(player, !player.isSneaking());
+            rankManager.showPlayerNameTag(player, !player.isSneaking(), false);
         } else {
             rankManager.hidePlayerNameTag(player, true);
         }

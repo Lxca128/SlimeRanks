@@ -134,7 +134,11 @@ public class RankManager {
         }
     }
 
-    public void showPlayerNameTag(@NotNull Player player, boolean completely) {
+    public void showPlayerNameTag(@NotNull Player player, boolean completely, boolean invisibleCheck) {
+        if (!playerNameTags.containsKey(player) && shouldDisplayPlayerNameTag(player, invisibleCheck)) {
+            addPlayerNameTag(player);
+        }
+
         TextDisplay nameTag = playerNameTags.get(player);
 
         if (nameTag == null) {
@@ -155,6 +159,10 @@ public class RankManager {
     }
 
     public void setNameTagVisibility(@NotNull Player player, @NotNull Player viewer, boolean visible) {
+        if (visible && !playerNameTags.containsKey(player) && shouldDisplayPlayerNameTag(player, false)) {
+            addPlayerNameTag(player);
+        }
+
         TextDisplay nameTag = playerNameTags.get(player);
 
         if (nameTag == null) {
