@@ -39,10 +39,12 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new PlayerChangedWorldListener(), this);
         pluginManager.registerEvents(new PlayerDeathListener(), this);
         pluginManager.registerEvents(new PlayerGameModeChangeListener(), this);
+        pluginManager.registerEvents(new PlayerHideEntityListener(), this);
         pluginManager.registerEvents(new PlayerJoinListener(), this);
-        pluginManager.registerEvents(new PlayerQuitListener(), this);
-        pluginManager.registerEvents(new PlayerToggleSneakListener(), this);
         pluginManager.registerEvents(new PlayerPostRespawnListener(), this);
+        pluginManager.registerEvents(new PlayerQuitListener(), this);
+        pluginManager.registerEvents(new PlayerShowEntityListener(), this);
+        pluginManager.registerEvents(new PlayerToggleSneakListener(), this);
         pluginManager.registerEvents(new WorldLoadListener(), this);
 
         runNameUpdateTask();
