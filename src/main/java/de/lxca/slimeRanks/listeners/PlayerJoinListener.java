@@ -16,17 +16,15 @@ public class PlayerJoinListener implements Listener {
         RankManager rankManager = RankManager.getInstance();
         Rank rank = rankManager.getPlayerRank(player);
 
-        if (rank == null) {
-            return;
-        }
+        if (rank != null) {
+            if (rank.tabIsActive()) {
+                player.playerListName(rank.getTabFormat(player));
+                player.setPlayerListOrder(rank.getTabPriority());
+            }
 
-        if (rank.tabIsActive()) {
-            player.playerListName(rank.getTabFormat(player));
-            player.setPlayerListOrder(rank.getTabPriority());
-        }
-
-        if (rankManager.shouldDisplayPlayerNameTag(player, true)) {
-            rankManager.addPlayerNameTag(player);
+            if (rankManager.shouldDisplayPlayerNameTag(player, true)) {
+                rankManager.addPlayerNameTag(player);
+            }
         }
 
         if (player.hasPermission("slimeranks.admin")) {
