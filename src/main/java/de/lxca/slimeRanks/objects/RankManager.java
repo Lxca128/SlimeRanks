@@ -151,6 +151,20 @@ public class RankManager {
         nameTag.setSeeThrough(completely);
     }
 
+    public void setNameTagVisibility(@NotNull Player player, @NotNull Player viewer, boolean visible) {
+        TextDisplay nameTag = playerNameTags.get(player);
+
+        if (nameTag == null) {
+            return;
+        }
+
+        if (visible) {
+            viewer.showEntity(Main.getInstance(), nameTag);
+        } else {
+            viewer.hideEntity(Main.getInstance(), nameTag);
+        }
+    }
+
     public void clearPlayerNameTags(@NotNull World world) {
         for (Entity entity : world.getEntities()) {
             if (entity instanceof TextDisplay nameTag && nameTag.getPersistentDataContainer().has(rankKey, PersistentDataType.BOOLEAN)) {
