@@ -2,6 +2,7 @@ package de.lxca.slimeRanks.objects;
 
 import de.lxca.slimeRanks.Main;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
@@ -69,6 +70,12 @@ public class RankManager {
         }
 
         return null;
+    }
+
+    public boolean shouldDisplayPlayerNameTag(@NotNull Player player, boolean invisibleCheck) {
+        Rank rank = getPlayerRank(player);
+
+        return rank != null && rank.nameTagIsActive() && player.getGameMode() != GameMode.SPECTATOR && (!invisibleCheck || !player.isInvisible());
     }
 
     public void addPlayerNameTag(Player player) {
