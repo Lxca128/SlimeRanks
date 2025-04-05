@@ -146,7 +146,9 @@ public class RankManager {
                 continue;
             }
 
-            loopPlayer.showEntity(Main.getInstance(), nameTag);
+            if (shouldDisplayPlayerNameTag(player, true) && loopPlayer.canSee(player)) {
+                loopPlayer.showEntity(Main.getInstance(), nameTag);
+            }
         }
 
         nameTag.setSeeThrough(completely);
