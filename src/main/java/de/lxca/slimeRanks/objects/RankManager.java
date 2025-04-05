@@ -140,17 +140,15 @@ public class RankManager {
             return;
         }
 
-        if (completely) {
-            for (Player loopPlayer : Bukkit.getOnlinePlayers()) {
-                if (loopPlayer.equals(player)) {
-                    continue;
-                }
-
-                loopPlayer.showEntity(Main.getInstance(), nameTag);
+        for (Player loopPlayer : Bukkit.getOnlinePlayers()) {
+            if (loopPlayer.equals(player)) {
+                continue;
             }
-        } else {
-            nameTag.setSeeThrough(true);
+
+            loopPlayer.showEntity(Main.getInstance(), nameTag);
         }
+
+        nameTag.setSeeThrough(completely);
     }
 
     public void clearPlayerNameTags(@NotNull World world) {
