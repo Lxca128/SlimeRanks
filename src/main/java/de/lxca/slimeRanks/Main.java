@@ -50,7 +50,7 @@ public final class Main extends JavaPlugin {
         runNameUpdateTask();
 
         for (World world : Bukkit.getWorlds()) {
-            RankManager.getInstance().clearPlayerNameTags(world);
+            PlayerNameTag.clearBuggyNameTags(world);
         }
 
         if (!Bukkit.getOnlinePlayers().isEmpty()) {
@@ -65,7 +65,7 @@ public final class Main extends JavaPlugin {
     @Override
     public void onDisable() {
         for (World world : Bukkit.getWorlds()) {
-            RankManager.getInstance().clearPlayerNameTags(world);
+            PlayerNameTag.clearBuggyNameTags(world);
         }
         TeamManager.getInstance().removeInvisibleNameTagTeam();
     }
