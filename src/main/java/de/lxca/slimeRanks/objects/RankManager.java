@@ -72,16 +72,13 @@ public class RankManager {
         for (Player player : Bukkit.getOnlinePlayers()) {
             Rank rank = RankManager.instance.getPlayerRank(player);
 
-            if (rank.tabIsActive()) {
+            if (rank != null && rank.tabIsActive()) {
                 player.playerListName(rank.getTabFormat(player));
                 player.setPlayerListOrder(rank.getTabPriority());
+                PlayerNameTag.getPlayerNameTag(player);
             } else {
                 player.playerListName(player.name());
                 player.setPlayerListOrder(0);
-            }
-
-            if (rank.nameTagIsActive()) {
-                PlayerNameTag.getPlayerNameTag(player);
             }
         }
     }
