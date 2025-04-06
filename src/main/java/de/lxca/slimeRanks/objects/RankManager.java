@@ -7,6 +7,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.*;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -53,7 +54,7 @@ public class RankManager {
         return ranks.size();
     }
 
-    public Rank getPlayerRank(@NotNull Player player) {
+    public @Nullable Rank getPlayerRank(@NotNull Player player) {
         for (Rank rank : ranks) {
             if (rank.getPermission() == null || player.hasPermission(rank.getPermission())) {
                 return rank;
