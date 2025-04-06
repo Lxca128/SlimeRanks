@@ -1,6 +1,6 @@
 package de.lxca.slimeRanks.listeners;
 
-import de.lxca.slimeRanks.objects.RankManager;
+import de.lxca.slimeRanks.objects.PlayerNameTag;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,6 +14,8 @@ public class PlayerShowEntityListener implements Listener {
             return;
         }
 
-        RankManager.getInstance().setNameTagVisibility(player, event.getPlayer(), true);
+        if (PlayerNameTag.hasNameTag(player)) {
+            PlayerNameTag.getPlayerNameTag(player).setVisibility(event.getPlayer(), true);
+        }
     }
 }

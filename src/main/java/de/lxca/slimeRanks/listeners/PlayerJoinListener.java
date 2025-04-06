@@ -1,5 +1,6 @@
 package de.lxca.slimeRanks.listeners;
 
+import de.lxca.slimeRanks.objects.PlayerNameTag;
 import de.lxca.slimeRanks.objects.Rank;
 import de.lxca.slimeRanks.objects.RankManager;
 import de.lxca.slimeRanks.objects.UpdateChecker;
@@ -22,8 +23,8 @@ public class PlayerJoinListener implements Listener {
                 player.setPlayerListOrder(rank.getTabPriority());
             }
 
-            if (rankManager.shouldDisplayPlayerNameTag(player, true)) {
-                rankManager.addPlayerNameTag(player);
+            if (PlayerNameTag.shouldDisplayPlayerNameTag(player, true)) {
+                PlayerNameTag.getPlayerNameTag(player);
             }
         }
 

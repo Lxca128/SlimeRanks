@@ -1,6 +1,6 @@
 package de.lxca.slimeRanks.listeners;
 
-import de.lxca.slimeRanks.objects.RankManager;
+import de.lxca.slimeRanks.objects.PlayerNameTag;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,6 +12,8 @@ public class PlayerDeathListener implements Listener {
     public void onPlayerDeath(PlayerDeathEvent event) {
         Player player = event.getPlayer();
 
-        RankManager.getInstance().removePlayerNameTag(player);
+        if (PlayerNameTag.hasNameTag(player)) {
+            PlayerNameTag.getPlayerNameTag(player).remove();
+        }
     }
 }

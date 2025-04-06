@@ -1,6 +1,6 @@
 package de.lxca.slimeRanks.listeners;
 
-import de.lxca.slimeRanks.objects.RankManager;
+import de.lxca.slimeRanks.objects.PlayerNameTag;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,9 +14,11 @@ public class PlayerGameModeChangeListener implements Listener {
         Player player = event.getPlayer();
 
         if (event.getNewGameMode() == GameMode.SPECTATOR) {
-            RankManager.getInstance().removePlayerNameTag(player);
+            if (PlayerNameTag.hasNameTag(player)) {
+                PlayerNameTag.getPlayerNameTag(player).remove();
+            }
         } else if (player.getGameMode() == GameMode.SPECTATOR) {
-            RankManager.getInstance().addPlayerNameTag(player);
+            PlayerNameTag.getPlayerNameTag(player);
         }
     }
 }

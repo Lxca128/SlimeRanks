@@ -1,6 +1,6 @@
 package de.lxca.slimeRanks.listeners;
 
-import de.lxca.slimeRanks.objects.RankManager;
+import de.lxca.slimeRanks.objects.PlayerNameTag;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,6 +12,6 @@ public class WorldLoadListener implements Listener {
     public void onWorldLoad(WorldLoadEvent event) {
         World world = event.getWorld();
 
-        RankManager.getInstance().clearPlayerNameTags(world);
+        PlayerNameTag.clearBuggyNameTags(world);
     }
 }

@@ -1,9 +1,9 @@
 package de.lxca.slimeRanks.listeners;
 
 import com.destroystokyo.paper.event.player.PlayerPostRespawnEvent;
+import de.lxca.slimeRanks.objects.PlayerNameTag;
 import de.lxca.slimeRanks.objects.Rank;
 import de.lxca.slimeRanks.objects.RankManager;
-import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,8 +19,8 @@ public class PlayerPostRespawnListener implements Listener {
             return;
         }
 
-        if (rank.nameTagIsActive() && player.getGameMode() != GameMode.SPECTATOR) {
-            RankManager.getInstance().addPlayerNameTag(player);
+        if (PlayerNameTag.shouldDisplayPlayerNameTag(player, true)) {
+            PlayerNameTag.getPlayerNameTag(player);
         }
     }
 }
