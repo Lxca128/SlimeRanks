@@ -186,8 +186,9 @@ public class RankManager {
     }
 
     public void reloadDisplays() {
+        PlayerNameTag.clearPlayerNameTags();
         for (World world : Bukkit.getWorlds()) {
-            clearPlayerNameTags(world);
+            PlayerNameTag.clearBuggyNameTags(world);
         }
 
         for (Player player : Bukkit.getOnlinePlayers()) {
@@ -202,7 +203,7 @@ public class RankManager {
             }
 
             if (rank.nameTagIsActive()) {
-                addPlayerNameTag(player);
+                PlayerNameTag.getPlayerNameTag(player);
             }
         }
     }
