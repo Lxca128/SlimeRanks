@@ -16,6 +16,10 @@ public class PlayerToggleSneakListener implements Listener {
         Player player = event.getPlayer();
         Rank rank = RankManager.getInstance().getPlayerRank(player);
 
+        if (rank == null) {
+            return;
+        }
+
         if (event.isSneaking()) {
             if (rank.hideNameTagOnSneak()) {
                 if (PlayerNameTag.hasNameTag(player)) {
