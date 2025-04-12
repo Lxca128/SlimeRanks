@@ -79,9 +79,9 @@ public class PlayerNameTag {
         mount(nameTag);
     }
 
-    public void mount(TextDisplay nameTag) {
+    public void mount(@NotNull TextDisplay nameTag) {
         if (player.getWorld() != nameTag.getWorld()) {
-            nameTag.teleport(getNameTagLocation(player));
+            nameTag.teleportAsync(getNameTagLocation(player));
         }
         player.addPassenger(nameTag);
     }
