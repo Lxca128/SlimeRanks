@@ -166,6 +166,11 @@ public class PlayerNameTag {
         return player.getLocation().add(0, 1.80, 0);
     }
 
+    private static boolean isNameTagRemovable(@NotNull TextDisplay nameTag) {
+        return nameTag.getPersistentDataContainer().has(PlayerNameTag.nameTagKey, PersistentDataType.BOOLEAN)
+                && playerNameTags.values().stream().noneMatch(playerNameTag -> playerNameTag.nameTag.equals(nameTag));
+    }
+
     private static void removeTextDisplay(@NotNull TextDisplay nameTag) {
         if (Main.isFolia()) {
             nameTag.getScheduler().run(
