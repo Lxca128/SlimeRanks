@@ -1,10 +1,7 @@
 package de.lxca.slimeRanks.objects;
 
 import de.lxca.slimeRanks.Main;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.NamespacedKey;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -35,7 +32,7 @@ public class PlayerNameTag {
     }
 
     private @NotNull TextDisplay spawnNameTag() {
-        TextDisplay nameTag = player.getWorld().spawn(player.getLocation().add(0, 1.80, 0), TextDisplay.class);
+        TextDisplay nameTag = player.getWorld().spawn(getNameTagLocation(player), TextDisplay.class);
         nameTag.setTransformation(new Transformation(
                 new Vector3f(0, 0.25F, 0),
                 new Quaternionf(),
@@ -83,6 +80,9 @@ public class PlayerNameTag {
     }
 
     public void mount(TextDisplay nameTag) {
+        if (player.getWorld() != nameTag.getWorld()) {
+            nameTag.teleport(getNameTagLocation(player));
+        }
         player.addPassenger(nameTag);
     }
 
@@ -144,5 +144,13 @@ public class PlayerNameTag {
         Rank rank = RankManager.getInstance().getPlayerRank(player);
 
         return rank != null && rank.nameTagIsActive() && player.getGameMode() != GameMode.SPECTATOR && (!invisibleCheck || !player.hasPotionEffect(PotionEffectType.INVISIBILITY));
+    }
+
+    private static Location getNameTagLocation(@Nullable Player player) {
+        if (player == null) {
+            return null;
+        }
+
+        return player.getLocation().add(0, 1.80, 0);
     }
 }
