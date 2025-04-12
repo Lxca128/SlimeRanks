@@ -42,6 +42,8 @@ public class AsyncChatListener implements Listener {
         }
         Component serverMessage = rank.getChatFormat(player, playerMessageString);
 
-        Bukkit.broadcast(serverMessage);
+        for (Player loopPlayer : Bukkit.getOnlinePlayers()) {
+            loopPlayer.sendMessage(serverMessage);
+        }
     }
 }
