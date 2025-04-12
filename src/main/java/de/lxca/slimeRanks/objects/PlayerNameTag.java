@@ -25,6 +25,12 @@ public class PlayerNameTag {
     private final TextDisplay nameTag;
 
     private PlayerNameTag(Player player) {
+        if (RankManager.getInstance().getPlayerRank(player) == null) {
+            this.player = null;
+            this.nameTag = null;
+            return;
+        }
+
         this.player = player;
         this.nameTag = spawnNameTag();
 
@@ -52,7 +58,13 @@ public class PlayerNameTag {
     }
 
     private void setText(@NotNull TextDisplay nameTag) {
-        nameTag.text(RankManager.getInstance().getPlayerRank(player).getNameTagFormat(player));
+        Rank rank = RankManager.getInstance().getPlayerRank(player);
+
+        if (rank == null) {
+            return;
+        }
+
+        nameTag.text(rank.getNameTagFormat(player));
     }
 
     public void setSeeThrough(boolean seeThrough) {
