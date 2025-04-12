@@ -40,10 +40,15 @@ public class AsyncChatListener implements Listener {
         } else {
             playerMessageString = MiniMessage.miniMessage().serialize(playerMessage);
         }
-        Component serverMessage = rank.getChatFormat(player, playerMessageString);
+        Component formattedPlayerMessage = rank.getChatFormat(player, playerMessageString);
 
         for (Player loopPlayer : Bukkit.getOnlinePlayers()) {
-            loopPlayer.sendMessage(serverMessage);
+            loopPlayer.sendMessage(formattedPlayerMessage);
+        }
+        if (Main.getConfigYml().getYmlConfig().getBoolean("ShowChatMessageInConsole")) {
+            Main.getLogger("SlimeRanks - Chat").info(
+                    PlainTextComponentSerializer.plainText().serialize(formattedPlayerMessage)
+            );
         }
     }
 }

@@ -17,6 +17,7 @@ public class ConfigYml extends Yml {
         createConfigKey("NotifyForPluginUpdates", true);
         createConfigKey("NotifyForVersionUpdates", true);
         createConfigKey("NameUpdateInterval", 0);
+        createConfigKey("ShowChatMessageInConsole", true);
         saveYmlConfig();
     }
 }
