@@ -34,6 +34,9 @@ public final class Main extends JavaPlugin {
 
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new AsyncChatListener(), this);
+        if (isFolia()) {
+            pluginManager.registerEvents(new ChunkLoadListener(), this);
+        }
         pluginManager.registerEvents(new EntityPotionEffectListener(), this);
         pluginManager.registerEvents(new InventoryClickListener(), this);
         pluginManager.registerEvents(new PlayerChangedWorldListener(), this);
