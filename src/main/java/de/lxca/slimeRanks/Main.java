@@ -67,9 +67,14 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        if (isFolia()) {
+            return;
+        }
+
         for (World world : Bukkit.getWorlds()) {
             PlayerNameTag.clearBuggyNameTags(world);
         }
+
         TeamManager.getInstance().removeInvisibleNameTagTeam();
     }
 
