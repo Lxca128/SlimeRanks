@@ -13,7 +13,14 @@ public class PlayerChangedWorldListener implements Listener {
         Player player = event.getPlayer();
 
         if (PlayerNameTag.hasNameTag(player)) {
-            PlayerNameTag.getPlayerNameTag(player).mount();
+            PlayerNameTag playerNameTag = PlayerNameTag.getPlayerNameTag(player);
+
+            if (playerNameTag == null) {
+                return;
+            }
+
+            playerNameTag.mount();
+            playerNameTag.setVisibility(player, false);
         }
     }
 }
