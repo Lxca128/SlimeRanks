@@ -128,4 +128,13 @@ public final class Main extends JavaPlugin {
             nameUpdateTask =  Bukkit.getScheduler().runTaskTimer(getInstance(), new NameUpdateScheduler(), (nameUpdateInterval * 20L), nameUpdateInterval * 20L);
         }
     }
+
+    public static boolean isFolia() {
+        try {
+            Class.forName("io.papermc.paper.threadedregions.RegionizedServer");
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
+    }
 }
