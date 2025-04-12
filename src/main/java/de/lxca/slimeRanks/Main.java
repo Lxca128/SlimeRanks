@@ -37,6 +37,7 @@ public final class Main extends JavaPlugin {
         if (isFolia()) {
             pluginManager.registerEvents(new ChunkLoadListener(), this);
         }
+        pluginManager.registerEvents(new EntityAddToWorldListener(), this);
         pluginManager.registerEvents(new EntityPotionEffectListener(), this);
         pluginManager.registerEvents(new InventoryClickListener(), this);
         pluginManager.registerEvents(new PlayerChangedWorldListener(), this);
