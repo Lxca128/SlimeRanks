@@ -106,7 +106,7 @@ public class PlayerNameTag {
     }
 
     public void remove() {
-        nameTag.remove();
+        removeTextDisplay(nameTag);
         playerNameTags.remove(player);
     }
 
@@ -152,5 +152,17 @@ public class PlayerNameTag {
         }
 
         return player.getLocation().add(0, 1.80, 0);
+    }
+
+    private static void removeTextDisplay(@NotNull TextDisplay nameTag) {
+        if (Main.isFolia()) {
+            nameTag.getScheduler().run(
+                    Main.getInstance(),
+                    task -> nameTag.remove(),
+                    null
+            );
+        } else {
+            nameTag.remove();
+        }
     }
 }
