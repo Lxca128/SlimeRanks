@@ -21,8 +21,11 @@ public class AsyncChatListener implements Listener {
 
         if (ChatInput.playerHasActivateChatInputSession(player)) {
             event.setCancelled(true);
-            Main.getInstance().getServer().getScheduler().runTask(
-                    Main.getInstance(), () -> ChatInput.getChatInputSession(player).executeLogic(event));
+            player.getScheduler().run(
+                    Main.getInstance(),
+                    scheduledTask -> ChatInput.getChatInputSession(player).executeLogic(event),
+                    null
+            );
             return;
         }
 
