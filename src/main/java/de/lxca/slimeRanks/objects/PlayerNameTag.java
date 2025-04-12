@@ -146,8 +146,16 @@ public class PlayerNameTag {
 
     public static void clearBuggyNameTags(@NotNull World world) {
         for (Entity entity : world.getEntities()) {
-            if (entity instanceof TextDisplay nameTag && nameTag.getPersistentDataContainer().has(PlayerNameTag.nameTagKey, PersistentDataType.BOOLEAN)) {
-                nameTag.remove();
+            if (entity instanceof TextDisplay nameTag && isNameTagRemovable(nameTag)) {
+                removeTextDisplay(nameTag);
+            }
+        }
+    }
+
+    public static void clearBuggyNameTags(@NotNull Chunk chunk) {
+        for (Entity entity : chunk.getEntities()) {
+            if (entity instanceof TextDisplay nameTag && isNameTagRemovable(nameTag)) {
+                removeTextDisplay(nameTag);
             }
         }
     }
@@ -155,7 +163,10 @@ public class PlayerNameTag {
     public static boolean shouldDisplayPlayerNameTag(@NotNull Player player, boolean invisibleCheck) {
         Rank rank = RankManager.getInstance().getPlayerRank(player);
 
-        return rank != null && rank.nameTagIsActive() && player.getGameMode() != GameMode.SPECTATOR && (!invisibleCheck || !player.hasPotionEffect(PotionEffectType.INVISIBILITY));
+        return rank != null
+                && rank.nameTagIsActive()
+                && player.getGameMode() != GameMode.SPECTATOR
+                && (!invisibleCheck || !player.hasPotionEffect(PotionEffectType.INVISIBILITY));
     }
 
     private static Location getNameTagLocation(@Nullable Player player) {
