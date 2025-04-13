@@ -62,7 +62,7 @@ public class Message {
         String messageString = Main.getMessagesYml().getYmlConfig().getString(messageKey, null);
 
         if (messageString == null) {
-            Main.getLogger(this.getClass()).warn("Message with key {} not found in messages.yml!", messageKey);
+            Main.getLogger("SlimeRanks").warn("Message with key {} not found in messages.yml!", messageKey);
             return messageKey;
         }
 
@@ -87,7 +87,7 @@ public class Message {
         List<?> loreLines = Main.getMessagesYml().getYmlConfig().getList(messageKey, null);
 
         if (loreLines == null || loreLines.isEmpty()) {
-            Main.getLogger(this.getClass()).warn("Message with key {} not found or is empty in messages.yml!", messageKey);
+            Main.getLogger("SlimeRanks").warn("Message with key {} not found or is empty in messages.yml!", messageKey);
             return null;
         }
 
@@ -96,7 +96,7 @@ public class Message {
 
         for (Object loreLine : loreLines) {
             if (!(loreLine instanceof String loreLineString)) {
-                Main.getLogger(this.getClass()).warn("Message with key {} contains non-string lore line at index {} in messages.yml!", messageKey, String.valueOf(loreLines.indexOf(loreLine)));
+                Main.getLogger("SlimeRanks").warn("Message with key {} contains non-string lore line at index {} in messages.yml!", messageKey, String.valueOf(loreLines.indexOf(loreLine)));
                 continue;
             }
 
