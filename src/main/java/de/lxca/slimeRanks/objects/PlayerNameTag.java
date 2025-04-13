@@ -109,7 +109,7 @@ public class PlayerNameTag {
     }
 
     public void showForAllPermittedPlayers() {
-        if (!shouldDisplayPlayerNameTag(player, true)) {
+        if (!shouldDisplayPlayerNameTag(player, true, true)) {
             return;
         }
 
@@ -164,12 +164,12 @@ public class PlayerNameTag {
         }
     }
 
-    public static boolean shouldDisplayPlayerNameTag(@NotNull Player player, boolean invisibleCheck) {
+    public static boolean shouldDisplayPlayerNameTag(@NotNull Player player, boolean gameModeCheck, boolean invisibleCheck) {
         Rank rank = RankManager.getInstance().getPlayerRank(player);
 
         return rank != null
                 && rank.nameTagIsActive()
-                && player.getGameMode() != GameMode.SPECTATOR
+                && (!gameModeCheck || player.getGameMode() != GameMode.SPECTATOR)
                 && (!invisibleCheck || !player.hasPotionEffect(PotionEffectType.INVISIBILITY));
     }
 

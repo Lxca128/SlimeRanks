@@ -17,7 +17,7 @@ public class EntityPotionEffectListener implements Listener {
             return;
         }
 
-        if (PlayerNameTag.shouldDisplayPlayerNameTag(player, false) && event.getNewEffect() == null) {
+        if (PlayerNameTag.shouldDisplayPlayerNameTag(player, true, false) && event.getNewEffect() == null) {
             PlayerNameTag.getPlayerNameTag(player);
             if (!Main.isFolia()) {
                 TeamManager.getInstance().showPlayerNameTag(player);

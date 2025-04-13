@@ -35,7 +35,7 @@ public class PlayerToggleSneakListener implements Listener {
                 }
             }
         } else {
-            if (PlayerNameTag.shouldDisplayPlayerNameTag(player, true)) {
+            if (PlayerNameTag.shouldDisplayPlayerNameTag(player, true, true)) {
                 if (rank.hideNameTagOnSneak()) {
                     PlayerNameTag.getPlayerNameTag(player).showForAllPermittedPlayers();
                     if (!Main.isFolia()) {

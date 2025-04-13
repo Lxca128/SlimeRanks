@@ -24,7 +24,7 @@ public class PlayerJoinListener implements Listener {
                 player.setPlayerListOrder(rank.getTabPriority());
             }
 
-            if (!Main.isFolia() && PlayerNameTag.shouldDisplayPlayerNameTag(player, true)) {
+            if (!Main.isFolia() && PlayerNameTag.shouldDisplayPlayerNameTag(player, true, true)) {
                 PlayerNameTag.getPlayerNameTag(player);
             }
         }

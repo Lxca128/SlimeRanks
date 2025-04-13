@@ -86,7 +86,7 @@ public class RankManager {
                 player.setPlayerListOrder(rank.getTabPriority());
             }
 
-            if (rank.nameTagIsActive() && PlayerNameTag.shouldDisplayPlayerNameTag(player, true)) {
+            if (rank.nameTagIsActive() && PlayerNameTag.shouldDisplayPlayerNameTag(player, true, true)) {
                 player.getScheduler().run(
                         Main.getInstance(),
                         scheduledTask -> PlayerNameTag.getPlayerNameTag(player),

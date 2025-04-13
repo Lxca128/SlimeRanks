@@ -15,7 +15,7 @@ public class EntityAddToWorldListener implements Listener {
             return;
         }
 
-        if (PlayerNameTag.shouldDisplayPlayerNameTag(player, true)) {
+        if (PlayerNameTag.shouldDisplayPlayerNameTag(player, true, true)) {
             player.getScheduler().run(
                     Main.getInstance(),
                     scheduledTask -> {
