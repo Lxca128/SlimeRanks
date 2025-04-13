@@ -34,6 +34,10 @@ public final class Main extends JavaPlugin {
 
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new AsyncChatListener(), this);
+        if (isFolia()) {
+            pluginManager.registerEvents(new ChunkLoadListener(), this);
+        }
+        pluginManager.registerEvents(new EntityAddToWorldListener(), this);
         pluginManager.registerEvents(new EntityPotionEffectListener(), this);
         pluginManager.registerEvents(new InventoryClickListener(), this);
         pluginManager.registerEvents(new PlayerChangedWorldListener(), this);
@@ -64,9 +68,14 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        if (isFolia()) {
+            return;
+        }
+
         for (World world : Bukkit.getWorlds()) {
             PlayerNameTag.clearBuggyNameTags(world);
         }
+
         TeamManager.getInstance().removeInvisibleNameTagTeam();
     }
 
@@ -126,6 +135,15 @@ public final class Main extends JavaPlugin {
         int nameUpdateInterval = configYml.getYmlConfig().getInt("NameUpdateInterval");
         if (nameUpdateInterval > 0) {
             nameUpdateTask =  Bukkit.getScheduler().runTaskTimer(getInstance(), new NameUpdateScheduler(), (nameUpdateInterval * 20L), nameUpdateInterval * 20L);
+        }
+    }
+
+    public static boolean isFolia() {
+        try {
+            Class.forName("io.papermc.paper.threadedregions.RegionizedServer");
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
         }
     }
 }

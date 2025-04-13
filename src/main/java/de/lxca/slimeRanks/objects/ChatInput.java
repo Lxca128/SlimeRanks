@@ -12,7 +12,6 @@ import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
@@ -26,7 +25,6 @@ public class ChatInput {
     private final ChatInputType chatInputType;
     private final int timerSeconds;
     private final Object linkedObject;
-    private BukkitTask titleTask;
 
     public ChatInput(Player player, ChatInputType chatInputType, int timerSeconds, Component infoMessage) {
         killChatInputSession(player);
@@ -36,9 +34,9 @@ public class ChatInput {
         this.timerSeconds = timerSeconds;
         this.linkedObject = null;
 
-        startTimer(infoMessage);
-
         chatInputSessions.put(player, this);
+
+        startTimer(infoMessage);
     }
 
     public ChatInput(Player player, ChatInputType chatInputType, int timerSeconds, Object linkedObject, Component infoMessage) {
@@ -49,41 +47,50 @@ public class ChatInput {
         this.timerSeconds = timerSeconds;
         this.linkedObject = linkedObject;
 
-        startTimer(infoMessage);
-
         chatInputSessions.put(player, this);
+
+        startTimer(infoMessage);
     }
 
     private void startTimer(Component infoMessage) {
         new Message(player, true, "Chat.Input.Started");
+
         if (infoMessage != null) {
             player.sendMessage(infoMessage);
         }
+
         player.playSound(player, Sound.UI_CARTOGRAPHY_TABLE_TAKE_RESULT, 1.0F, 1.0F);
 
-        final int[] seconds = {timerSeconds};
-        Runnable titleTaskRunnable = () -> {
-            if (!playerHasActivateChatInputSession(player)) {
-                return;
-            }
-            if (player.isOnline() && seconds[0] > 0) {
-                HashMap<String, String> replacements = new HashMap<>();
-                replacements.put("seconds", String.valueOf(seconds[0]));
+        runTimer(player, timerSeconds);
+    }
 
-                Title.Times times = Title.Times.times(Duration.ZERO, Duration.ofSeconds(1), Duration.ofSeconds(1));
-                Title title = Title.title(
-                        new Message("Title.ChatInput.Main").getMessage(),
-                        new Message("Title.ChatInput.Sub", replacements).getMessage(),
-                        times
-                );
-                player.showTitle(title);
-                seconds[0]--;
-                return;
-            }
+    private void runTimer(Player player, int secondsLeft) {
+        if (!playerHasActivateChatInputSession(player)) {
+            return;
+        }
 
+        if (player.isOnline() && secondsLeft > 0) {
+            HashMap<String, String> replacements = new HashMap<>();
+            replacements.put("seconds", String.valueOf(secondsLeft));
+
+            Title.Times times = Title.Times.times(Duration.ZERO, Duration.ofSeconds(1), Duration.ofSeconds(1));
+            Title title = Title.title(
+                    new Message("Title.ChatInput.Main").getMessage(),
+                    new Message("Title.ChatInput.Sub", replacements).getMessage(),
+                    times
+            );
+
+            player.showTitle(title);
+
+            Bukkit.getServer().getRegionScheduler().runDelayed(
+                    Main.getInstance(),
+                    player.getLocation(),
+                    task -> runTimer(player, secondsLeft - 1),
+                    20L
+            );
+        } else {
             endSession(true, null, false);
-        };
-        titleTask = Bukkit.getScheduler().runTaskTimer(Main.getInstance(), titleTaskRunnable, 0, 20);
+        }
     }
 
     public void endSession(boolean notifyPlayer, Component additionalInfoMessage, boolean actionSuccessful) {
@@ -204,7 +211,6 @@ public class ChatInput {
         ChatInput chatInput = chatInputSessions.getOrDefault(player, null);
 
         if (chatInput != null) {
-            chatInput.titleTask.cancel();
             player.clearTitle();
             chatInputSessions.remove(player);
         }

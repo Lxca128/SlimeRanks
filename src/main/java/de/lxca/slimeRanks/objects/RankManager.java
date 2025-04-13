@@ -66,20 +66,32 @@ public class RankManager {
 
     public void reloadDisplays() {
         PlayerNameTag.clearPlayerNameTags();
-        for (World world : Bukkit.getWorlds()) {
-            PlayerNameTag.clearBuggyNameTags(world);
+        if (!Main.isFolia()) {
+            for (World world : Bukkit.getWorlds()) {
+                PlayerNameTag.clearBuggyNameTags(world);
+            }
         }
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             Rank rank = RankManager.instance.getPlayerRank(player);
 
-            if (rank != null && rank.tabIsActive()) {
-                player.playerListName(rank.getTabFormat(player));
-                player.setPlayerListOrder(rank.getTabPriority());
-                PlayerNameTag.getPlayerNameTag(player);
-            } else {
+            if (rank == null) {
                 player.playerListName(player.name());
                 player.setPlayerListOrder(0);
+                continue;
+            }
+
+            if (rank.tabIsActive()) {
+                player.playerListName(rank.getTabFormat(player));
+                player.setPlayerListOrder(rank.getTabPriority());
+            }
+
+            if (rank.nameTagIsActive() && PlayerNameTag.shouldDisplayPlayerNameTag(player, true, true)) {
+                player.getScheduler().run(
+                        Main.getInstance(),
+                        scheduledTask -> PlayerNameTag.getPlayerNameTag(player),
+                        null
+                );
             }
         }
     }

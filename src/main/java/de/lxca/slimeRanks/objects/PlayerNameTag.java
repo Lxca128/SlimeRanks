@@ -25,6 +25,12 @@ public class PlayerNameTag {
     private final TextDisplay nameTag;
 
     private PlayerNameTag(Player player) {
+        if (RankManager.getInstance().getPlayerRank(player) == null) {
+            this.player = null;
+            this.nameTag = null;
+            return;
+        }
+
         this.player = player;
         this.nameTag = spawnNameTag();
 
@@ -52,7 +58,13 @@ public class PlayerNameTag {
     }
 
     private void setText(@NotNull TextDisplay nameTag) {
-        nameTag.text(RankManager.getInstance().getPlayerRank(player).getNameTagFormat(player));
+        Rank rank = RankManager.getInstance().getPlayerRank(player);
+
+        if (rank == null) {
+            return;
+        }
+
+        nameTag.text(rank.getNameTagFormat(player));
     }
 
     public void setSeeThrough(boolean seeThrough) {
@@ -79,11 +91,15 @@ public class PlayerNameTag {
         mount(nameTag);
     }
 
-    public void mount(TextDisplay nameTag) {
+    public void mount(@NotNull TextDisplay nameTag) {
         if (player.getWorld() != nameTag.getWorld()) {
-            nameTag.teleport(getNameTagLocation(player));
+            nameTag.teleportAsync(getNameTagLocation(player));
         }
-        player.addPassenger(nameTag);
+        player.getScheduler().run(
+                Main.getInstance(),
+                scheduledTask -> player.addPassenger(nameTag),
+                null
+        );
     }
 
     public void hideForAll() {
@@ -93,7 +109,7 @@ public class PlayerNameTag {
     }
 
     public void showForAllPermittedPlayers() {
-        if (!shouldDisplayPlayerNameTag(player, true)) {
+        if (!shouldDisplayPlayerNameTag(player, true, true)) {
             return;
         }
 
@@ -106,7 +122,7 @@ public class PlayerNameTag {
     }
 
     public void remove() {
-        nameTag.remove();
+        removeTextDisplay(nameTag);
         playerNameTags.remove(player);
     }
 
@@ -134,16 +150,27 @@ public class PlayerNameTag {
 
     public static void clearBuggyNameTags(@NotNull World world) {
         for (Entity entity : world.getEntities()) {
-            if (entity instanceof TextDisplay nameTag && nameTag.getPersistentDataContainer().has(PlayerNameTag.nameTagKey, PersistentDataType.BOOLEAN)) {
-                nameTag.remove();
+            if (entity instanceof TextDisplay nameTag && isNameTagRemovable(nameTag)) {
+                removeTextDisplay(nameTag);
             }
         }
     }
 
-    public static boolean shouldDisplayPlayerNameTag(@NotNull Player player, boolean invisibleCheck) {
+    public static void clearBuggyNameTags(@NotNull Chunk chunk) {
+        for (Entity entity : chunk.getEntities()) {
+            if (entity instanceof TextDisplay nameTag && isNameTagRemovable(nameTag)) {
+                removeTextDisplay(nameTag);
+            }
+        }
+    }
+
+    public static boolean shouldDisplayPlayerNameTag(@NotNull Player player, boolean gameModeCheck, boolean invisibleCheck) {
         Rank rank = RankManager.getInstance().getPlayerRank(player);
 
-        return rank != null && rank.nameTagIsActive() && player.getGameMode() != GameMode.SPECTATOR && (!invisibleCheck || !player.hasPotionEffect(PotionEffectType.INVISIBILITY));
+        return rank != null
+                && rank.nameTagIsActive()
+                && (!gameModeCheck || player.getGameMode() != GameMode.SPECTATOR)
+                && (!invisibleCheck || !player.hasPotionEffect(PotionEffectType.INVISIBILITY));
     }
 
     private static Location getNameTagLocation(@Nullable Player player) {
@@ -152,5 +179,22 @@ public class PlayerNameTag {
         }
 
         return player.getLocation().add(0, 1.80, 0);
+    }
+
+    private static boolean isNameTagRemovable(@NotNull TextDisplay nameTag) {
+        return nameTag.getPersistentDataContainer().has(PlayerNameTag.nameTagKey, PersistentDataType.BOOLEAN)
+                && playerNameTags.values().stream().noneMatch(playerNameTag -> playerNameTag.nameTag.equals(nameTag));
+    }
+
+    private static void removeTextDisplay(@NotNull TextDisplay nameTag) {
+        if (Main.isFolia()) {
+            nameTag.getScheduler().run(
+                    Main.getInstance(),
+                    task -> nameTag.remove(),
+                    null
+            );
+        } else {
+            nameTag.remove();
+        }
     }
 }

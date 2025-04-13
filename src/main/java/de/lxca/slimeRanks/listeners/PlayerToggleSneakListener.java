@@ -1,5 +1,6 @@
 package de.lxca.slimeRanks.listeners;
 
+import de.lxca.slimeRanks.Main;
 import de.lxca.slimeRanks.objects.PlayerNameTag;
 import de.lxca.slimeRanks.objects.Rank;
 import de.lxca.slimeRanks.objects.RankManager;
@@ -25,17 +26,21 @@ public class PlayerToggleSneakListener implements Listener {
                 if (PlayerNameTag.hasNameTag(player)) {
                     PlayerNameTag.getPlayerNameTag(player).hideForAll();
                 }
-                TeamManager.getInstance().hidePlayerNameTag(player);
+                if (!Main.isFolia()) {
+                    TeamManager.getInstance().hidePlayerNameTag(player);
+                }
             } else {
                 if (PlayerNameTag.hasNameTag(player)) {
                     PlayerNameTag.getPlayerNameTag(player).setSeeThrough(false);
                 }
             }
         } else {
-            if (PlayerNameTag.shouldDisplayPlayerNameTag(player, true)) {
+            if (PlayerNameTag.shouldDisplayPlayerNameTag(player, true, true)) {
                 if (rank.hideNameTagOnSneak()) {
                     PlayerNameTag.getPlayerNameTag(player).showForAllPermittedPlayers();
-                    TeamManager.getInstance().showPlayerNameTag(player);
+                    if (!Main.isFolia()) {
+                        TeamManager.getInstance().showPlayerNameTag(player);
+                    }
                 } else {
                     PlayerNameTag.getPlayerNameTag(player).setSeeThrough(true);
                 }

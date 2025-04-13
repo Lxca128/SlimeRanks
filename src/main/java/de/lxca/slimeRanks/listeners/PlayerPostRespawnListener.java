@@ -19,7 +19,7 @@ public class PlayerPostRespawnListener implements Listener {
             return;
         }
 
-        if (PlayerNameTag.shouldDisplayPlayerNameTag(player, true)) {
+        if (PlayerNameTag.shouldDisplayPlayerNameTag(player, true, true)) {
             PlayerNameTag.getPlayerNameTag(player);
         }
     }

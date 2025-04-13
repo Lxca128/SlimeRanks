@@ -1,5 +1,6 @@
 package de.lxca.slimeRanks.listeners;
 
+import de.lxca.slimeRanks.Main;
 import de.lxca.slimeRanks.objects.PlayerNameTag;
 import de.lxca.slimeRanks.objects.TeamManager;
 import org.bukkit.entity.Player;
@@ -16,11 +17,15 @@ public class EntityPotionEffectListener implements Listener {
             return;
         }
 
-        if (PlayerNameTag.shouldDisplayPlayerNameTag(player, false) && event.getNewEffect() == null) {
+        if (PlayerNameTag.shouldDisplayPlayerNameTag(player, true, false) && event.getNewEffect() == null) {
             PlayerNameTag.getPlayerNameTag(player);
-            TeamManager.getInstance().showPlayerNameTag(player);
+            if (!Main.isFolia()) {
+                TeamManager.getInstance().showPlayerNameTag(player);
+            }
         } else {
-            TeamManager.getInstance().hidePlayerNameTag(player);
+            if (!Main.isFolia()) {
+                TeamManager.getInstance().hidePlayerNameTag(player);
+            }
             PlayerNameTag.getPlayerNameTag(player).remove();
         }
     }

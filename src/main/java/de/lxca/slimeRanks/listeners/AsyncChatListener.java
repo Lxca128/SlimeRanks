@@ -21,8 +21,11 @@ public class AsyncChatListener implements Listener {
 
         if (ChatInput.playerHasActivateChatInputSession(player)) {
             event.setCancelled(true);
-            Main.getInstance().getServer().getScheduler().runTask(
-                    Main.getInstance(), () -> ChatInput.getChatInputSession(player).executeLogic(event));
+            player.getScheduler().run(
+                    Main.getInstance(),
+                    scheduledTask -> ChatInput.getChatInputSession(player).executeLogic(event),
+                    null
+            );
             return;
         }
 
@@ -40,8 +43,15 @@ public class AsyncChatListener implements Listener {
         } else {
             playerMessageString = MiniMessage.miniMessage().serialize(playerMessage);
         }
-        Component serverMessage = rank.getChatFormat(player, playerMessageString);
+        Component formattedPlayerMessage = rank.getChatFormat(player, playerMessageString);
 
-        Bukkit.broadcast(serverMessage);
+        for (Player loopPlayer : Bukkit.getOnlinePlayers()) {
+            loopPlayer.sendMessage(formattedPlayerMessage);
+        }
+        if (Main.getConfigYml().getYmlConfig().getBoolean("ShowChatMessageInConsole")) {
+            Main.getLogger("SlimeRanks - Chat").info(
+                    PlainTextComponentSerializer.plainText().serialize(formattedPlayerMessage)
+            );
+        }
     }
 }
