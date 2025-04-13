@@ -95,7 +95,11 @@ public class PlayerNameTag {
         if (player.getWorld() != nameTag.getWorld()) {
             nameTag.teleportAsync(getNameTagLocation(player));
         }
-        player.addPassenger(nameTag);
+        player.getScheduler().run(
+                Main.getInstance(),
+                scheduledTask -> player.addPassenger(nameTag),
+                null
+        );
     }
 
     public void hideForAll() {
