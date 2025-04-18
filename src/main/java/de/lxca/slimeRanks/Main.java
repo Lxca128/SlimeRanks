@@ -34,9 +34,7 @@ public final class Main extends JavaPlugin {
 
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new AsyncChatListener(), this);
-        if (isFolia()) {
-            pluginManager.registerEvents(new ChunkLoadListener(), this);
-        }
+        pluginManager.registerEvents(new ChunkLoadListener(), this);
         pluginManager.registerEvents(new EntityAddToWorldListener(), this);
         pluginManager.registerEvents(new EntityPotionEffectListener(), this);
         pluginManager.registerEvents(new InventoryClickListener(), this);
@@ -49,7 +47,6 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new PlayerQuitListener(), this);
         pluginManager.registerEvents(new PlayerShowEntityListener(), this);
         pluginManager.registerEvents(new PlayerToggleSneakListener(), this);
-        pluginManager.registerEvents(new WorldLoadListener(), this);
 
         runNameUpdateTask();
 
