@@ -15,7 +15,11 @@ public class PlayerShowEntityListener implements Listener {
         }
 
         if (PlayerNameTag.hasNameTag(player)) {
-            PlayerNameTag.getPlayerNameTag(player).setVisibility(event.getPlayer(), true);
+            PlayerNameTag playerNameTag = PlayerNameTag.getPlayerNameTag(player);
+
+            if (playerNameTag != null) {
+                playerNameTag.setVisibility(event.getPlayer(), true);
+            }
         }
     }
 }

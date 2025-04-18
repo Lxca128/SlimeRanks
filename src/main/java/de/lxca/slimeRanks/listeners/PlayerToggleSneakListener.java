@@ -24,25 +24,39 @@ public class PlayerToggleSneakListener implements Listener {
         if (event.isSneaking()) {
             if (rank.hideNameTagOnSneak()) {
                 if (PlayerNameTag.hasNameTag(player)) {
-                    PlayerNameTag.getPlayerNameTag(player).hideForAll();
+                    PlayerNameTag playerNameTag = PlayerNameTag.getPlayerNameTag(player);
+
+                    if (playerNameTag != null) {
+                        playerNameTag.hideForAll();
+                    }
                 }
                 if (!Main.isFolia()) {
                     TeamManager.getInstance().hidePlayerNameTag(player);
                 }
             } else {
                 if (PlayerNameTag.hasNameTag(player)) {
-                    PlayerNameTag.getPlayerNameTag(player).setSeeThrough(false);
+                    PlayerNameTag playerNameTag = PlayerNameTag.getPlayerNameTag(player);
+
+                    if (playerNameTag != null) {
+                        playerNameTag.setSeeThrough(false);
+                    }
                 }
             }
         } else {
             if (PlayerNameTag.shouldDisplayPlayerNameTag(player, true, true)) {
+                PlayerNameTag playerNameTag = PlayerNameTag.getPlayerNameTag(player);
+
+                if (playerNameTag == null) {
+                    return;
+                }
+
                 if (rank.hideNameTagOnSneak()) {
-                    PlayerNameTag.getPlayerNameTag(player).showForAllPermittedPlayers();
+                    playerNameTag.showForAllPermittedPlayers();
                     if (!Main.isFolia()) {
                         TeamManager.getInstance().showPlayerNameTag(player);
                     }
                 } else {
-                    PlayerNameTag.getPlayerNameTag(player).setSeeThrough(true);
+                    playerNameTag.setSeeThrough(true);
                 }
             }
         }

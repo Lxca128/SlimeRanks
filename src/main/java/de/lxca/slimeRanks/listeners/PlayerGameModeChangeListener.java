@@ -15,7 +15,11 @@ public class PlayerGameModeChangeListener implements Listener {
 
         if (event.getNewGameMode() == GameMode.SPECTATOR) {
             if (PlayerNameTag.hasNameTag(player)) {
-                PlayerNameTag.getPlayerNameTag(player).remove();
+                PlayerNameTag playerNameTag = PlayerNameTag.getPlayerNameTag(player);
+
+                if (playerNameTag != null) {
+                    playerNameTag.remove();
+                }
             }
         } else if (player.getGameMode() == GameMode.SPECTATOR && PlayerNameTag.shouldDisplayPlayerNameTag(player, false, true)) {
             PlayerNameTag.getPlayerNameTag(player);

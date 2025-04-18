@@ -13,7 +13,11 @@ public class PlayerDeathListener implements Listener {
         Player player = event.getPlayer();
 
         if (PlayerNameTag.hasNameTag(player)) {
-            PlayerNameTag.getPlayerNameTag(player).remove();
+            PlayerNameTag playerNameTag = PlayerNameTag.getPlayerNameTag(player);
+
+            if (playerNameTag != null) {
+                playerNameTag.remove();
+            }
         }
     }
 }

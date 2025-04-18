@@ -11,7 +11,10 @@ public class PlayerQuitListener implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
+        PlayerNameTag playerNameTag = PlayerNameTag.getPlayerNameTag(player);
 
-        PlayerNameTag.getPlayerNameTag(player).remove();
+        if (playerNameTag != null) {
+            playerNameTag.remove();
+        }
     }
 }
