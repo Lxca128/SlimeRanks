@@ -144,24 +144,22 @@ public class ChatInput {
             ranksYml.set("Ranks." + messageString + ".RankPriority", 1);
             Main.getRanksYml().saveYmlConfig();
             RankManager.getInstance().reloadRanks();
+            RankManager.getInstance().reloadDisplays();
             endSession(true, null, true);
             player.openInventory(new RankEditGui(new Rank(messageString)).getInventory());
         } else if (chatInputType == ChatInputType.RANK_TAB_FORMAT) {
             Rank rank = (Rank) linkedObject;
             rank.setTabFormat(messageString);
-            RankManager.getInstance().reloadDisplays();
             endSession(true, null, true);
             player.openInventory(new RankEditGui(rank).getInventory());
         } else if (chatInputType == ChatInputType.RANK_CHAT_FORMAT) {
             Rank rank = (Rank) linkedObject;
             rank.setChatFormat(messageString);
-            RankManager.getInstance().reloadDisplays();
             endSession(true, null, true);
             player.openInventory(new RankEditGui(rank).getInventory());
         } else if (chatInputType == ChatInputType.RANK_NAME_TAG_FORMAT) {
             Rank rank = (Rank) linkedObject;
             rank.setNameTagFormat(messageString);
-            RankManager.getInstance().reloadDisplays();
             endSession(true, null, true);
             player.openInventory(new RankEditGui(rank).getInventory());
         } else if (chatInputType == ChatInputType.RANK_TAB_PRIORITY || chatInputType == ChatInputType.RANK_PRIORITY) {
@@ -185,13 +183,11 @@ public class ChatInput {
             } else {
                 rank.setTabPriority(priority);
             }
-            RankManager.getInstance().reloadDisplays();
             endSession(true, null, true);
             player.openInventory(new RankEditGui(rank).getInventory());
         } else if (chatInputType == ChatInputType.RANK_PERMISSION) {
             Rank rank = (Rank) linkedObject;
             rank.setPermission(messageString);
-            RankManager.getInstance().reloadDisplays();
             endSession(true, null, true);
             player.openInventory(new RankEditGui(rank).getInventory());
         } else {

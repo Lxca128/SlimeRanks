@@ -104,17 +104,14 @@ public class RankEditGui implements InventoryHolder {
         } else if (slot == 21) {
             rank.setTabActive(!rank.tabIsActive());
             inventory.setItem(slot, EditItems.getStatusItem(rank.tabIsActive()));
-            RankManager.getInstance().reloadDisplays();
             player.playSound(player, Sound.BLOCK_LEVER_CLICK, 1.0F, 1.0F);
         } else if (slot == 22) {
             rank.setChatActive(!rank.chatIsActive());
             inventory.setItem(slot, EditItems.getStatusItem(rank.chatIsActive()));
-            RankManager.getInstance().reloadDisplays();
             player.playSound(player, Sound.BLOCK_LEVER_CLICK, 1.0F, 1.0F);
         } else if (slot == 23) {
             rank.setNameTagActive(!rank.nameTagIsActive());
             inventory.setItem(slot, EditItems.getStatusItem(rank.nameTagIsActive()));
-            RankManager.getInstance().reloadDisplays();
             player.playSound(player, Sound.BLOCK_LEVER_CLICK, 1.0F, 1.0F);
         } else if (slot == 25) {
             rank.setColoredMessages(!rank.getColoredMessages());
@@ -130,7 +127,6 @@ public class RankEditGui implements InventoryHolder {
             if (event.getClick() == ClickType.SHIFT_LEFT || event.getClick() == ClickType.SHIFT_RIGHT) {
                 rank.setPermission(null);
                 inventory.setItem(slot, EditItems.getPermissionItem(rank));
-                RankManager.getInstance().reloadDisplays();
                 player.playSound(player, Sound.BLOCK_LAVA_POP, 1.0F, 1.0F);
             } else {
                 Component additionalInfoMessage = new Message("Chat.Input.Permission", true).getMessage();
@@ -146,7 +142,6 @@ public class RankEditGui implements InventoryHolder {
             player.playSound(player, Sound.ITEM_BOOK_PAGE_TURN, 1.0F, 1.0F);
         } else if (slot == 53 && (event.getClick() == ClickType.SHIFT_LEFT || event.getClick() == ClickType.SHIFT_RIGHT)) {
             rank.delete();
-            RankManager.getInstance().reloadDisplays();
             player.openInventory(new RankOverviewGui().getInventory());
             player.playSound(player, Sound.ENTITY_GENERIC_EXPLODE, 1.0F, 1.0F);
         }

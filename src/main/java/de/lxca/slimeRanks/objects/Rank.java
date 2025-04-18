@@ -56,6 +56,7 @@ public class Rank {
         Main.getRanksYml().getYmlConfig().set("Ranks." + identifier + ".Tab.Active", tabActive);
         Main.getRanksYml().saveYmlConfig();
         this.tabActive = tabActive;
+        RankManager.getInstance().reloadDisplays();
     }
 
     public Component getTabFormat(@NotNull Player player) {
@@ -74,6 +75,7 @@ public class Rank {
         Main.getRanksYml().getYmlConfig().set("Ranks." + identifier + ".Tab.Format", tabFormat);
         Main.getRanksYml().saveYmlConfig();
         this.tabFormat = tabFormat;
+        RankManager.getInstance().reloadDisplays();
     }
 
     public int getTabPriority() {
@@ -84,6 +86,7 @@ public class Rank {
         Main.getRanksYml().getYmlConfig().set("Ranks." + identifier + ".Tab.Priority", tabPriority);
         Main.getRanksYml().saveYmlConfig();
         this.tabPriority = tabPriority;
+        RankManager.getInstance().reloadDisplays();
     }
 
     public boolean chatIsActive() {
@@ -132,6 +135,7 @@ public class Rank {
         Main.getRanksYml().getYmlConfig().set("Ranks." + identifier + ".NameTag.Active", nameTagActive);
         Main.getRanksYml().saveYmlConfig();
         this.nameTagActive = nameTagActive;
+        RankManager.getInstance().reloadDisplays();
     }
 
     public Component getNameTagFormat(@NotNull Player player) {
@@ -150,6 +154,7 @@ public class Rank {
         Main.getRanksYml().getYmlConfig().set("Ranks." + identifier + ".NameTag.Format", nameTagFormat);
         Main.getRanksYml().saveYmlConfig();
         this.nameTagFormat = nameTagFormat;
+        RankManager.getInstance().reloadDisplays();
     }
 
     public boolean hideNameTagOnSneak() {
@@ -160,6 +165,7 @@ public class Rank {
         Main.getRanksYml().getYmlConfig().set("Ranks." + identifier + ".NameTag.HideOnSneak", hideNameTagOnSneak);
         Main.getRanksYml().saveYmlConfig();
         this.hideNameTagOnSneak = hideNameTagOnSneak;
+        RankManager.getInstance().reloadDisplays();
     }
 
     public String getPermission() {
@@ -170,6 +176,7 @@ public class Rank {
         Main.getRanksYml().getYmlConfig().set("Ranks." + identifier + ".Permission", permission);
         Main.getRanksYml().saveYmlConfig();
         this.permission = permission;
+        RankManager.getInstance().reloadDisplays();
     }
 
     public int getRankPriority() {
@@ -180,12 +187,14 @@ public class Rank {
         Main.getRanksYml().getYmlConfig().set("Ranks." + identifier + ".RankPriority", rankPriority);
         Main.getRanksYml().saveYmlConfig();
         this.rankPriority = rankPriority;
+        RankManager.getInstance().reloadDisplays();
     }
 
     public void delete() {
         Main.getRanksYml().getYmlConfig().set("Ranks." + identifier, null);
         Main.getRanksYml().saveYmlConfig();
         RankManager.getInstance().reloadRanks();
+        RankManager.getInstance().reloadDisplays();
     }
 
     private @NotNull Component parseComponent(@NotNull String format, @NotNull Player player, @Nullable String message) {
