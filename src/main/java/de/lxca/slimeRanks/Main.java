@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandMap;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -33,20 +34,25 @@ public final class Main extends JavaPlugin {
         commandMap.register("slimeventure", new SlimeranksCommand("slimeranks"));
 
         PluginManager pluginManager = Bukkit.getPluginManager();
-        pluginManager.registerEvents(new AsyncChatListener(), this);
-        pluginManager.registerEvents(new ChunkLoadListener(), this);
-        pluginManager.registerEvents(new EntityAddToWorldListener(), this);
-        pluginManager.registerEvents(new EntityPotionEffectListener(), this);
-        pluginManager.registerEvents(new InventoryClickListener(), this);
-        pluginManager.registerEvents(new PlayerChangedWorldListener(), this);
-        pluginManager.registerEvents(new PlayerDeathListener(), this);
-        pluginManager.registerEvents(new PlayerGameModeChangeListener(), this);
-        pluginManager.registerEvents(new PlayerHideEntityListener(), this);
-        pluginManager.registerEvents(new PlayerJoinListener(), this);
-        pluginManager.registerEvents(new PlayerPostRespawnListener(), this);
-        pluginManager.registerEvents(new PlayerQuitListener(), this);
-        pluginManager.registerEvents(new PlayerShowEntityListener(), this);
-        pluginManager.registerEvents(new PlayerToggleSneakListener(), this);
+        Listener[] listeners = {
+                new AsyncChatListener(),
+                new ChunkLoadListener(),
+                new EntityAddToWorldListener(),
+                new EntityPotionEffectListener(),
+                new InventoryClickListener(),
+                new PlayerChangedWorldListener(),
+                new PlayerDeathListener(),
+                new PlayerGameModeChangeListener(),
+                new PlayerHideEntityListener(),
+                new PlayerJoinListener(),
+                new PlayerPostRespawnListener(),
+                new PlayerQuitListener(),
+                new PlayerShowEntityListener(),
+                new PlayerToggleSneakListener()
+        };
+        for (Listener listener : listeners) {
+            pluginManager.registerEvents(listener, this);
+        }
 
         runNameUpdateTask();
 
