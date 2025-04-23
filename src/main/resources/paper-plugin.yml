@@ -7,6 +7,10 @@ load: STARTUP
 authors: [ Lxca128 ]
 description: Create custom ranks which are displayed in the tab, chat and above the player.
 folia-supported: true
+permissions:
+  slimeranks.admin:
+    description: Grants access to the /slimeranks command and allows full management of ranks through the GUI.
+    default: op
 dependencies:
   server:
     PlaceholderAPI:
