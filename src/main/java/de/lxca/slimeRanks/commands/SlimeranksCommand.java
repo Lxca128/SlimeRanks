@@ -27,27 +27,28 @@ public class SlimeranksCommand extends Command {
             sendAboutMessage(commandSender);
             return true;
         } else if (strings.length == 1) {
-            if (strings[0].equalsIgnoreCase("about")) {
-                sendAboutMessage(commandSender);
-                return true;
-            } else if (strings[0].equalsIgnoreCase("gui")) {
-                if (commandSender instanceof Player player) {
-                    player.openInventory(new RankOverviewGui().getInventory());
+            switch (strings[0]) {
+                case "about":
+                    sendAboutMessage(commandSender);
                     return true;
-                } else {
-                    new Message(commandSender, true, "Chat.Command.OnlyPlayers");
+                case "gui":
+                    if (commandSender instanceof Player player) {
+                        player.openInventory(new RankOverviewGui().getInventory());
+                        return true;
+                    } else {
+                        new Message(commandSender, true, "Chat.Command.OnlyPlayers");
+                        return false;
+                    }
+                case "help":
+                    new Message(commandSender, false, "Chat.Command.Help");
+                    return true;
+                case "reload":
+                    Main.reload();
+                    new Message(commandSender, true, "Chat.Command.Reload");
+                    return true;
+                default:
+                    sendUnknownMessage(commandSender, s);
                     return false;
-                }
-            } else if (strings[0].equalsIgnoreCase("help")) {
-                new Message(commandSender, false, "Chat.Command.Help");
-                return true;
-            } else if (strings[0].equalsIgnoreCase("reload")) {
-                Main.reload();
-                new Message(commandSender, true, "Chat.Command.Reload");
-                return true;
-            } else {
-                sendUnknownMessage(commandSender, s);
-                return false;
             }
         } else {
             sendUnknownMessage(commandSender, s);
