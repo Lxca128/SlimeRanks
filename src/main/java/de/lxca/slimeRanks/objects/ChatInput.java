@@ -131,22 +131,16 @@ public class ChatInput {
                 return;
             }
 
-            ranksYml.set("Ranks." + messageString + ".Tab.Active", true);
-            ranksYml.set("Ranks." + messageString + ".Tab.Format", "<color:#b0b0b0>" + messageString + "</color> <dark_gray>|</dark_gray> <gray>{player}</gray>");
-            ranksYml.set("Ranks." + messageString + ".Tab.Priority", 0);
-            ranksYml.set("Ranks." + messageString + ".Chat.Active", true);
-            ranksYml.set("Ranks." + messageString + ".Chat.Format", "<color:#b0b0b0>" + messageString + "</color> <dark_gray>|</dark_gray> <gray>{player}</gray> <dark_gray>»</dark_gray> <color:#ededed>{message}</color>");
-            ranksYml.set("Ranks." + messageString + ".Chat.ColoredMessages", false);
-            ranksYml.set("Ranks." + messageString + ".NameTag.Active", true);
-            ranksYml.set("Ranks." + messageString + ".NameTag.Format", "<color:#b0b0b0>" + messageString + "</color> <dark_gray>|</dark_gray> <gray>{player}</gray>");
-            ranksYml.set("Ranks." + messageString + ".NameTag.HideOnSneak", false);
-            ranksYml.set("Ranks." + messageString + ".Permission", "slimeranks.rank." + messageString);
-            ranksYml.set("Ranks." + messageString + ".RankPriority", 1);
-            Main.getRanksYml().saveYmlConfig();
-            RankManager.getInstance().reloadRanks();
-            RankManager.getInstance().reloadDisplays();
+            Rank createdRank = Rank.createRank(messageString);
+
+            if (createdRank == null) {
+                Component errorMessage = new Message("Chat.Input.RankIdentifier.CreationFailed", true).getMessage();
+                endSession(true, errorMessage, false);
+                return;
+            }
+
             endSession(true, null, true);
-            player.openInventory(new RankEditGui(new Rank(messageString)).getInventory());
+            player.openInventory(new RankEditGui(createdRank).getInventory());
         } else if (chatInputType == ChatInputType.RANK_TAB_FORMAT) {
             Rank rank = (Rank) linkedObject;
             rank.setTabFormat(messageString);
