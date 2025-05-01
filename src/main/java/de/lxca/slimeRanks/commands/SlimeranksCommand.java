@@ -3,14 +3,22 @@ package de.lxca.slimeRanks.commands;
 import de.lxca.slimeRanks.Main;
 import de.lxca.slimeRanks.guis.RankOverviewGui;
 import de.lxca.slimeRanks.objects.Message;
+import de.lxca.slimeRanks.objects.Rank;
+import de.lxca.slimeRanks.objects.RankManager;
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.node.Node;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SlimeranksCommand extends Command {
 
@@ -50,6 +58,64 @@ public class SlimeranksCommand extends Command {
                     sendUnknownMessage(commandSender, s, strings);
                     return false;
             }
+        } else if (strings.length == 2) {
+            if (strings[0].equals("import")) {
+                if (strings[1].equals("luckperms")) {
+                    RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
+
+                    if (provider == null) {
+                        new Message(commandSender, true, "Chat.Command.Import.LuckPermsNotFound");
+                        return false;
+                    }
+
+                    LuckPerms api = provider.getProvider();
+                    AtomicBoolean couldImportAllRanks = new AtomicBoolean(true);
+
+                    api.getGroupManager().getLoadedGroups().forEach(group -> {
+                        String rankIdentifier = group.getIdentifier().getName();
+                        Rank rank = new Rank(rankIdentifier);
+
+                        if (!rank.exists()) {
+                            rank = Rank.createRank(rankIdentifier);
+                        }
+
+                        if (rank == null || !rank.exists()) {
+                            Main.getLogger("SlimeRanks").warn("Failed to create rank for LuckPerms group: {}! Make sure the group-identifier only contains letters.", rankIdentifier);
+                            couldImportAllRanks.set(false);
+                            return;
+                        }
+
+                        if (rank.exists()) {
+                            String permission = rank.getPermission();
+
+                            if (group.data().toCollection().stream().noneMatch(node -> node.getKey().equals(permission))) {
+                                group.data().add(Node.builder(permission).build());
+                                api.getGroupManager().saveGroup(group);
+                            }
+                        }
+                    });
+
+                    if (couldImportAllRanks.get()) {
+                        new Message(commandSender, true, "Chat.Command.Import.LuckPermsSuccess");
+                    } else {
+                        new Message(commandSender, true, "Chat.Command.Import.LuckPermsPartiallySuccess");
+                    }
+                    RankManager.getInstance().reloadDisplays();
+                    if (commandSender instanceof Player player) {
+                        player.openInventory(new RankOverviewGui().getInventory());
+                    }
+                    return true;
+                } else {
+                    HashMap<String, String> replacements = new HashMap<>();
+                    replacements.put("import_service", strings[1]);
+
+                    new Message(commandSender, true, "Chat.Command.Import.UnknownService", replacements);
+                    return false;
+                }
+            } else {
+                sendUnknownMessage(commandSender, s, strings);
+                return false;
+            }
         } else {
             sendUnknownMessage(commandSender, s, strings);
             return false;
@@ -74,21 +140,34 @@ public class SlimeranksCommand extends Command {
 
     @Override
     public @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, String @NotNull [] args) {
+        if (!sender.hasPermission("slimeranks.admin")) {
+            return Collections.emptyList();
+        }
+
         ArrayList<String> completerList = new ArrayList<>();
-        if (args.length == 1 && sender.hasPermission("slimeranks.admin")) {
+
+        if (args.length == 1) {
             completerList.add("about");
             completerList.add("gui");
             completerList.add("help");
+            completerList.add("import");
             completerList.add("reload");
+        } else if (args.length == 2) {
+            if (args[0].equals("import")) {
+                completerList.add("luckperms");
+            }
         }
 
         ArrayList<String> completerListFiltered = new ArrayList<>();
+
         for (String loopString : completerList) {
             String loopStringLowerCase = loopString.toLowerCase();
+
             if (loopStringLowerCase.startsWith(args[args.length-1].toLowerCase())) {
                 completerListFiltered.add(loopString);
             }
         }
+
         return completerListFiltered;
     }
 }
