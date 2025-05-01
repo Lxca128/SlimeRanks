@@ -256,4 +256,36 @@ public class Rank {
 
         return deserializedFormat != null ? deserializedFormat : miniMessage.deserialize(format);
     }
+
+    public static @Nullable Rank createRank(@NotNull String identifier) {
+        if (!identifier.chars().allMatch(Character::isAlphabetic)) {
+            return null;
+        }
+
+        YamlConfiguration ranksYml = Main.getRanksYml().getYmlConfig();
+        ConfigurationSection ranksSection = ranksYml.getConfigurationSection("Ranks");
+
+        if (ranksSection == null || ranksSection.getKeys(false).contains(identifier)) {
+            return null;
+        }
+
+        String formattedIdentifier = identifier.substring(0, 1).toUpperCase() + identifier.substring(1).toLowerCase();
+
+        ranksYml.set("Ranks." + identifier + ".Tab.Active", true);
+        ranksYml.set("Ranks." + identifier + ".Tab.Format", "<color:#b0b0b0>" + formattedIdentifier + "</color> <dark_gray>|</dark_gray> <gray>{player}</gray>");
+        ranksYml.set("Ranks." + identifier + ".Tab.Priority", 0);
+        ranksYml.set("Ranks." + identifier + ".Chat.Active", true);
+        ranksYml.set("Ranks." + identifier + ".Chat.Format", "<color:#b0b0b0>" + formattedIdentifier + "</color> <dark_gray>|</dark_gray> <gray>{player}</gray> <dark_gray>»</dark_gray> <color:#ededed>{message}</color>");
+        ranksYml.set("Ranks." + identifier + ".Chat.ColoredMessages", false);
+        ranksYml.set("Ranks." + identifier + ".NameTag.Active", true);
+        ranksYml.set("Ranks." + identifier + ".NameTag.Format", "<color:#b0b0b0>" + formattedIdentifier + "</color> <dark_gray>|</dark_gray> <gray>{player}</gray>");
+        ranksYml.set("Ranks." + identifier + ".NameTag.HideOnSneak", false);
+        ranksYml.set("Ranks." + identifier + ".Permission", "slimeranks.rank." + identifier);
+        ranksYml.set("Ranks." + identifier + ".RankPriority", 1);
+        Main.getRanksYml().saveYmlConfig();
+        RankManager.getInstance().reloadRanks();
+        RankManager.getInstance().reloadDisplays();
+
+        return new Rank(identifier);
+    }
 }
