@@ -7,6 +7,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextReplacementConfig;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -30,6 +31,23 @@ public class Rank {
     public Rank(String identifier) {
         YamlConfiguration ranksYml = Main.getRanksYml().getYmlConfig();
 
+        if (ranksYml == null) {
+            this.identifier = null;
+            return;
+        }
+
+        ConfigurationSection ranksSection = ranksYml.getConfigurationSection("Ranks");
+
+        if (ranksSection == null) {
+            this.identifier = null;
+            return;
+        }
+
+        if (!ranksSection.getKeys(false).contains(identifier)) {
+            this.identifier = null;
+            return;
+        }
+
         this.identifier = identifier;
         this.tabActive = ranksYml.getBoolean("Ranks." + identifier + ".Tab.Active", false);
         this.tabFormat = ranksYml.getString("Ranks." + identifier + ".Tab.Format", null);
@@ -42,6 +60,10 @@ public class Rank {
         this.hideNameTagOnSneak = ranksYml.getBoolean("Ranks." + identifier + ".NameTag.HideOnSneak", true);
         this.permission = ranksYml.getString("Ranks." + identifier + ".Permission", null);
         this.rankPriority = ranksYml.getInt("Ranks." + identifier + ".RankPriority", 0);
+    }
+
+    public boolean exists() {
+        return identifier != null;
     }
 
     public String getIdentifier() {
