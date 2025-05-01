@@ -7,6 +7,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextReplacementConfig;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -30,6 +31,23 @@ public class Rank {
     public Rank(String identifier) {
         YamlConfiguration ranksYml = Main.getRanksYml().getYmlConfig();
 
+        if (ranksYml == null) {
+            this.identifier = null;
+            return;
+        }
+
+        ConfigurationSection ranksSection = ranksYml.getConfigurationSection("Ranks");
+
+        if (ranksSection == null) {
+            this.identifier = null;
+            return;
+        }
+
+        if (!ranksSection.getKeys(false).contains(identifier)) {
+            this.identifier = null;
+            return;
+        }
+
         this.identifier = identifier;
         this.tabActive = ranksYml.getBoolean("Ranks." + identifier + ".Tab.Active", false);
         this.tabFormat = ranksYml.getString("Ranks." + identifier + ".Tab.Format", null);
@@ -42,6 +60,10 @@ public class Rank {
         this.hideNameTagOnSneak = ranksYml.getBoolean("Ranks." + identifier + ".NameTag.HideOnSneak", true);
         this.permission = ranksYml.getString("Ranks." + identifier + ".Permission", null);
         this.rankPriority = ranksYml.getInt("Ranks." + identifier + ".RankPriority", 0);
+    }
+
+    public boolean exists() {
+        return identifier != null;
     }
 
     public String getIdentifier() {
@@ -233,5 +255,37 @@ public class Rank {
         }
 
         return deserializedFormat != null ? deserializedFormat : miniMessage.deserialize(format);
+    }
+
+    public static @Nullable Rank createRank(@NotNull String identifier) {
+        if (!identifier.chars().allMatch(Character::isAlphabetic)) {
+            return null;
+        }
+
+        YamlConfiguration ranksYml = Main.getRanksYml().getYmlConfig();
+        ConfigurationSection ranksSection = ranksYml.getConfigurationSection("Ranks");
+
+        if (ranksSection == null || ranksSection.getKeys(false).contains(identifier)) {
+            return null;
+        }
+
+        String formattedIdentifier = identifier.substring(0, 1).toUpperCase() + identifier.substring(1).toLowerCase();
+
+        ranksYml.set("Ranks." + identifier + ".Tab.Active", true);
+        ranksYml.set("Ranks." + identifier + ".Tab.Format", "<color:#b0b0b0>" + formattedIdentifier + "</color> <dark_gray>|</dark_gray> <gray>{player}</gray>");
+        ranksYml.set("Ranks." + identifier + ".Tab.Priority", 0);
+        ranksYml.set("Ranks." + identifier + ".Chat.Active", true);
+        ranksYml.set("Ranks." + identifier + ".Chat.Format", "<color:#b0b0b0>" + formattedIdentifier + "</color> <dark_gray>|</dark_gray> <gray>{player}</gray> <dark_gray>»</dark_gray> <color:#ededed>{message}</color>");
+        ranksYml.set("Ranks." + identifier + ".Chat.ColoredMessages", false);
+        ranksYml.set("Ranks." + identifier + ".NameTag.Active", true);
+        ranksYml.set("Ranks." + identifier + ".NameTag.Format", "<color:#b0b0b0>" + formattedIdentifier + "</color> <dark_gray>|</dark_gray> <gray>{player}</gray>");
+        ranksYml.set("Ranks." + identifier + ".NameTag.HideOnSneak", false);
+        ranksYml.set("Ranks." + identifier + ".Permission", "slimeranks.rank." + identifier);
+        ranksYml.set("Ranks." + identifier + ".RankPriority", 1);
+        Main.getRanksYml().saveYmlConfig();
+        RankManager.getInstance().reloadRanks();
+        RankManager.getInstance().reloadDisplays();
+
+        return new Rank(identifier);
     }
 }
