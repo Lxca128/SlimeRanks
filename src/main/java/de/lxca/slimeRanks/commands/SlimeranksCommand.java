@@ -47,11 +47,11 @@ public class SlimeranksCommand extends Command {
                     new Message(commandSender, true, "Chat.Command.Reload");
                     return true;
                 default:
-                    sendUnknownMessage(commandSender, s);
+                    sendUnknownMessage(commandSender, s, strings);
                     return false;
             }
         } else {
-            sendUnknownMessage(commandSender, s);
+            sendUnknownMessage(commandSender, s, strings);
             return false;
         }
     }
@@ -65,11 +65,11 @@ public class SlimeranksCommand extends Command {
         new Message(commandSender, false, "Chat.Command.About", replacements);
     }
 
-    private void sendUnknownMessage(@NotNull CommandSender commandSender, @NotNull String command) {
+    private void sendUnknownMessage(@NotNull CommandSender commandSender, @NotNull String s, @NotNull String @NotNull [] strings) {
         HashMap<String, String> replacements = new HashMap<>();
-        replacements.put("command", command);
+        replacements.put("command", "/" + s + " " + String.join(" ", strings));
 
-        new Message(commandSender, false, "Chat.Command.Unknown", replacements);
+        new Message(commandSender, true, "Chat.Command.Unknown", replacements);
     }
 
     @Override
