@@ -64,3 +64,6 @@ SlimeRanks is a powerful and flexible Minecraft plugin that allows server owners
 | `/slimeranks gui` | Opens the GUI to manage all ranks. | `slimeranks.admin` |
 | `/slimeranks help` | Shows all available commands. | `slimeranks.admin` |
 | `/slimeranks reload` | Reloads the plugin configurations. | `slimeranks.admin` |
+
+## 🫱 Partner
+[![ZAP-Hosting AD](https://github.com/user-attachments/assets/6b9f5e63-dead-4228-98f7-e75dbe442c06)](https://zap-hosting.com/slimeranks)
