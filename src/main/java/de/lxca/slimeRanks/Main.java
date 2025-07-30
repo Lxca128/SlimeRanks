@@ -54,6 +54,10 @@ public final class Main extends JavaPlugin {
             pluginManager.registerEvents(listener, this);
         }
 
+        if (pluginManager.getPlugin("PlaceholderAPI") != null) {
+            new Placeholder().register();
+        }
+
         runNameUpdateTask();
 
         for (World world : Bukkit.getWorlds()) {
