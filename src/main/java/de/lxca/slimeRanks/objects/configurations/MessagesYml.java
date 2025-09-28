@@ -44,6 +44,29 @@ public class MessagesYml extends Yml {
         createConfigKey("Chat.Input.RankPriority", "<gray>Please enter the desired <color:#39ff14>rank priority</color> as a <color:#39ff14>number</color><dark_gray>.</dark_gray></gray><newline><gray>If a player has multiple ranks<dark_gray>,</dark_gray> they will use the rank with the highest priority<dark_gray>.</dark_gray>");
         createConfigKey("Chat.Input.RankIdentifier.CreationFailed", "<red>An error occurred while creating the rank. Please try again</red><dark_gray>.</dark_gray>");
 
+        createConfigKey("dialog.global.back", "Back");
+        createConfigKey("dialog.global.save", "Save");
+        createConfigKey("dialog.edit_rank.chat.title", "Edit chat format");
+        createConfigKey("dialog.edit_rank.name_tag.title", "Edit name-tag format");
+        createConfigKey("dialog.edit_rank.tab.title", "Edit tab format");
+        createConfigKey("dialog.edit_rank.chat.description",
+                "Define the chat format in which the messages of players with the rank <#39ff14>{rank}<reset> are displayed.<newline>" +
+                        "You can use placeholders like <#39ff14>{player}<reset> for the player’s name and <#39ff14>{message}<reset> for the message.<newline>" +
+                        "<newline><#39ff14>Note:<reset> The format must be written in <#39ff14>MiniMessage<reset>. " +
+                        "For a preview, you can use the <#39ff14>Web Viewer<reset>: https://webui.advntr.dev");
+
+        createConfigKey("dialog.edit_rank.name_tag.description",
+                "Define the name tag format in which the names of players with the rank <#39ff14>{rank}<reset> are shown above their character.<newline>" +
+                        "Use placeholders like <#39ff14>{player}<reset> to display the player’s name.<newline>" +
+                        "<newline><#39ff14>Note:<reset> The format must be written in <#39ff14>MiniMessage<reset>. " +
+                        "For a preview, you can use the <#39ff14>Web Viewer<reset>: https://webui.advntr.dev");
+
+        createConfigKey("dialog.edit_rank.tab.description",
+                "Define the tab list format in which the names of players with the rank <#39ff14>{rank}<reset> are displayed in the player list.<newline>" +
+                        "You can use placeholders like <#39ff14>{player}<reset> to show the player’s name.<newline>" +
+                        "<newline><#39ff14>Note:<reset> The format must be written in <#39ff14>MiniMessage<reset>. " +
+                        "For a preview, you can use the <#39ff14>Web Viewer<reset>: https://webui.advntr.dev");
+
         createConfigKey("Gui.Global.ItemName.Close", "<color:#ff1439><u>Close</u></color>");
         createConfigKey("Gui.Global.ItemName.Back", "<color:#39ff14><u>Back</u></color>");
         createConfigKey("Gui.Global.ItemName.PreviousPage", "<color:#39ff14><u>Previous page</u></color>");
