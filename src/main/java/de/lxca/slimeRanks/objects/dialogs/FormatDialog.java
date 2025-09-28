@@ -53,7 +53,6 @@ public class FormatDialog extends BaseDialog {
                                         getCurrentFormat(),
                                         Integer.MAX_VALUE,
                                         TextDialogInput.MultilineOptions.create(Integer.MAX_VALUE, 128))
-
                         ))
                         .build()
                 )
