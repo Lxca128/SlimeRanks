@@ -3,12 +3,14 @@ package de.lxca.slimeRanks.guis;
 import de.lxca.slimeRanks.Main;
 import de.lxca.slimeRanks.enums.ChatInputType;
 import de.lxca.slimeRanks.enums.FormatType;
+import de.lxca.slimeRanks.enums.WeightType;
 import de.lxca.slimeRanks.items.GlobalItems;
 import de.lxca.slimeRanks.items.EditItems;
 import de.lxca.slimeRanks.objects.ChatInput;
 import de.lxca.slimeRanks.objects.Message;
 import de.lxca.slimeRanks.objects.Rank;
 import de.lxca.slimeRanks.objects.dialogs.FormatDialog;
+import de.lxca.slimeRanks.objects.dialogs.WeightDialog;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -115,9 +117,7 @@ public class RankEditGui implements InventoryHolder {
             inventory.setItem(slot, EditItems.getStatusItem(rank.getColoredMessages()));
             player.playSound(player, Sound.BLOCK_LEVER_CLICK, 1.0F, 1.0F);
         } else if (slot == 38) {
-            Component additionalInfoMessage = new Message("Chat.Input.RankPriority", true).getMessage();
-            new ChatInput(player, ChatInputType.RANK_PRIORITY, 30, rank, additionalInfoMessage);
-            player.closeInventory();
+            new WeightDialog(player, rank, WeightType.RANK).open();
         } else if (slot == 40) {
             if (event.getClick() == ClickType.SHIFT_LEFT || event.getClick() == ClickType.SHIFT_RIGHT) {
                 rank.setPermission(null);
@@ -129,9 +129,7 @@ public class RankEditGui implements InventoryHolder {
                 player.closeInventory();
             }
         } else if (slot == 42) {
-            Component additionalInfoMessage = new Message("Chat.Input.TabPriority", true).getMessage();
-            new ChatInput(player, ChatInputType.RANK_TAB_PRIORITY, 30, rank, additionalInfoMessage);
-            player.closeInventory();
+            new WeightDialog(player, rank, WeightType.TAB).open();
         } else if (slot == 45) {
             player.openInventory(new RankOverviewGui().getInventory());
             player.playSound(player, Sound.ITEM_BOOK_PAGE_TURN, 1.0F, 1.0F);
