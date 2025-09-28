@@ -5,6 +5,7 @@ import io.papermc.paper.dialog.Dialog;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public abstract class BaseDialog {
 
@@ -12,7 +13,7 @@ public abstract class BaseDialog {
     protected final Rank rank;
     protected Dialog dialog;
 
-    public BaseDialog(@NotNull Player player, @NotNull Rank rank, boolean buildDialog) {
+    public BaseDialog(@NotNull Player player, @Nullable Rank rank, boolean buildDialog) {
         this.player = player;
         this.rank = rank;
         if (buildDialog) {
