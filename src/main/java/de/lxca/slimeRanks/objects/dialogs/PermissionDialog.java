@@ -25,6 +25,9 @@ import java.util.List;
 
 @SuppressWarnings("UnstableApiUsage")
 public class PermissionDialog extends BaseDialog {
+
+    private static final String PERMISSION_KEY = "permission";
+
     public PermissionDialog(@NotNull Player player, Rank rank) {
         super(player, rank, false);
         this.dialog = buildDialog();
@@ -42,7 +45,7 @@ public class PermissionDialog extends BaseDialog {
                         ))
                         .inputs(List.of(
                                 DialogInput.text(
-                                        "permission",
+                                        PERMISSION_KEY,
                                         300,
                                         Component.empty(),
                                         false,
@@ -95,7 +98,7 @@ public class PermissionDialog extends BaseDialog {
     private @NotNull DialogAction getSaveDialogAction() {
         return DialogAction.customClick(
                 (view, audience) -> {
-                    String newPermission = view.getText("permission");
+                    String newPermission = view.getText(PERMISSION_KEY);
                     if (newPermission == null || newPermission.isEmpty()) {
                         setNewPermission(null);
                     } else {

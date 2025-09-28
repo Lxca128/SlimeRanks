@@ -25,6 +25,7 @@ import java.util.List;
 @SuppressWarnings("UnstableApiUsage")
 public class WeightDialog extends BaseDialog {
 
+    private static final String WEIGHT_KEY = "weight";
     private final WeightType weightType;
 
     public WeightDialog(@NotNull Player player, Rank rank, WeightType weightType) {
@@ -44,7 +45,7 @@ public class WeightDialog extends BaseDialog {
                                 )
                         ))
                         .inputs(List.of(
-                                DialogInput.numberRange("weight", Component.empty(), 0, Math.max(getCurrentWeight(), 100))
+                                DialogInput.numberRange(WEIGHT_KEY, Component.empty(), 0, Math.max(getCurrentWeight(), 100))
                                         .step(1f)
                                         .initial((float) getCurrentWeight())
                                         .labelFormat("%s %s")
@@ -117,7 +118,7 @@ public class WeightDialog extends BaseDialog {
     private @NotNull DialogAction getSaveDialogAction() {
         return DialogAction.customClick(
                 (view, audience) -> {
-                    Float weightFloat = view.getFloat("weight");
+                    Float weightFloat = view.getFloat(WEIGHT_KEY);
                     int newWeight = weightFloat != null ? weightFloat.intValue() : getCurrentWeight();
 
                     setNewWeight(newWeight);
