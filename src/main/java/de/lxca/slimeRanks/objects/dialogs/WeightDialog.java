@@ -72,7 +72,7 @@ public class WeightDialog extends BaseDialog {
     }
 
     private int getCurrentWeight() {
-        if (weightType ==  WeightType.RANK) {
+        if (weightType == WeightType.RANK) {
             return rank.getRankPriority();
         } else {
             return rank.getTabPriority();
