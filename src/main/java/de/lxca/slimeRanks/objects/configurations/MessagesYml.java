@@ -29,20 +29,63 @@ public class MessagesYml extends Yml {
         createConfigKey("Chat.Action.UpdateAvailable", "<gray>A new version of <color:#39ff14>SlimeRanks</color> has been released on <color:#39ff14>Modrinth</color></gray><dark_gray>!</dark_gray><newline><color:#39ff14><b><click:open_url:'https://modrinth.com/plugin/slimeranks'>Click here</click></b></color> <gray>to update your version</gray> <dark_gray>(</dark_gray><color:#39ff14><color:#ff1439>{current_version}</color></color> <dark_gray>-></dark_gray> <color:#39ff14>{newest_version}</color><dark_gray>).</dark_gray>");
         createConfigKey("Chat.Action.VersionUpdateAvailable", "<gray>A new version of <color:#39ff14>SlimeRanks</color> has been released on <color:#39ff14>Modrinth</color></gray><dark_gray>!</dark_gray><newline><color:#39ff14><b><click:open_url:'https://modrinth.com/plugin/slimeranks'>Click here</click></b></color> <gray>to update your version</gray> <dark_gray>(</dark_gray><color:#39ff14><color:#ff1439>{current_version}</color></color> <dark_gray>-></dark_gray> <color:#39ff14>{newest_version}</color><dark_gray>).</dark_gray><newline><color:#ff3914>The latest version of SlimeRanks no longer supports this Minecraft version<dark_gray>,</dark_gray> so support is only limitedly available</color><dark_gray>.</dark_gray>");
 
-        createConfigKey("Chat.Input.Started", "<gray>Chat input started<dark_gray>.</dark_gray> To cancel the process<dark_gray>,</dark_gray> write</gray> <color:#39ff24>cancel</color><dark_gray>.</dark_gray>");
-        createConfigKey("Chat.Input.Ended", "<gray>Chat input session ended</gray><dark_gray>.</dark_gray>");
-        createConfigKey("Chat.Input.RankIdentifier.OnlyLetters", "<red>The rank identifier can only contain letters</red><dark_gray>.</dark_gray>");
-        createConfigKey("Chat.Input.RankIdentifier.AlreadyUsed", "<red>The rank identifier is already in use</red><dark_gray>.</dark_gray>");
-        createConfigKey("Chat.Input.OnlyNumbers", "<red>The input must only contain numbers</red><dark_gray>.</dark_gray>");
-        createConfigKey("Chat.Input.HigherThanZero", "<red>The input must be greater than or equal to</red> <color:#ff1439>0</color><dark_gray>.</dark_gray>");
-        createConfigKey("Chat.Input.CreateRank", "<gray>Please enter the desired identifier for the rank</gray><dark_gray>.</dark_gray><newline><gray>Only letters are allowed</gray><dark_gray>.</dark_gray>");
-        createConfigKey("Chat.Input.TabFormat", "<gray>Please enter the desired <color:#39ff14>Tablist Format</color> in <color:#39ff14>MiniMessage format</color></gray><dark_gray>.</dark_gray><newline><gray>The following placeholders are supported</gray><dark_gray>:</dark_gray> <color:#39ff14>{player}</color><dark_gray>.</dark_gray>");
-        createConfigKey("Chat.Input.ChatFormat", "<gray>Please enter the desired <color:#39ff14>Chat Format</color> in <color:#39ff14>MiniMessage format</color></gray><dark_gray>.</dark_gray><newline><gray>The following placeholders are supported</gray><dark_gray>:</dark_gray> <color:#39ff14>{player}<dark_gray>,</dark_gray> {message}</color><dark_gray>.</dark_gray>");
-        createConfigKey("Chat.Input.NameTagFormat", "<gray>Please enter the desired <color:#39ff14>NameTag Format</color> in <color:#39ff14>MiniMessage format</color></gray><dark_gray>.</dark_gray><newline><gray>The following placeholders are supported</gray><dark_gray>:</dark_gray> <color:#39ff14>{player}</color><dark_gray>.</dark_gray>");
-        createConfigKey("Chat.Input.TabPriority", "<gray>Please enter the desired <color:#39ff14>tab priority</color> as a <color:#39ff14>number</color><dark_gray>.</dark_gray></gray><newline><gray>The higher the number<dark_gray>,</dark_gray> the higher the rank will be displayed<dark_gray>.</dark_gray> A value of <color:#39ff14>0</color> disables sorting</gray><dark_gray>.</dark_gray>");
-        createConfigKey("Chat.Input.Permission", "<gray>Please enter the required <color:#39ff14>permission</color> the player needs to obtain the rank</gray><dark_gray>.</dark_gray>");
-        createConfigKey("Chat.Input.RankPriority", "<gray>Please enter the desired <color:#39ff14>rank priority</color> as a <color:#39ff14>number</color><dark_gray>.</dark_gray></gray><newline><gray>If a player has multiple ranks<dark_gray>,</dark_gray> they will use the rank with the highest priority<dark_gray>.</dark_gray>");
-        createConfigKey("Chat.Input.RankIdentifier.CreationFailed", "<red>An error occurred while creating the rank. Please try again</red><dark_gray>.</dark_gray>");
+        createConfigKey("dialog.global.back", "Back");
+        createConfigKey("dialog.global.save", "Save");
+        createConfigKey("dialog.rank_identifier.create", "Create Rank");
+        createConfigKey("dialog.edit_rank.chat.title", "Edit chat format");
+        createConfigKey("dialog.edit_rank.name_tag.title", "Edit name-tag format");
+        createConfigKey("dialog.edit_rank.tab.title", "Edit tab format");
+        createConfigKey("dialog.edit_rank.rank_weight.title", "Edit rank weight");
+        createConfigKey("dialog.edit_rank.tab_weight.title", "Edit tab weight");
+        createConfigKey("dialog.edit_rank.permission.title", "Edit permission");
+        createConfigKey("dialog.create_rank.rank_identifier.title", "Create rank");
+        createConfigKey("dialog.edit_rank.chat.description",
+                "Define the chat format in which the messages of players with the rank <#39ff14>{rank}<reset> are displayed.<newline>" +
+                        "You can use placeholders like <#39ff14>{player}<reset> for the player’s name and <#39ff14>{message}<reset> for the message.<newline>" +
+                        "<newline><#39ff14>Note:<reset> The format must be written in <#39ff14>MiniMessage<reset>. " +
+                        "For a preview, you can use the <#39ff14>Web Viewer<reset>: https://webui.advntr.dev"
+        );
+        createConfigKey("dialog.edit_rank.name_tag.description",
+                "Define the name tag format in which the names of players with the rank <#39ff14>{rank}<reset> are shown above their character.<newline>" +
+                        "Use placeholders like <#39ff14>{player}<reset> to display the player’s name.<newline>" +
+                        "<newline><#39ff14>Note:<reset> The format must be written in <#39ff14>MiniMessage<reset>. " +
+                        "For a preview, you can use the <#39ff14>Web Viewer<reset>: https://webui.advntr.dev"
+        );
+        createConfigKey("dialog.edit_rank.tab.description",
+                "Define the tab list format in which the names of players with the rank <#39ff14>{rank}<reset> are displayed in the player list.<newline>" +
+                        "You can use placeholders like <#39ff14>{player}<reset> to show the player’s name.<newline>" +
+                        "<newline><#39ff14>Note:<reset> The format must be written in <#39ff14>MiniMessage<reset>. " +
+                        "For a preview, you can use the <#39ff14>Web Viewer<reset>: https://webui.advntr.dev"
+        );
+        createConfigKey("dialog.edit_rank.rank_weight.description",
+                "Set the rank weighting for the rank <#39ff14>{rank}<reset> here.<newline>" +
+                        "<newline><#39ff14>Note:<reset> If a player has access to multiple ranks, they will automatically receive the rank with the <#39ff14>highest weighting<reset>."
+        );
+        createConfigKey("dialog.edit_rank.tab_weight.description",
+                "Set the tab weighting for the rank <#39ff14>{rank}<reset> here.<newline>" +
+                        "<newline><#39ff14>Note:<reset> The higher the value, the higher players with this rank will appear in the tab list.<newline>" +
+                        "If set to <#39ff14>0<reset>, no sorting will be applied."
+        );
+        createConfigKey("dialog.edit_rank.permission.description",
+                "Set the permission required for the rank <#39ff14>{rank}<reset>.<newline>" +
+                        "<newline><#39ff14>Note:<reset> The permission can be assigned, for example, using <#39ff14>LuckPerms<reset>.<newline>" +
+                        "If the permission field is left <#39ff14>empty<reset>, no permission will be required and every player will receive this rank by <#39ff14>default<reset>."
+        );
+        createConfigKey("dialog.create_rank.rank_identifier.description",
+                "Enter the identifier for the rank you want to create.<newline>" +
+                        "By clicking the <#39ff14>Create Rank<reset> button, a new rank will be created with the specified identifier.<newline>" +
+                        "<newline><#39ff14>Note:<reset> The identifier may only contain <#39ff14>letters<reset> and must not already be in use."
+        );
+
+        createConfigKey("dialog.create_rank.rank_identifier.error.only_letters",
+                "<red>The rank identifier can only contain letters</red><dark_gray>.</dark_gray>"
+        );
+        createConfigKey("dialog.create_rank.rank_identifier.error.already_used",
+                "<red>The rank identifier is already in use</red><dark_gray>.</dark_gray>"
+        );
+        createConfigKey("dialog.create_rank.rank_identifier.error.creation_failed",
+                "<red>An error occurred while creating the rank. Please try again</red><dark_gray>.</dark_gray>"
+        );
 
         createConfigKey("Gui.Global.ItemName.Close", "<color:#ff1439><u>Close</u></color>");
         createConfigKey("Gui.Global.ItemName.Back", "<color:#39ff14><u>Back</u></color>");

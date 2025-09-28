@@ -1,14 +1,15 @@
 package de.lxca.slimeRanks.guis;
 
 import de.lxca.slimeRanks.Main;
-import de.lxca.slimeRanks.enums.ChatInputType;
+import de.lxca.slimeRanks.enums.FormatType;
+import de.lxca.slimeRanks.enums.WeightType;
 import de.lxca.slimeRanks.items.GlobalItems;
 import de.lxca.slimeRanks.items.EditItems;
-import de.lxca.slimeRanks.objects.ChatInput;
 import de.lxca.slimeRanks.objects.Message;
 import de.lxca.slimeRanks.objects.Rank;
-import de.lxca.slimeRanks.objects.RankManager;
-import net.kyori.adventure.text.Component;
+import de.lxca.slimeRanks.objects.dialogs.FormatDialog;
+import de.lxca.slimeRanks.objects.dialogs.PermissionDialog;
+import de.lxca.slimeRanks.objects.dialogs.WeightDialog;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -84,17 +85,11 @@ public class RankEditGui implements InventoryHolder {
         int slot = event.getRawSlot();
 
         if (slot == 12) {
-            Component additionalInfoMessage = new Message("Chat.Input.TabFormat", true).getMessage();
-            new ChatInput(player, ChatInputType.RANK_TAB_FORMAT, 120, rank, additionalInfoMessage);
-            player.closeInventory();
+            new FormatDialog(player, rank, FormatType.TAB).open();
         } else if (slot == 13) {
-            Component additionalInfoMessage = new Message("Chat.Input.ChatFormat", true).getMessage();
-            new ChatInput(player, ChatInputType.RANK_CHAT_FORMAT, 120, rank, additionalInfoMessage);
-            player.closeInventory();
+            new FormatDialog(player, rank, FormatType.CHAT).open();
         } else if (slot == 14) {
-            Component additionalInfoMessage = new Message("Chat.Input.NameTagFormat", true).getMessage();
-            new ChatInput(player, ChatInputType.RANK_NAME_TAG_FORMAT, 120, rank, additionalInfoMessage);
-            player.closeInventory();
+            new FormatDialog(player, rank, FormatType.NAME_TAG).open();
         } else if (slot == 19) {
             rank.setHideNameTagOnSneak(!rank.hideNameTagOnSneak());
             inventory.setItem(4, GlobalItems.getRankItem(rank));
@@ -120,23 +115,17 @@ public class RankEditGui implements InventoryHolder {
             inventory.setItem(slot, EditItems.getStatusItem(rank.getColoredMessages()));
             player.playSound(player, Sound.BLOCK_LEVER_CLICK, 1.0F, 1.0F);
         } else if (slot == 38) {
-            Component additionalInfoMessage = new Message("Chat.Input.RankPriority", true).getMessage();
-            new ChatInput(player, ChatInputType.RANK_PRIORITY, 30, rank, additionalInfoMessage);
-            player.closeInventory();
+            new WeightDialog(player, rank, WeightType.RANK).open();
         } else if (slot == 40) {
             if (event.getClick() == ClickType.SHIFT_LEFT || event.getClick() == ClickType.SHIFT_RIGHT) {
                 rank.setPermission(null);
                 inventory.setItem(slot, EditItems.getPermissionItem(rank));
                 player.playSound(player, Sound.BLOCK_LAVA_POP, 1.0F, 1.0F);
             } else {
-                Component additionalInfoMessage = new Message("Chat.Input.Permission", true).getMessage();
-                new ChatInput(player, ChatInputType.RANK_PERMISSION, 30, rank, additionalInfoMessage);
-                player.closeInventory();
+                new PermissionDialog(player, rank).open();
             }
         } else if (slot == 42) {
-            Component additionalInfoMessage = new Message("Chat.Input.TabPriority", true).getMessage();
-            new ChatInput(player, ChatInputType.RANK_TAB_PRIORITY, 30, rank, additionalInfoMessage);
-            player.closeInventory();
+            new WeightDialog(player, rank, WeightType.TAB).open();
         } else if (slot == 45) {
             player.openInventory(new RankOverviewGui().getInventory());
             player.playSound(player, Sound.ITEM_BOOK_PAGE_TURN, 1.0F, 1.0F);
