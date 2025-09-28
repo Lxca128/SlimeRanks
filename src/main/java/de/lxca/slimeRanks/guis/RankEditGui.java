@@ -1,17 +1,15 @@
 package de.lxca.slimeRanks.guis;
 
 import de.lxca.slimeRanks.Main;
-import de.lxca.slimeRanks.enums.ChatInputType;
 import de.lxca.slimeRanks.enums.FormatType;
 import de.lxca.slimeRanks.enums.WeightType;
 import de.lxca.slimeRanks.items.GlobalItems;
 import de.lxca.slimeRanks.items.EditItems;
-import de.lxca.slimeRanks.objects.ChatInput;
 import de.lxca.slimeRanks.objects.Message;
 import de.lxca.slimeRanks.objects.Rank;
 import de.lxca.slimeRanks.objects.dialogs.FormatDialog;
+import de.lxca.slimeRanks.objects.dialogs.PermissionDialog;
 import de.lxca.slimeRanks.objects.dialogs.WeightDialog;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -124,9 +122,7 @@ public class RankEditGui implements InventoryHolder {
                 inventory.setItem(slot, EditItems.getPermissionItem(rank));
                 player.playSound(player, Sound.BLOCK_LAVA_POP, 1.0F, 1.0F);
             } else {
-                Component additionalInfoMessage = new Message("Chat.Input.Permission", true).getMessage();
-                new ChatInput(player, ChatInputType.RANK_PERMISSION, 30, rank, additionalInfoMessage);
-                player.closeInventory();
+                new PermissionDialog(player, rank).open();
             }
         } else if (slot == 42) {
             new WeightDialog(player, rank, WeightType.TAB).open();
