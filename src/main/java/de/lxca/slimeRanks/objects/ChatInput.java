@@ -141,21 +141,6 @@ public class ChatInput {
 
             endSession(true, null, true);
             player.openInventory(new RankEditGui(createdRank).getInventory());
-        } else if (chatInputType == ChatInputType.RANK_TAB_FORMAT) {
-            Rank rank = (Rank) linkedObject;
-            rank.setTabFormat(messageString);
-            endSession(true, null, true);
-            player.openInventory(new RankEditGui(rank).getInventory());
-        } else if (chatInputType == ChatInputType.RANK_CHAT_FORMAT) {
-            Rank rank = (Rank) linkedObject;
-            rank.setChatFormat(messageString);
-            endSession(true, null, true);
-            player.openInventory(new RankEditGui(rank).getInventory());
-        } else if (chatInputType == ChatInputType.RANK_NAME_TAG_FORMAT) {
-            Rank rank = (Rank) linkedObject;
-            rank.setNameTagFormat(messageString);
-            endSession(true, null, true);
-            player.openInventory(new RankEditGui(rank).getInventory());
         } else if (chatInputType == ChatInputType.RANK_TAB_PRIORITY || chatInputType == ChatInputType.RANK_PRIORITY) {
             if (!messageString.chars().allMatch(Character::isDigit)) {
                 Component additionalInfoMessage = new Message("Chat.Input.OnlyNumbers", true).getMessage();
