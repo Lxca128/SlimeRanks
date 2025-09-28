@@ -1,14 +1,12 @@
 package de.lxca.slimeRanks.guis;
 
 import de.lxca.slimeRanks.Main;
-import de.lxca.slimeRanks.enums.ChatInputType;
 import de.lxca.slimeRanks.items.GlobalItems;
 import de.lxca.slimeRanks.items.OverviewItems;
-import de.lxca.slimeRanks.objects.ChatInput;
 import de.lxca.slimeRanks.objects.Message;
 import de.lxca.slimeRanks.objects.Rank;
 import de.lxca.slimeRanks.objects.RankManager;
-import net.kyori.adventure.text.Component;
+import de.lxca.slimeRanks.objects.dialogs.RankIdentifierDialog;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -102,9 +100,7 @@ public class RankOverviewGui implements InventoryHolder {
             setItems();
             player.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 2.0F);
         } else if (slot == 35) {
-            Component additionalInfoMessage = new Message("Chat.Input.CreateRank", true).getMessage();
-            new ChatInput(player, ChatInputType.RANK_IDENTIFIER, 30, additionalInfoMessage);
-            player.closeInventory();
+            new RankIdentifierDialog(player).open();
         }
     }
 }
