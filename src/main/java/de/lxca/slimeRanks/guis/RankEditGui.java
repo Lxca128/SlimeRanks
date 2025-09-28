@@ -2,12 +2,13 @@ package de.lxca.slimeRanks.guis;
 
 import de.lxca.slimeRanks.Main;
 import de.lxca.slimeRanks.enums.ChatInputType;
+import de.lxca.slimeRanks.enums.FormatType;
 import de.lxca.slimeRanks.items.GlobalItems;
 import de.lxca.slimeRanks.items.EditItems;
 import de.lxca.slimeRanks.objects.ChatInput;
 import de.lxca.slimeRanks.objects.Message;
 import de.lxca.slimeRanks.objects.Rank;
-import de.lxca.slimeRanks.objects.RankManager;
+import de.lxca.slimeRanks.objects.dialogs.FormatDialog;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -84,17 +85,11 @@ public class RankEditGui implements InventoryHolder {
         int slot = event.getRawSlot();
 
         if (slot == 12) {
-            Component additionalInfoMessage = new Message("Chat.Input.TabFormat", true).getMessage();
-            new ChatInput(player, ChatInputType.RANK_TAB_FORMAT, 120, rank, additionalInfoMessage);
-            player.closeInventory();
+            new FormatDialog(player, rank, FormatType.TAB).open();
         } else if (slot == 13) {
-            Component additionalInfoMessage = new Message("Chat.Input.ChatFormat", true).getMessage();
-            new ChatInput(player, ChatInputType.RANK_CHAT_FORMAT, 120, rank, additionalInfoMessage);
-            player.closeInventory();
+            new FormatDialog(player, rank, FormatType.CHAT).open();
         } else if (slot == 14) {
-            Component additionalInfoMessage = new Message("Chat.Input.NameTagFormat", true).getMessage();
-            new ChatInput(player, ChatInputType.RANK_NAME_TAG_FORMAT, 120, rank, additionalInfoMessage);
-            player.closeInventory();
+            new FormatDialog(player, rank, FormatType.NAME_TAG).open();
         } else if (slot == 19) {
             rank.setHideNameTagOnSneak(!rank.hideNameTagOnSneak());
             inventory.setItem(4, GlobalItems.getRankItem(rank));
