@@ -49,23 +49,32 @@ public class MessagesYml extends Yml {
         createConfigKey("dialog.edit_rank.chat.title", "Edit chat format");
         createConfigKey("dialog.edit_rank.name_tag.title", "Edit name-tag format");
         createConfigKey("dialog.edit_rank.tab.title", "Edit tab format");
+        createConfigKey("dialog.edit_rank.rank_weight.title", "Edit rank weight");
+        createConfigKey("dialog.edit_rank.tab_weight.title", "Edit tab weight");
         createConfigKey("dialog.edit_rank.chat.description",
                 "Define the chat format in which the messages of players with the rank <#39ff14>{rank}<reset> are displayed.<newline>" +
                         "You can use placeholders like <#39ff14>{player}<reset> for the player’s name and <#39ff14>{message}<reset> for the message.<newline>" +
                         "<newline><#39ff14>Note:<reset> The format must be written in <#39ff14>MiniMessage<reset>. " +
                         "For a preview, you can use the <#39ff14>Web Viewer<reset>: https://webui.advntr.dev");
-
         createConfigKey("dialog.edit_rank.name_tag.description",
                 "Define the name tag format in which the names of players with the rank <#39ff14>{rank}<reset> are shown above their character.<newline>" +
                         "Use placeholders like <#39ff14>{player}<reset> to display the player’s name.<newline>" +
                         "<newline><#39ff14>Note:<reset> The format must be written in <#39ff14>MiniMessage<reset>. " +
                         "For a preview, you can use the <#39ff14>Web Viewer<reset>: https://webui.advntr.dev");
-
         createConfigKey("dialog.edit_rank.tab.description",
                 "Define the tab list format in which the names of players with the rank <#39ff14>{rank}<reset> are displayed in the player list.<newline>" +
                         "You can use placeholders like <#39ff14>{player}<reset> to show the player’s name.<newline>" +
                         "<newline><#39ff14>Note:<reset> The format must be written in <#39ff14>MiniMessage<reset>. " +
                         "For a preview, you can use the <#39ff14>Web Viewer<reset>: https://webui.advntr.dev");
+        createConfigKey("dialog.edit_rank.rank_weight.description",
+                "Set the rank weighting for the rank <#39ff14>{rank}<reset> here.<newline>" +
+                        "<newline><#39ff14>Note:<reset> If a player has access to multiple ranks, they will automatically receive the rank with the <#39ff14>highest weighting<reset>."
+        );
+        createConfigKey("dialog.edit_rank.tab_weight.description",
+                "Set the tab weighting for the rank <#39ff14>{rank}<reset> here.<newline>" +
+                        "<newline><#39ff14>Note:<reset> The higher the value, the higher players with this rank will appear in the tab list.<newline>" +
+                        "If set to <#39ff14>0<reset>, no sorting will be applied."
+        );
 
         createConfigKey("Gui.Global.ItemName.Close", "<color:#ff1439><u>Close</u></color>");
         createConfigKey("Gui.Global.ItemName.Back", "<color:#39ff14><u>Back</u></color>");
