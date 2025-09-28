@@ -46,12 +46,14 @@ public class MessagesYml extends Yml {
 
         createConfigKey("dialog.global.back", "Back");
         createConfigKey("dialog.global.save", "Save");
+        createConfigKey("dialog.rank_identifier.create", "Create Rank");
         createConfigKey("dialog.edit_rank.chat.title", "Edit chat format");
         createConfigKey("dialog.edit_rank.name_tag.title", "Edit name-tag format");
         createConfigKey("dialog.edit_rank.tab.title", "Edit tab format");
         createConfigKey("dialog.edit_rank.rank_weight.title", "Edit rank weight");
         createConfigKey("dialog.edit_rank.tab_weight.title", "Edit tab weight");
         createConfigKey("dialog.edit_rank.permission.title", "Edit permission");
+        createConfigKey("dialog.create_rank.rank_identifier.title", "Create rank");
         createConfigKey("dialog.edit_rank.chat.description",
                 "Define the chat format in which the messages of players with the rank <#39ff14>{rank}<reset> are displayed.<newline>" +
                         "You can use placeholders like <#39ff14>{player}<reset> for the player’s name and <#39ff14>{message}<reset> for the message.<newline>" +
@@ -83,6 +85,21 @@ public class MessagesYml extends Yml {
                 "Set the permission required for the rank <#39ff14>{rank}<reset>.<newline>" +
                         "<newline><#39ff14>Note:<reset> The permission can be assigned, for example, using <#39ff14>LuckPerms<reset>.<newline>" +
                         "If the permission field is left <#39ff14>empty<reset>, no permission will be required and every player will receive this rank by <#39ff14>default<reset>."
+        );
+        createConfigKey("dialog.create_rank.rank_identifier.description",
+                "Enter the identifier for the rank you want to create.<newline>" +
+                        "By clicking the <#39ff14>Create Rank<reset> button, a new rank will be created with the specified identifier.<newline>" +
+                        "<newline><#39ff14>Note:<reset> The identifier may only contain <#39ff14>letters<reset> and must not already be in use."
+        );
+
+        createConfigKey("dialog.create_rank.rank_identifier.error.only_letters",
+                "<red>The rank identifier can only contain letters</red><dark_gray>.</dark_gray>"
+        );
+        createConfigKey("dialog.create_rank.rank_identifier.error.already_used",
+                "<red>The rank identifier is already in use</red><dark_gray>.</dark_gray>"
+        );
+        createConfigKey("dialog.create_rank.rank_identifier.error.creation_failed",
+                "<red>An error occurred while creating the rank. Please try again</red><dark_gray>.</dark_gray>"
         );
 
         createConfigKey("Gui.Global.ItemName.Close", "<color:#ff1439><u>Close</u></color>");
