@@ -19,14 +19,6 @@ public class GlobalItems {
         return itemBuilder.getItemStack();
     }
 
-    public static ItemStack getCloseItem() {
-        ItemBuilder itemBuilder = new ItemBuilder(Material.BARRIER);
-
-        itemBuilder.setItemName("Gui.Global.ItemName.Close");
-
-        return itemBuilder.getItemStack();
-    }
-
     public static ItemStack getBackItem() {
         ItemBuilder itemBuilder = new ItemBuilder(Material.ARROW);
 
