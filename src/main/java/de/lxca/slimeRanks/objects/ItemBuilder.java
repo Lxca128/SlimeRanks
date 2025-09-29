@@ -1,6 +1,8 @@
 package de.lxca.slimeRanks.objects;
 
 import de.lxca.slimeRanks.Main;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
@@ -8,6 +10,7 @@ import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -74,6 +77,12 @@ public class ItemBuilder {
 
     public void setHideTooltip(boolean value) {
         itemMeta.setHideTooltip(value);
+    }
+
+    @SuppressWarnings("UnstableApiUsage")
+    public ItemBuilder setTooltipDisplay(@NotNull TooltipDisplay.Builder tooltipDisplayBuilder) {
+        itemStack.setData(DataComponentTypes.TOOLTIP_DISPLAY, tooltipDisplayBuilder.build());
+        return this;
     }
 
     public ItemStack getItemStack() {
