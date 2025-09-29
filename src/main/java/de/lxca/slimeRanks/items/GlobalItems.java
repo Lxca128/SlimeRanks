@@ -28,17 +28,25 @@ public class GlobalItems {
     }
 
     public static ItemStack getPreviousPageItem(boolean pageAvailable) {
-        ItemBuilder itemBuilder = new ItemBuilder(pageAvailable ? Material.LIME_DYE : Material.GRAY_DYE);
+        ItemBuilder itemBuilder = new ItemBuilder(pageAvailable ? Material.PAPER : Material.BLACK_STAINED_GLASS_PANE);
 
-        itemBuilder.setItemName("Gui.Global.ItemName.PreviousPage");
+        if (pageAvailable) {
+            itemBuilder.setItemName("Gui.Global.ItemName.PreviousPage");
+        } else {
+            itemBuilder.setHideTooltip(true);
+        }
 
         return itemBuilder.getItemStack();
     }
 
     public static ItemStack getNextPageItem(boolean pageAvailable) {
-        ItemBuilder itemBuilder = new ItemBuilder(pageAvailable ? Material.LIME_DYE : Material.GRAY_DYE);
+        ItemBuilder itemBuilder = new ItemBuilder(pageAvailable ? Material.PAPER : Material.BLACK_STAINED_GLASS_PANE);
 
-        itemBuilder.setItemName("Gui.Global.ItemName.NextPage");
+        if (pageAvailable) {
+            itemBuilder.setItemName("Gui.Global.ItemName.NextPage");
+        } else {
+            itemBuilder.setHideTooltip(true);
+        }
 
         return itemBuilder.getItemStack();
     }
