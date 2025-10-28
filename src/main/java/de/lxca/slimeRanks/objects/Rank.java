@@ -228,8 +228,8 @@ public class Rank {
         }
 
         if (Main.isPluginEnabled("MiniPlaceholders")) {
-            TagResolver tagResolver = MiniPlaceholders.getAudienceGlobalPlaceholders(player);
-            deserializedFormat = miniMessage.deserialize(format, tagResolver);
+            TagResolver tagResolver = MiniPlaceholders.audiencePlaceholders();
+            deserializedFormat = miniMessage.deserialize(format, player, tagResolver);
         }
 
         if (deserializedFormat == null) {
