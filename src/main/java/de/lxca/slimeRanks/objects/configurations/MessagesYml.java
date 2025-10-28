@@ -87,7 +87,6 @@ public class MessagesYml extends Yml {
                 "<red>An error occurred while creating the rank. Please try again</red><dark_gray>.</dark_gray>"
         );
 
-        createConfigKey("Gui.Global.ItemName.Close", "<color:#ff1439><u>Close</u></color>");
         createConfigKey("Gui.Global.ItemName.Back", "<color:#39ff14><u>Back</u></color>");
         createConfigKey("Gui.Global.ItemName.PreviousPage", "<color:#39ff14><u>Previous page</u></color>");
         createConfigKey("Gui.Global.ItemName.NextPage", "<color:#39ff14><u>Next page</u></color>");

@@ -56,7 +56,6 @@ public class RankOverviewGui implements InventoryHolder {
                 inventory.clear(rankSlot);
             }
         }
-        inventory.setItem(27, GlobalItems.getCloseItem());
         inventory.setItem(30, GlobalItems.getPreviousPageItem(page > 1));
         inventory.setItem(32, GlobalItems.getNextPageItem(ranks.size() > (page * rankSlots.size())));
         inventory.setItem(34, OverviewItems.getReloadItem());
@@ -80,8 +79,6 @@ public class RankOverviewGui implements InventoryHolder {
                 player.openInventory(new RankEditGui(rank).getInventory());
                 player.playSound(player, Sound.ITEM_BOOK_PAGE_TURN, 1.0F, 1.0F);
             }
-        } else if (slot == 27) {
-            player.closeInventory();
         } else if (slot == 30) {
             if (page > 1) {
                 page--;

@@ -2,8 +2,9 @@ package de.lxca.slimeRanks.items;
 
 import de.lxca.slimeRanks.objects.ItemBuilder;
 import de.lxca.slimeRanks.objects.Rank;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,14 +20,6 @@ public class GlobalItems {
         return itemBuilder.getItemStack();
     }
 
-    public static ItemStack getCloseItem() {
-        ItemBuilder itemBuilder = new ItemBuilder(Material.BARRIER);
-
-        itemBuilder.setItemName("Gui.Global.ItemName.Close");
-
-        return itemBuilder.getItemStack();
-    }
-
     public static ItemStack getBackItem() {
         ItemBuilder itemBuilder = new ItemBuilder(Material.ARROW);
 
@@ -36,22 +29,34 @@ public class GlobalItems {
     }
 
     public static ItemStack getPreviousPageItem(boolean pageAvailable) {
-        ItemBuilder itemBuilder = new ItemBuilder(pageAvailable ? Material.LIME_DYE : Material.GRAY_DYE);
+        ItemBuilder itemBuilder = new ItemBuilder(pageAvailable ? Material.PAPER : Material.BLACK_STAINED_GLASS_PANE);
 
-        itemBuilder.setItemName("Gui.Global.ItemName.PreviousPage");
+        if (pageAvailable) {
+            itemBuilder.setItemName("Gui.Global.ItemName.PreviousPage");
+        } else {
+            itemBuilder.setHideTooltip(true);
+        }
 
         return itemBuilder.getItemStack();
     }
 
     public static ItemStack getNextPageItem(boolean pageAvailable) {
-        ItemBuilder itemBuilder = new ItemBuilder(pageAvailable ? Material.LIME_DYE : Material.GRAY_DYE);
+        ItemBuilder itemBuilder = new ItemBuilder(pageAvailable ? Material.PAPER : Material.BLACK_STAINED_GLASS_PANE);
 
-        itemBuilder.setItemName("Gui.Global.ItemName.NextPage");
+        if (pageAvailable) {
+            itemBuilder.setItemName("Gui.Global.ItemName.NextPage");
+        } else {
+            itemBuilder.setHideTooltip(true);
+        }
 
         return itemBuilder.getItemStack();
     }
 
     public static ItemStack getRankItem(@NotNull Rank rank) {
+        @SuppressWarnings("UnstableApiUsage")
+        TooltipDisplay.Builder tooltipDisplayBuilder = TooltipDisplay.tooltipDisplay()
+                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS);
+
         ItemBuilder itemBuilder = new ItemBuilder(Material.FILLED_MAP);
         HashMap<String, String> nameReplacements = new HashMap<>();
         HashMap<String, String> loreReplacements = new HashMap<>();
@@ -70,8 +75,7 @@ public class GlobalItems {
         itemBuilder.setItemName("Gui.Global.ItemName.Rank", nameReplacements);
         itemBuilder.setLore("Gui.Global.ItemLore.Rank", loreReplacements);
 
-        itemBuilder.addItemFlag(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
-        itemBuilder.addItemFlag(ItemFlag.HIDE_ATTRIBUTES);
+        itemBuilder.setTooltipDisplay(tooltipDisplayBuilder);
 
         return itemBuilder.getItemStack();
     }

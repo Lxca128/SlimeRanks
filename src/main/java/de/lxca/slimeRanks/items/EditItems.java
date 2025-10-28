@@ -3,7 +3,6 @@ package de.lxca.slimeRanks.items;
 import de.lxca.slimeRanks.objects.ItemBuilder;
 import de.lxca.slimeRanks.objects.Rank;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -51,13 +50,10 @@ public class EditItems {
         HashMap<String, String> replacements = new HashMap<>();
         replacements.put("priority", String.valueOf(rank.getTabPriority()));
 
-        ItemBuilder itemBuilder = new ItemBuilder(Material.NETHERITE_UPGRADE_SMITHING_TEMPLATE);
+        ItemBuilder itemBuilder = new ItemBuilder(Material.GUSTER_BANNER_PATTERN);
 
         itemBuilder.setItemName("Gui.Edit.ItemName.TabPriority");
         itemBuilder.setLore("Gui.Edit.ItemLore.TabPriority", replacements);
-
-        itemBuilder.addItemFlag(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
-        itemBuilder.addItemFlag(ItemFlag.HIDE_ATTRIBUTES);
 
         return itemBuilder.getItemStack();
     }
@@ -66,7 +62,7 @@ public class EditItems {
         HashMap<String, String> replacements = new HashMap<>();
         replacements.put("priority", String.valueOf(rank.getRankPriority()));
 
-        ItemBuilder itemBuilder = new ItemBuilder(Material.ANVIL);
+        ItemBuilder itemBuilder = new ItemBuilder(Material.GLOBE_BANNER_PATTERN);
 
         itemBuilder.setItemName("Gui.Edit.ItemName.RankPriority");
         itemBuilder.setLore("Gui.Edit.ItemLore.RankPriority", replacements);
@@ -111,7 +107,7 @@ public class EditItems {
     }
 
     public static ItemStack getStatusItem(boolean active) {
-        ItemBuilder itemBuilder = new ItemBuilder(active ? Material.LIME_DYE : Material.GRAY_DYE);
+        ItemBuilder itemBuilder = new ItemBuilder(active ? Material.LIME_STAINED_GLASS : Material.WHITE_STAINED_GLASS);
 
         if (active) {
             itemBuilder.setItemName("Gui.Edit.ItemName.Status.Activated");
