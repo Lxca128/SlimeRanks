@@ -27,6 +27,13 @@ SlimeRanks is a powerful and flexible Minecraft plugin that allows server owners
 - 🎨 **MiniMessage + HEX Colors:** Full support for MiniMessage formatting, including HEX colors.  
 - 🌐 **Multi-Language Ready:** All messages can be translated to match your server’s language.
 
+## 🗺️ Roadmap
+
+Want to see what’s planned for the future of SlimeRanks?  
+Check out the public roadmap here:
+
+👉 **[SlimeRanks Roadmap](https://app.todoist.com/public/project/roadmap-6f3xwMjFm44225R6?public_key=dbd7eaad-451c-4cd4-8032-2422f12459c7)**
+
 ## 🖥️ GUI Preview
 <img src="https://github.com/user-attachments/assets/d7b7ce32-deed-45e5-a91a-ed0ef10eb640" alt="Rank Overview GUI" />
 <img src="https://github.com/user-attachments/assets/2170ffed-6e74-4279-9031-e9ef54aa2ffa" alt="Edit Rank GUI" />
