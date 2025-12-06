@@ -19,8 +19,13 @@ public class PlayerChangedWorldListener implements Listener {
                 return;
             }
 
-            playerNameTag.mount();
-            playerNameTag.setVisibility(player, false);
+            playerNameTag.mount().thenAccept(success -> {
+                if (!success) {
+                    return;
+                }
+
+                playerNameTag.setVisibility(player, false);
+            });
         }
     }
 }
