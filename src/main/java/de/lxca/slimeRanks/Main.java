@@ -58,6 +58,10 @@ public final class Main extends JavaPlugin {
             new Placeholder().register();
         }
 
+        if (pluginManager.getPlugin("Multiverse-Core") != null) {
+            pluginManager.registerEvents(new MultiverseTeleportListener(), this);
+        }
+
         runNameUpdateTask();
 
         for (World world : Bukkit.getWorlds()) {
