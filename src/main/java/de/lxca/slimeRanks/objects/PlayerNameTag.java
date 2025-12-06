@@ -92,14 +92,17 @@ public class PlayerNameTag {
     }
 
     public void mount(@NotNull TextDisplay nameTag) {
-        if (player.getWorld() != nameTag.getWorld()) {
-            nameTag.teleportAsync(getNameTagLocation(player));
-        }
-        player.getScheduler().run(
-                Main.getInstance(),
-                scheduledTask -> player.addPassenger(nameTag),
-                null
-        );
+        nameTag.teleportAsync(getNameTagLocation(player)).thenAccept(success -> {
+            if (!success) {
+                return;
+            }
+
+            player.getScheduler().run(
+                    Main.getInstance(),
+                    scheduledTask -> player.addPassenger(nameTag),
+                    null
+            );
+        });
     }
 
     public void hideForAll() {
