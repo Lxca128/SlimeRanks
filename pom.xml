@@ -63,6 +63,10 @@
       <id>placeholderapi</id>
       <url>https://repo.extendedclip.com/releases/</url>
     </repository>
+    <repository>
+      <id>onarandombox</id>
+      <url>https://repo.onarandombox.com/content/groups/public/</url>
+    </repository>
   </repositories>
 
   <dependencies>
@@ -94,6 +98,12 @@
       <groupId>net.luckperms</groupId>
       <artifactId>api</artifactId>
       <version>5.5</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mvplugins.multiverse.core</groupId>
+      <artifactId>multiverse-core</artifactId>
+      <version>5.3.4-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
