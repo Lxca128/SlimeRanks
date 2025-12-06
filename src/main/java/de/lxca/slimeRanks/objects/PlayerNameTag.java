@@ -15,6 +15,7 @@ import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 import java.util.HashMap;
+import java.util.concurrent.CompletableFuture;
 
 public class PlayerNameTag {
 
@@ -87,22 +88,30 @@ public class PlayerNameTag {
         }
     }
 
-    public void mount() {
-        mount(nameTag);
+    public CompletableFuture<Boolean> mount() {
+        return mount(nameTag);
     }
 
-    public void mount(@NotNull TextDisplay nameTag) {
+    public CompletableFuture<Boolean> mount(@NotNull TextDisplay nameTag) {
+        CompletableFuture<Boolean> result = new CompletableFuture<>();
+
         nameTag.teleportAsync(getNameTagLocation(player)).thenAccept(success -> {
             if (!success) {
+                result.complete(false);
                 return;
             }
 
             player.getScheduler().run(
                     Main.getInstance(),
-                    scheduledTask -> player.addPassenger(nameTag),
-                    null
+                    scheduledTask -> {
+                        player.addPassenger(nameTag);
+                        result.complete(true);
+                    },
+                    () -> result.complete(false)
             );
         });
+
+        return result;
     }
 
     public void hideForAll() {
