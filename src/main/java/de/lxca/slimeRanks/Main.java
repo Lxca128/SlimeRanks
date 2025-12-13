@@ -48,7 +48,8 @@ public final class Main extends JavaPlugin {
                 new PlayerPostRespawnListener(),
                 new PlayerQuitListener(),
                 new PlayerShowEntityListener(),
-                new PlayerToggleSneakListener()
+                new PlayerToggleSneakListener(),
+                new PluginEnableListener()
         };
         for (Listener listener : listeners) {
             pluginManager.registerEvents(listener, this);
