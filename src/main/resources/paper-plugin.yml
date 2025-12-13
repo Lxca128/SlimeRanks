@@ -14,18 +14,14 @@ permissions:
 dependencies:
   server:
     PlaceholderAPI:
-      load: BEFORE
       required: false
       join-classpath: true
     MiniPlaceholders:
-      load: BEFORE
       required: false
       join-classpath: true
     LuckPerms:
-      load: AFTER
       required: false
       join-classpath: true
     Multiverse-Core:
-      load: BEFORE
       required: false
       join-classpath: true
