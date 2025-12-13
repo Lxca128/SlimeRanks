@@ -19,9 +19,8 @@ public class PluginEnableListener implements Listener {
                 break;
             case "PlaceholderAPI":
                 new Placeholder().register();
-                RankManager.getInstance().reloadDisplays();
-                break;
             case "MiniPlaceholders":
+            case "LuckPerms":
                 RankManager.getInstance().reloadDisplays();
                 break;
         }
