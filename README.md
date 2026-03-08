@@ -62,7 +62,7 @@ Check out the public roadmap here:
 
 <p>You can find more detailed information in our documentation:</p>
 
-[![GitBook Documentation](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/documentation/gitbook_vector.svg)](https://wiki.slimeventure.net/slimeranks/getting-started#how-to-configure-slimeranks)
+[![GitBook Documentation](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/documentation/gitbook_vector.svg)](https://slimeventure.gitbook.io/slimeventure-plugins/slimeranks/getting-started#how-to-configure-slimeranks)
 
 ## 🛠 Commands & Permissions
 | Command | Description | Permission |
